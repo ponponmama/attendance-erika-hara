@@ -1,0 +1,10 @@
+/docker/mysql/data/
+/node_modules
+/public/hot
+/storage/*.key
+/vendor
+.env
+.env.backup
+.styleci.yml
+docker-compose.yml
+cspell.json

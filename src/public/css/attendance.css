@@ -1,0 +1,73 @@
+/* Attendance Page */
+.attendance-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+}
+
+.attendance-status {
+    line-height: 1.5rem;
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin-bottom: 1%;
+    background-color: #c9c9c9;
+    color: #5f5f5f;
+    letter-spacing: 0.3rem;
+}
+
+.attendance-date {
+    margin: 0;
+    padding: 2%;
+    font-size: 2.5rem;
+}
+
+.attendance-time {
+    margin: 0;
+    font-size: 5rem;
+    font-weight: bold;
+}
+
+.attendance-actions {
+    display: flex;
+    justify-content: center;
+    margin: 3% auto;
+}
+
+.attendance-actions__form {
+    margin: 0 10%;
+}
+
+.action-button {
+    width: 230px;
+    background-color: #000;
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    padding: 16px 30px;
+    font-size: 2.2rem;
+    transition: opacity 0.3s;
+    margin: 12% auto;
+}
+
+.action-break-button {
+    width: 230px;
+    background-color: #fff;
+    color: #000;
+    border: none;
+    border-radius: 20px;
+    padding: 16px 30px;
+    font-size: 2.2rem;
+    transition: opacity 0.3s;
+    margin: 12% auto;
+}
+
+.action-button:hover {
+    opacity: 0.8;
+}
+
