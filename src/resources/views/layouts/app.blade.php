@@ -17,9 +17,9 @@
         @auth
             <nav class="header-nav">
                 <ul class="header-nav__list">
-                    <li class="header-nav__item"><a href="{{ route('attendance.index') }}" class="header-nav__link">勤怠</a>
+                    <li class="header-nav__item"><a href="{{ route('attendance_index') }}" class="header-nav__link">勤怠</a>
                     </li>
-                    <li class="header-nav__item"><a href="{{ route('attendance.list') }}" class="header-nav__link">勤怠一覧</a>
+                    <li class="header-nav__item"><a href="{{ route('attendance_list') }}" class="header-nav__link">勤怠一覧</a>
                     </li>
                     <li class="header-nav__item"><a href="#" class="header-nav__link">申請</a></li>
                     <li class="header-nav__item">

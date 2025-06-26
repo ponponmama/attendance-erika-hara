@@ -25,24 +25,35 @@
     </div>
     <div class="attendance-actions">
         @if ($status === 'not_clocked_in')
-            <form class="attendance-actions__form" action="{{ route('attendance.clock-in') }}" method="POST">
+            <form class="attendance-actions__form" action="{{ route('attendance_clock_in') }}" method="POST">
                 @csrf
                 <button type="submit" class="action-button button">出勤</button>
             </form>
         @elseif ($status === 'clocked_in')
-            <form class="attendance-actions__form" action="{{ route('attendance.clock-out') }}" method="POST">
+            <form method="POST" action="{{ route('attendance_clock_out') }}">
                 @csrf
-                <button type="submit" class="action-button button">退勤</button>
+                @if (session('message'))
+                    <div class="alert alert-success">
+                        {{ session('message') }}
+                    </div>
+                @else
+                    <button type="submit" class="action-button button">退勤</button>
+                @endif
             </form>
-            <form class="attendance-actions__form" action="{{ route('attendance.break-start') }}" method="POST">
+            <form class="attendance-actions__form" action="{{ route('attendance_break_start') }}" method="POST">
                 @csrf
-                <button type="submit" class="action-break-button button">休憩開始</button>
+                <button type="submit" class="action-break-button button">休憩中</button>
             </form>
         @elseif ($status === 'on_break')
-            <form class="attendance-actions__form" action="{{ route('attendance.break-end') }}" method="POST">
+            <form class="attendance-actions__form" action="{{ route('attendance_break_end') }}" method="POST">
                 @csrf
-                <button type="submit" class="action-break-button button">休憩終了</button>
+                <button type="submit" class="action-break-button button">休憩戻</button>
             </form>
+        @endif
+        @if (session('message'))
+            <div class="alert alert-success">
+                {{ session('message') }}
+            </div>
         @endif
     </div>
 @endsection

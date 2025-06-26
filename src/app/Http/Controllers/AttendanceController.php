@@ -167,6 +167,17 @@ class AttendanceController extends Controller
             ]);
         }
 
-        return redirect('/attendance');
+        return redirect()->route('attendance_index')->with('message', 'お疲れ様でした。');
+    }
+
+    public function show($id)
+    {
+        $user = Auth::user();
+        $attendance = Attendance::where('id', $id)
+            ->where('user_id', $user->id)
+            ->with('breakTimes')
+            ->firstOrFail();
+
+        return view('attendance.detail', compact('attendance'));
     }
 }

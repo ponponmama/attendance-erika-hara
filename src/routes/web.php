@@ -27,11 +27,12 @@ Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name
 
 
 Route::middleware('auth')->group(function () {
-    Route::get('/', [AttendanceController::class, 'index'])->name('attendance.index');
+    Route::get('/', [AttendanceController::class, 'index'])->name('attendance_index');
     Route::get('/attendance', [AttendanceController::class, 'index']);
-    Route::get('/attendance/list', [AttendanceController::class, 'list'])->name('attendance.list');
-    Route::post('/clock-in', [AttendanceController::class, 'clockIn'])->name('attendance.clock-in');
-    Route::post('/clock-out', [AttendanceController::class, 'clockOut'])->name('attendance.clock-out');
-    Route::post('/break-start', [AttendanceController::class, 'breakStart'])->name('attendance.break-start');
-    Route::post('/break-end', [AttendanceController::class, 'breakEnd'])->name('attendance.break-end');
+    Route::get('/attendance/list', [AttendanceController::class, 'list'])->name('attendance_list');
+    Route::post('/clock-in', [AttendanceController::class, 'clockIn'])->name('attendance_clock_in');
+    Route::post('/clock-out', [AttendanceController::class, 'clockOut'])->name('attendance_clock_out');
+    Route::post('/break-start', [AttendanceController::class, 'breakStart'])->name('attendance_break_start');
+    Route::post('/break-end', [AttendanceController::class, 'breakEnd'])->name('attendance_break_end');
+    Route::get('/attendance/{id}', [AttendanceController::class, 'show'])->name('attendance_detail');
 });
