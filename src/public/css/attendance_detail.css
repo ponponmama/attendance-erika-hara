@@ -57,6 +57,10 @@
     border-bottom: 2px solid #e0e0e0;
 }
 
+.td-text {
+    padding: 4px 34px;
+}
+
 .attendance-detail-date {
     display: inline-block;
     width: 30%;
