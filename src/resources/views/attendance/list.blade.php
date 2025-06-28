@@ -8,7 +8,6 @@
     <div class="attendance-list-container">
         <div class="attendance-list-header">
             <h1 class="attendance-list-title">
-                <span class="title-bar"></span>
                 勤怠一覧
             </h1>
             <div class="month-switcher">
