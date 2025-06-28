@@ -20,13 +20,8 @@
     text-align: left;
 }
 
-
-
-.attendance-detail-card {
+.attendance-detail-form {
     width: 100%;
-    background: #fff;
-    border-radius: 12px;
-    padding: 32px 24px 24px 24px;
 }
 
 .attendance-detail-table {
@@ -34,42 +29,68 @@
     border-collapse: separate;
     border-spacing: 0 0;
     margin-bottom: 32px;
-    font-size: 1rem;
-}
-
-.attendance-detail-th {
-    text-align: left;
-    color: #5f5f5f;
-    font-weight: bold;
-    width: 120px;
-    padding: 12px 0;
-    vertical-align: top;
+    font-size: 1.2rem;
     background: #fff;
-    border-bottom: 2px solid #e0e0e0;
-}
-
-.attendance-detail-td {
-    padding: 12px 0;
-    font-size: 1.1rem;
-    color: #222;
-    border-bottom: 2px solid #e0e0e0;
+    border-radius: 12px;
 }
 
 .attendance-detail-table tr:last-child .attendance-detail-td {
     border-bottom: none;
 }
 
-.attendance-detail-time {
-    font-weight: bold;
-    font-size: 1.1em;
-    letter-spacing: 0.05em;
+.attendance-detail-tr {
+    height: 120px;
+}
+
+.attendance-detail-th {
+    text-align: left;
+    color: #949393;
+    width: 30%;
+    padding: 4px 40px;
+    background: #fff;
+    border-bottom: 2px solid #e0e0e0;
+}
+
+.attendance-detail-td {
+    width: 70%;
+    padding: 4px 20px;
+    border-bottom: 2px solid #e0e0e0;
+}
+
+.attendance-detail-date {
+    display: inline-block;
+    width: 30%;
+    padding: 4px 25px;
+}
+
+.attendance-detail-date:first-child {
+    margin-right: 14%;
+}
+
+.attendance-detail-input {
+    border: 2px solid #e0e0e0;
+    border-radius: 6px;
+    padding: 4px 25px;
+    box-sizing: border-box;
+    margin: 0 4px;
+    resize: none;
+    font-family: inherit;
+    transition: border 0.2s;
 }
 
 .attendance-detail-tilde {
-    margin: 0 12px;
-    color: #888;
-    font-size: 1.2em;
+    padding: 4px 25px;
+    margin: 0 10px;
 }
+
+.attendance-detail-td,
+.attendance-detail-input {
+    color: black;
+    text-align: left;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
 
 .attendance-detail-btn-area {
     text-align: right;
@@ -81,39 +102,26 @@
     color: #fff;
     border: none;
     border-radius: 8px;
-    padding: 10px 36px;
-    font-size: 1.1em;
+    padding: 10px 40px;
+    font-size: 1.2rem;
     font-weight: bold;
     cursor: pointer;
     transition: background 0.2s;
 }
+
 .attendance-detail-edit-btn:hover {
     background: #444;
 }
 
-.attendance-detail-input {
-    border: 1.5px solid #e0e0e0;
-    border-radius: 6px;
-    padding: 8px 10px;
-    font-size: 1em;
-    color: #222;
-    background: #fff;
-    width: 40%;
-    min-height: 40px;
-    box-sizing: border-box;
-    margin: 0 4px;
-    resize: none;
-    font-family: inherit;
-    transition: border 0.2s;
-}
+
+
 .attendance-detail-input:focus {
     outline: none;
-    border: 1.5px solid #888;
+    border: 2px solid #888;
 }
 
-/* 備考欄だけ幅を広げる */
-.attendance-detail-td textarea.attendance-detail-input {
-    width: 100%;
+.attendance-detail-memo {
+    width: 70%;
     min-height: 48px;
     resize: vertical;
 }
@@ -122,11 +130,14 @@
 input[type="time"].attendance-detail-input::-webkit-calendar-picker-indicator {
     display: none;
 }
+
 input[type="time"].attendance-detail-input::-webkit-inner-spin-button,
 input[type="time"].attendance-detail-input::-webkit-outer-spin-button {
     display: none;
     -webkit-appearance: none;
 }
+
 input[type="time"].attendance-detail-input {
     -moz-appearance: textfield;
+    appearance: textfield;
 }
