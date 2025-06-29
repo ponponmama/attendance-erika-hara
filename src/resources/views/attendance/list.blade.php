@@ -12,13 +12,13 @@
             </h1>
             <div class="month-switcher">
                 <a href="{{ route('attendance_list', ['month' => $currentMonth->copy()->subMonth()->format('Y-m')]) }}"
-                    class="month-arrow">&lt; 前月</a>
+                    class="month-arrow">← 前月</a>
                 <span class="current-month">
                     <img src="{{ asset('images/calendar.svg') }}" alt="カレンダー" class="calendar-icon">
-                    {{ $currentMonth->format('Y年m月') }}
+                    {{ $currentMonth->format('Y/m') }}
                 </span>
                 <a href="{{ route('attendance_list', ['month' => $currentMonth->copy()->addMonth()->format('Y-m')]) }}"
-                    class="month-arrow">翌月 &gt;</a>
+                    class="month-arrow">翌月 →</a>
             </div>
         </div>
         <div class="attendance-table-container">
@@ -75,12 +75,20 @@
                                 <td class="table-td">{{ $clockOut ? $clockOut->format('H:i') : '' }}</td>
                                 <td class="table-td">
                                     @if ($breakHours > 0)
-                                        <span class="break-hours">{{ number_format($breakHours, 1) }}</span>
+                                        @php
+                                            $break_h = floor($breakHours);
+                                            $break_m = ($breakHours - $break_h) * 60;
+                                        @endphp
+                                        <span class="break-hours">{{ sprintf('%02d:%02d', $break_h, $break_m) }}</span>
                                     @endif
                                 </td>
                                 <td class="table-td">
                                     @if ($netWorkHours > 0)
-                                        <span class="work-hours">{{ number_format($netWorkHours, 1) }}</span>
+                                        @php
+                                            $hours = floor($netWorkHours);
+                                            $minutes = ($netWorkHours - $hours) * 60;
+                                        @endphp
+                                        <span class="work-hours">{{ sprintf('%02d:%02d', $hours, $minutes) }}</span>
                                     @endif
                                 </td>
                                 <td class="table-td">

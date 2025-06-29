@@ -1,11 +1,11 @@
-/* Attendance Page */
 .attendance-container {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
-    width: 100%;
+    font-weight: bold;
+    width: 50%;
 }
 
 .attendance-status {
@@ -14,7 +14,6 @@
     padding: 10px 20px;
     border-radius: 20px;
     font-size: 1.3rem;
-    font-weight: bold;
     margin-bottom: 1%;
     background-color: #c9c9c9;
     color: #5f5f5f;
@@ -25,38 +24,46 @@
     margin: 0;
     padding: 2%;
     font-size: 2.5rem;
+    font-weight: normal;
 }
 
 .attendance-time {
     margin: 0;
     font-size: 5rem;
-    font-weight: bold;
 }
 
 .attendance-actions {
+    width: 50%;
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
+    align-items: center;
     margin: 3% auto;
 }
 
 .attendance-actions__form {
-    margin: 0 10%;
+    width: 50%;
+    margin: 0.5%;
+    font-size: 2.2rem;
+    font-weight: bold;
+}
+
+.action-button, .action-break-button {
+    font-size: 2.2rem;
+    font-weight: bold;
 }
 
 .action-button {
-    width: 230px;
+    width: 70%;
     background-color: #000;
     color: #fff;
     border: none;
     border-radius: 20px;
     padding: 16px 30px;
-    font-size: 2.2rem;
     transition: opacity 0.3s;
-    margin: 12% auto;
 }
 
 .action-break-button {
-    width: 230px;
+    width: 70%;
     background-color: #fff;
     color: #000;
     border: none;
@@ -64,7 +71,6 @@
     padding: 16px 30px;
     font-size: 2.2rem;
     transition: opacity 0.3s;
-    margin: 12% auto;
 }
 
 .action-button:hover {
@@ -72,8 +78,15 @@
 }
 
 .alert-success {
+    width: 100%;
     margin-top: 10px;
     text-align: center;
     font-size: 1.5rem;
     font-weight: bold;
+    letter-spacing: 0.4rem;
+    color: #000;
+}
+
+@media screen and (max-width: 768px) {
+
 }

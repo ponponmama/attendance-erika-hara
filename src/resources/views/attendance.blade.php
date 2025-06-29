@@ -30,7 +30,7 @@
                 <button type="submit" class="action-button button">出勤</button>
             </form>
         @elseif ($status === 'clocked_in')
-            <form method="POST" action="{{ route('attendance_clock_out') }}">
+            <form class="attendance-actions__form" method="POST" action="{{ route('attendance_clock_out') }}">
                 @csrf
                 @if (session('message'))
                     <div class="alert alert-success">
@@ -42,7 +42,7 @@
             </form>
             <form class="attendance-actions__form" action="{{ route('attendance_break_start') }}" method="POST">
                 @csrf
-                <button type="submit" class="action-break-button button">休憩中</button>
+                <button type="submit" class="action-break-button button">休憩入</button>
             </form>
         @elseif ($status === 'on_break')
             <form class="attendance-actions__form" action="{{ route('attendance_break_end') }}" method="POST">
@@ -51,9 +51,9 @@
             </form>
         @endif
         @if (session('message'))
-            <div class="alert alert-success">
+            <p class="alert alert-success">
                 {{ session('message') }}
-            </div>
+            </p>
         @endif
     </div>
 @endsection
