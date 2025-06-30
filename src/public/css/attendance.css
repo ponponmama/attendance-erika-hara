@@ -1,3 +1,11 @@
+/* 縦スクロールを防ぐ */
+body {
+    overflow-y: hidden;
+    height: 100vh;
+    position: fixed;
+    width: 100%;
+}
+
 .attendance-container {
     display: flex;
     flex-direction: column;
@@ -37,19 +45,20 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
-    margin: 3% auto;
 }
 
 .attendance-actions__form {
     width: 50%;
     margin: 0.5%;
-    font-size: 2.2rem;
     font-weight: bold;
+    letter-spacing: 0.3rem;
 }
 
 .action-button, .action-break-button {
     font-size: 2.2rem;
     font-weight: bold;
+    margin: 3% auto;
+    letter-spacing: 0.4rem;
 }
 
 .action-button {
@@ -87,6 +96,36 @@
     color: #000;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 540px) {
+    .attendance-container {
+        width: 90%;
+    }
 
+    .attendance-date {
+        font-size: 2rem;
+    }
+
+    .attendance-actions__form {
+        width: 90%;
+    }
+
+    .attendance-actions {
+        width: 100%;
+    }
+
+    .action-button, .action-break-button {
+        font-size: 1.2rem;
+        padding: 10px 20px;
+    }
+
+}
+
+@media screen and (min-width: 541px) and (max-width: 1024px) {
+    .attendance-container {
+        width: 90%;
+    }
+
+    .attendance-actions {
+        width: 90%;
+    }
 }

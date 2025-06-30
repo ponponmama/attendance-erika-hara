@@ -32,45 +32,54 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('user_pass'),
         ]);
 
-        // 各ユーザーに対して過去3日分の勤怠・休憩・修正依頼データを作成
+        // 各ユーザーに対して過去7日分の勤怠・休憩・修正依頼データを作成
         foreach ($users as $user) {
-            for ($i = 0; $i < 3; $i++) {
+            for ($i = 1; $i <= 7; $i++) {
                 $date = now()->subDays($i)->toDateString();
+
+                // 土日（土曜日=6、日曜日=0）は休み
+                $dayOfWeek = Carbon::parse($date)->dayOfWeek;
+                $isHoliday = ($dayOfWeek === 0 || $dayOfWeek === 6);
 
                 $attendance = Attendance::factory()->create([
                     'user_id' => $user->id,
                     'date' => $date,
+                    'clock_in' => $isHoliday ? null : Attendance::factory()->make()->clock_in,
+                    'clock_out' => $isHoliday ? null : Attendance::factory()->make()->clock_out,
                 ]);
 
-                // 朝休憩（10:10〜10:20〜10:25）
-                $start = Carbon::parse($date . ' 10:10');
-                $end = (clone $start)->addMinutes(rand(10, 15));
-                BreakTime::factory()->create([
-                    'attendance_id' => $attendance->id,
-                    'break_start' => $start,
-                    'break_end' => $end,
-                ]);
+                // 休みの日は休憩データを作成しない
+                if (!$isHoliday) {
+                    // 朝休憩（10:10〜10:20〜10:25）
+                    $start = Carbon::parse($date . ' 10:10');
+                    $end = (clone $start)->addMinutes(rand(10, 15));
+                    BreakTime::factory()->create([
+                        'attendance_id' => $attendance->id,
+                        'break_start' => $start,
+                        'break_end' => $end,
+                    ]);
 
-                // 昼休憩（12:00〜13:00）
-                $start = Carbon::parse($date . ' 12:00');
-                $end = (clone $start)->addHour();
-                BreakTime::factory()->create([
-                    'attendance_id' => $attendance->id,
-                    'break_start' => $start,
-                    'break_end' => $end,
-                ]);
+                    // 昼休憩（12:00〜13:00）
+                    $start = Carbon::parse($date . ' 12:00');
+                    $end = (clone $start)->addHour();
+                    BreakTime::factory()->create([
+                        'attendance_id' => $attendance->id,
+                        'break_start' => $start,
+                        'break_end' => $end,
+                    ]);
 
-                // 15時休憩（15:00〜15:10〜15:15）
-                $start = Carbon::parse($date . ' 15:00');
-                $end = (clone $start)->addMinutes(rand(10, 15));
-                BreakTime::factory()->create([
-                    'attendance_id' => $attendance->id,
-                    'break_start' => $start,
-                    'break_end' => $end,
-                ]);
+                    // 15時休憩（15:00〜15:10〜15:15）
+                    $start = Carbon::parse($date . ' 15:00');
+                    $end = (clone $start)->addMinutes(rand(10, 15));
+                    BreakTime::factory()->create([
+                        'attendance_id' => $attendance->id,
+                        'break_start' => $start,
+                        'break_end' => $end,
+                    ]);
+                }
 
                 // 1日だけ修正依頼データ
-                if ($i === 0) {
+                if ($i === 1) {
                     StampCorrectionRequest::factory()->create([
                         'user_id' => $user->id,
                         'attendance_id' => $attendance->id,

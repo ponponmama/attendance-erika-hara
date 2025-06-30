@@ -66,9 +66,7 @@
                 <tr class="attendance-detail-tr">
                     <th class="attendance-detail-th">備考</th>
                     <td class="attendance-detail-td">
-                        <textarea name="memo" class="attendance-detail-input attendance-detail-memo">
-                            {{ $attendance->memo ?? '' }}
-                        </textarea>
+                        <textarea name="memo" class="attendance-detail-input attendance-detail-memo">{{ $attendance->memo ?? '' }}</textarea>
                     </td>
                 </tr>
             </table>
