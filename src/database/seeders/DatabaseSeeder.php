@@ -34,7 +34,7 @@ class DatabaseSeeder extends Seeder
 
         // 各ユーザーに対して過去7日分の勤怠・休憩・修正依頼データを作成
         foreach ($users as $user) {
-            for ($i = 1; $i <= 7; $i++) {
+            for ($i = 1; $i <= 30; $i++) {
                 $date = now()->subDays($i)->toDateString();
 
                 // 土日（土曜日=6、日曜日=0）は休み

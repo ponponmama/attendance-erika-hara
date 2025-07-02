@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('css')
-    <link rel="stylesheet" href="{{ asset('css/attendance_detail.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/users/attendance_detail.css') }}">
 @endsection
 
 @section('content')
@@ -9,6 +9,22 @@
         <h1 class="attendance-detail-title">
             勤怠詳細
         </h1>
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
+        @if (session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
+
         <form class="attendance-detail-form" action="{{ url('/attendance/update/' . $attendance->id) }}" method="post">
             @csrf
             <table class="attendance-detail-table">

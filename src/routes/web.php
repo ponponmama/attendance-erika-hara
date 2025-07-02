@@ -35,4 +35,5 @@ Route::middleware('auth')->group(function () {
     Route::post('/break-start', [AttendanceController::class, 'breakStart'])->name('attendance_break_start');
     Route::post('/break-end', [AttendanceController::class, 'breakEnd'])->name('attendance_break_end');
     Route::get('/attendance/{id}', [AttendanceController::class, 'show'])->name('attendance_detail');
+    Route::post('/attendance/update/{id}', [AttendanceController::class, 'update'])->name('attendance_update');
 });

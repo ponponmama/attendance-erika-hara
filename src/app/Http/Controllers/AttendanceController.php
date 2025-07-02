@@ -30,7 +30,7 @@ class AttendanceController extends Controller
             }
         }
 
-        return view('attendance', compact('now', 'status'));
+        return view('users.attendance.index', compact('now', 'status'));
     }
 
     public function list(Request $request)
@@ -55,7 +55,7 @@ class AttendanceController extends Controller
         // 月別の勤怠統計を計算
         $monthlyStats = $this->calculateMonthlyStats($attendances);
 
-        return view('attendance.list', compact('attendances', 'monthlyStats', 'currentMonth'));
+        return view('users.attendance.list', compact('attendances', 'monthlyStats', 'currentMonth'));
     }
 
     private function calculateMonthlyStats($attendances)
@@ -178,6 +178,70 @@ class AttendanceController extends Controller
             ->with('breakTimes')
             ->firstOrFail();
 
-        return view('attendance.detail', compact('attendance'));
+        return view('users.attendance.detail', compact('attendance'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $user = Auth::user();
+        $attendance = Attendance::where('id', $id)
+            ->where('user_id', $user->id)
+            ->firstOrFail();
+
+        // バリデーション
+        $request->validate([
+            'clock_in' => 'nullable|date_format:H:i',
+            'clock_out' => 'nullable|date_format:H:i',
+            'break_start_1' => 'nullable|date_format:H:i',
+            'break_end_1' => 'nullable|date_format:H:i',
+            'break_start_2' => 'nullable|date_format:H:i',
+            'break_end_2' => 'nullable|date_format:H:i',
+            'memo' => 'nullable|string|max:1000',
+        ]);
+
+        // 出勤時間と退勤時間の妥当性チェック
+        if ($request->clock_in && $request->clock_out) {
+            $clockIn = Carbon::parse($request->clock_in);
+            $clockOut = Carbon::parse($request->clock_out);
+
+            if ($clockIn->greaterThanOrEqualTo($clockOut)) {
+                return back()->withErrors(['clock_in' => '出勤時間もしくは退勤時間が不適切な値です']);
+            }
+        }
+
+        // 勤怠データを更新
+        $attendance->update([
+            'clock_in' => $request->clock_in ? Carbon::parse($request->clock_in)->format('H:i:s') : null,
+            'clock_out' => $request->clock_out ? Carbon::parse($request->clock_out)->format('H:i:s') : null,
+            'memo' => $request->memo,
+        ]);
+
+        // 休憩時間の更新
+        $this->updateBreakTimes($attendance, $request);
+
+        return redirect()->route('attendance_detail', $id)->with('success', '勤怠情報を更新しました');
+    }
+
+    private function updateBreakTimes($attendance, $request)
+    {
+        // 既存の休憩データを削除
+        $attendance->breakTimes()->delete();
+
+        // 新しい休憩データを作成
+        if ($request->break_start_1 && $request->break_end_1) {
+            BreakTime::create([
+                'attendance_id' => $attendance->id,
+                'break_start' => Carbon::parse($request->break_start_1)->format('H:i:s'),
+                'break_end' => Carbon::parse($request->break_end_1)->format('H:i:s'),
+            ]);
+        }
+
+        if ($request->break_start_2 && $request->break_end_2) {
+            BreakTime::create([
+                'attendance_id' => $attendance->id,
+                'break_start' => Carbon::parse($request->break_start_2)->format('H:i:s'),
+                'break_end' => Carbon::parse($request->break_end_2)->format('H:i:s'),
+            ]);
+        }
     }
 }

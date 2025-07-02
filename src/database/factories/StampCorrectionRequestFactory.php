@@ -26,7 +26,7 @@ class StampCorrectionRequestFactory extends Factory
             'user_id' => User::factory(),
             'attendance_id' => Attendance::factory(),
             'approved_by' => $approved_by,
-            'request_date' => $this->faker->date(),
+            'request_date' => $this->faker->dateTimeBetween('-14 days', '-1 day')->format('Y-m-d'),
             'correction_type' => $this->faker->randomElement(['clock_in', 'clock_out', 'break_start', 'break_end']),
             'current_time' => $this->faker->optional()->time('H:i:s'),
             'requested_time' => $this->faker->time('H:i:s'),
