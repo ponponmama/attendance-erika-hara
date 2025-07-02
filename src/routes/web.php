@@ -30,10 +30,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/', [AttendanceController::class, 'index'])->name('attendance_index');
     Route::get('/attendance', [AttendanceController::class, 'index']);
     Route::get('/attendance/list', [AttendanceController::class, 'list'])->name('attendance_list');
+    Route::get('/attendance/stamp_correction_list', [AttendanceController::class, 'stampCorrectionList'])->name('stamp_correction_list');
+    Route::get('/attendance/{id}', [AttendanceController::class, 'show'])->name('attendance_detail');
     Route::post('/clock-in', [AttendanceController::class, 'clockIn'])->name('attendance_clock_in');
     Route::post('/clock-out', [AttendanceController::class, 'clockOut'])->name('attendance_clock_out');
     Route::post('/break-start', [AttendanceController::class, 'breakStart'])->name('attendance_break_start');
     Route::post('/break-end', [AttendanceController::class, 'breakEnd'])->name('attendance_break_end');
-    Route::get('/attendance/{id}', [AttendanceController::class, 'show'])->name('attendance_detail');
     Route::post('/attendance/update/{id}', [AttendanceController::class, 'update'])->name('attendance_update');
 });

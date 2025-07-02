@@ -5,6 +5,7 @@ namespace Database\Factories;
 use App\Models\Attendance;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Database\Factories\ReasonList;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\StampCorrectionRequest>
@@ -30,7 +31,7 @@ class StampCorrectionRequestFactory extends Factory
             'correction_type' => $this->faker->randomElement(['clock_in', 'clock_out', 'break_start', 'break_end']),
             'current_time' => $this->faker->optional()->time('H:i:s'),
             'requested_time' => $this->faker->time('H:i:s'),
-            'reason' => $this->faker->realText(100),
+            'reason' => $this->faker->randomElement(ReasonList::REASONS),
             'status' => $status,
             'approved_at' => $approved_at,
         ];

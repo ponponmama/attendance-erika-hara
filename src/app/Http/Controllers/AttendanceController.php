@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use App\Models\Attendance;
 use App\Models\BreakTime;
+use App\Models\StampCorrectionRequest;
 
 class AttendanceController extends Controller
 {
@@ -30,7 +31,7 @@ class AttendanceController extends Controller
             }
         }
 
-        return view('users.attendance.index', compact('now', 'status'));
+        return view('users.attendance.attendance', compact('now', 'status'));
     }
 
     public function list(Request $request)
@@ -179,6 +180,19 @@ class AttendanceController extends Controller
             ->firstOrFail();
 
         return view('users.attendance.detail', compact('attendance'));
+    }
+
+    public function stampCorrectionList()
+    {
+        $user = Auth::user();
+        $requests = StampCorrectionRequest::where('user_id', $user->id)
+            ->whereHas('attendance', function ($query) {
+                $query->whereNotNull('memo')->where('memo', '!=', '');
+            })
+            ->orderBy('request_date', 'desc')
+            ->get();
+
+        return view('users.attendance.stamp_correction_list', compact('requests'));
     }
 
     public function update(Request $request, $id)
