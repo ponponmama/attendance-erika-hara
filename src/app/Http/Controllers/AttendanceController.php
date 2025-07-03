@@ -210,7 +210,9 @@ class AttendanceController extends Controller
             'break_end_1' => 'nullable|date_format:H:i',
             'break_start_2' => 'nullable|date_format:H:i',
             'break_end_2' => 'nullable|date_format:H:i',
-            'memo' => 'nullable|string|max:1000',
+            'memo' => 'required|string|max:1000',
+        ], [
+            'memo.required' => '備考を記入してください',
         ]);
 
         // 出勤時間と退勤時間の妥当性チェック
@@ -220,6 +222,44 @@ class AttendanceController extends Controller
 
             if ($clockIn->greaterThanOrEqualTo($clockOut)) {
                 return back()->withErrors(['clock_in' => '出勤時間もしくは退勤時間が不適切な値です']);
+            }
+        }
+
+        // 休憩時間の妥当性チェック
+        if ($request->clock_in && $request->clock_out) {
+            $clockIn = Carbon::parse($request->clock_in);
+            $clockOut = Carbon::parse($request->clock_out);
+
+            // 休憩1のバリデーション
+            if ($request->break_start_1 && $request->break_end_1) {
+                $breakStart1 = Carbon::parse($request->break_start_1);
+                $breakEnd1 = Carbon::parse($request->break_end_1);
+
+                // 休憩開始時間が休憩終了時間より後でないこと
+                if ($breakStart1->greaterThanOrEqualTo($breakEnd1)) {
+                    return back()->withErrors(['break_start_1' => '休憩時間が不適切な値です']);
+                }
+
+                // 休憩時間が勤務時間内にあること
+                if ($breakStart1->lessThan($clockIn) || $breakEnd1->greaterThan($clockOut)) {
+                    return back()->withErrors(['break_start_1' => '休憩時間が勤務時間外です']);
+                }
+            }
+
+            // 休憩2のバリデーション
+            if ($request->break_start_2 && $request->break_end_2) {
+                $breakStart2 = Carbon::parse($request->break_start_2);
+                $breakEnd2 = Carbon::parse($request->break_end_2);
+
+                // 休憩開始時間が休憩終了時間より後でないこと
+                if ($breakStart2->greaterThanOrEqualTo($breakEnd2)) {
+                    return back()->withErrors(['break_start_2' => '休憩時間が不適切な値です']);
+                }
+
+                // 休憩時間が勤務時間内にあること
+                if ($breakStart2->lessThan($clockIn) || $breakEnd2->greaterThan($clockOut)) {
+                    return back()->withErrors(['break_start_2' => '休憩時間が勤務時間外です']);
+                }
             }
         }
 

@@ -21,15 +21,15 @@ class StampCorrectionRequestFactory extends Factory
     {
         $status = $this->faker->randomElement(['pending', 'approved', 'rejected']);
         $approved_at = ($status !== 'pending') ? $this->faker->dateTimeThisMonth() : null;
-        $approved_by = ($status !== 'pending') ? User::factory() : null;
+        $approved_by = ($status !== 'pending') ? null : null; // シーダーで管理者IDを設定
 
         return [
-            'user_id' => User::factory(),
-            'attendance_id' => Attendance::factory(),
+            'user_id' => null, // シーダーで指定される
+            'attendance_id' => null, // シーダーで指定される
             'approved_by' => $approved_by,
-            'request_date' => $this->faker->dateTimeBetween('-14 days', '-1 day')->format('Y-m-d'),
+            'request_date' => $this->faker->dateTimeBetween('-30 days', '-1 day')->format('Y-m-d'),
             'correction_type' => $this->faker->randomElement(['clock_in', 'clock_out', 'break_start', 'break_end']),
-            'current_time' => $this->faker->optional()->time('H:i:s'),
+            'current_time' => $this->faker->optional(0.7)->time('H:i:s'),
             'requested_time' => $this->faker->time('H:i:s'),
             'reason' => $this->faker->randomElement(ReasonList::REASONS),
             'status' => $status,

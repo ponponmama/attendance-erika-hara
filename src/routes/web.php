@@ -2,8 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AttendanceController;
+
 use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
 use Laravel\Fortify\Http\Controllers\RegisteredUserController;
+use App\Http\Controllers\AdminAttendanceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,12 +23,14 @@ Route::get('/register', [RegisteredUserController::class, 'create'])->name('regi
 Route::post('/register', [RegisteredUserController::class, 'store']);
 
 Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('login');
+Route::get('/admin/login', [AuthenticatedSessionController::class, 'create'])->name('admin.login');
 Route::post('/login', [AuthenticatedSessionController::class, 'store']);
 
 Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 
 
-Route::middleware('auth')->group(function () {
+// 一般ユーザー用ルート
+Route::middleware(['auth', 'role:user'])->group(function () {
     Route::get('/', [AttendanceController::class, 'index'])->name('attendance_index');
     Route::get('/attendance', [AttendanceController::class, 'index']);
     Route::get('/attendance/list', [AttendanceController::class, 'list'])->name('attendance_list');
@@ -37,4 +41,11 @@ Route::middleware('auth')->group(function () {
     Route::post('/break-start', [AttendanceController::class, 'breakStart'])->name('attendance_break_start');
     Route::post('/break-end', [AttendanceController::class, 'breakEnd'])->name('attendance_break_end');
     Route::post('/attendance/update/{id}', [AttendanceController::class, 'update'])->name('attendance_update');
+});
+
+// 管理者用ルート
+Route::prefix('admin')->name('admin.')->middleware(['auth', 'role:admin'])->group(function () {
+    Route::get('/attendance/list', [AdminAttendanceController::class, 'list'])->name('attendance.list');
+    Route::get('/attendance/{id}', [AdminAttendanceController::class, 'detail'])->name('attendance.detail');
+    Route::get('/attendance/staff/{id}', [AdminAttendanceController::class, 'staffAttendance'])->name('attendance.staff');
 });

@@ -36,102 +36,48 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('user_pass'),
         ]);
 
-        // 一般ユーザー20人
-        $users = User::factory(20)->create([
+        // 一般ユーザーを作成
+        $users = User::factory()->count(25)->create([
             'password' => Hash::make('user_pass'),
         ]);
 
-        // 各ユーザーごとにランダムな3日間を決める
-        $memoDays = [];
-        for ($j = 0; $j < 3; $j++) {
-            $memoDays[] = rand(1, 30);
-        }
-        $memoDays = array_unique($memoDays); // 重複を除去
+        // 各ユーザーに対してFactoryを使って関連データを作成
+        foreach ($users as $userIndex => $user) {
+            // 月3回だけ修正申請を作成する日をランダムに決定
+            $correctionDays = collect(range(1, 30))->shuffle()->take(3);
+            for ($day = 1; $day <= 30; $day++) {
+                $date = now()->subDays($day)->toDateString();
 
-        // 各ユーザーに対して過去7日分の勤怠・休憩・修正依頼データを作成
-        foreach ($users as $user) {
-            for ($i = 1; $i <= 30; $i++) {
-                $date = now()->subDays($i)->toDateString();
+                // 勤怠データを作成
+                $attendance = Attendance::factory()->create([
+                    'user_id' => $user->id,
+                    'date' => $date,
+                ]);
 
-                // 土日（土曜日=6、日曜日=0）は休み
-                $dayOfWeek = Carbon::parse($date)->dayOfWeek;
-                $isHoliday = ($dayOfWeek === 0 || $dayOfWeek === 6);
+                // 出勤・退勤が両方nullなら休憩・修正依頼は作らない
+                if ($attendance->clock_in && $attendance->clock_out) {
+                    // 休憩データを作成（2-3回）
+                    $breakCount = rand(2, 3);
+                    for ($i = 0; $i < $breakCount; $i++) {
+                        BreakTime::factory()->create([
+                            'attendance_id' => $attendance->id,
+                        ]);
+                    }
 
-                // ランダムに決めた日はmemoを確実に設定
-                if (in_array($i, $memoDays)) {
-                    $attendance = Attendance::factory()->create([
-                        'user_id' => $user->id,
-                        'date' => $date,
-                        'clock_in' => $isHoliday ? null : Attendance::factory()->make()->clock_in,
-                        'clock_out' => $isHoliday ? null : Attendance::factory()->make()->clock_out,
-                        'memo' => Attendance::factory()->make()->memo, // AttendanceFactoryのmemoを使う
-                    ]);
-                } else {
-                    $attendance = Attendance::factory()->create([
-                        'user_id' => $user->id,
-                        'date' => $date,
-                        'clock_in' => $isHoliday ? null : Attendance::factory()->make()->clock_in,
-                        'clock_out' => $isHoliday ? null : Attendance::factory()->make()->clock_out,
-                    ]);
-                }
-
-                // 休みの日は休憩データを作成しない
-                if (!$isHoliday) {
-                    // 朝休憩（10:10〜10:20〜10:25）
-                    $start = Carbon::parse($date . ' 10:10');
-                    $end = (clone $start)->addMinutes(rand(10, 15));
-                    BreakTime::factory()->create([
-                        'attendance_id' => $attendance->id,
-                        'break_start' => $start,
-                        'break_end' => $end,
-                    ]);
-
-                    // 昼休憩（12:00〜13:00）
-                    $start = Carbon::parse($date . ' 12:00');
-                    $end = (clone $start)->addHour();
-                    BreakTime::factory()->create([
-                        'attendance_id' => $attendance->id,
-                        'break_start' => $start,
-                        'break_end' => $end,
-                    ]);
-
-                    // 15時休憩（15:00〜15:10〜15:15）
-                    $start = Carbon::parse($date . ' 15:00');
-                    $end = (clone $start)->addMinutes(rand(10, 15));
-                    BreakTime::factory()->create([
-                        'attendance_id' => $attendance->id,
-                        'break_start' => $start,
-                        'break_end' => $end,
-                    ]);
-                }
-
-                // memoがある勤怠データに対して修正依頼を作成（3件分）
-                if ($attendance->memo && StampCorrectionRequest::where('user_id', $user->id)->count() < 3) {
-                    StampCorrectionRequest::factory()->create([
-                        'user_id' => $user->id,
-                        'attendance_id' => $attendance->id,
-                        'request_date' => $date,
-                        // 必要なら他の項目も上書き
-                    ]);
+                    // 修正申請は月3回だけ
+                    if ($correctionDays->contains($day)) {
+                        $requestCount = rand(1, 2);
+                        for ($i = 0; $i < $requestCount; $i++) {
+                            StampCorrectionRequest::factory()->create([
+                                'user_id' => $user->id,
+                                'attendance_id' => $attendance->id,
+                                'approved_by' => $admin->id,
+                                'request_date' => $date,
+                            ]);
+                        }
+                    }
                 }
             }
         }
-
-        User::factory()
-            ->count(10)
-            ->has(
-                Attendance::factory()
-                    ->count(30)
-                    ->has(
-                        BreakTime::factory()->count(2),
-                        'breakTimes'
-                    )
-                    ->has(
-                        StampCorrectionRequest::factory()->count(1),
-                        'stampCorrectionRequests'
-                    ),
-                'attendances'
-            )
-            ->create();
     }
 }

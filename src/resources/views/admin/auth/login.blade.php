@@ -4,11 +4,11 @@
     <link rel="stylesheet" href="{{ asset('css/auth.css') }}">
 @endsection
 
-@section('title', 'ログイン')
+@section('title', '管理者ログイン')
 
 @section('content')
     <div class="auth-container">
-        <p class="auth-title">ログイン</p>
+        <p class="auth-title">管理者ログイン</p>
         <div class="auth-content">
             <p class="auth-error-message">
                 @error('failed')
@@ -16,6 +16,7 @@
                 @enderror
             </p>
             <form action="{{ route('login') }}" method="POST">
+                <input type="hidden" name="admin_login" value="1">
                 @csrf
                 <div class="form-group">
                     <label class="form-label" for="email">メールアドレス</label>
@@ -38,10 +39,9 @@
                     @enderror
                 </p>
                 <div class="form-group">
-                    <button type="submit" class="submit-button button">ログインする</button>
+                    <button type="submit" class="submit-button button">管理者ログインする</button>
                 </div>
             </form>
-            <p class="login-register"><a href="{{ route('register') }}">会員登録はこちら</a></p>
         </div>
     </div>
 @endsection

@@ -1,17 +1,40 @@
-.stamp-correction-list-container {
+.admin-list-container {
     width: 60%;
     padding: 40px 0;
     background: #f3f3f3;
 }
 
-.stamp-correction-list-title {
-    font-size: 2rem;
+.admin-list-header {
+    margin-bottom: 5%;
+}
+
+.month-switcher {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    background: white;
+    border-radius: 6px;
+    padding: 10px;
+}
+
+.month-arrow {
+    color: #5f5f5f;
+    text-decoration: none;
     font-weight: bold;
-    color: black;
-    text-align: left;
-    margin-bottom:2%;
-    padding-left: 3%;
-    border-left: 6px solid #5f5f5f;
+    font-size: 1.2rem;
+    padding: 4px 12px;
+    border-radius: 4px;
+}
+
+.month-arrow:hover {
+    background: #eee;
+}
+
+.calendar-icon {
+    width: 25px;
+    height: 25px;
+    color: #5f5f5f;
 }
 
 .tab-menu {
@@ -20,7 +43,6 @@
     margin: 4% auto;
     padding: 3%;
     border-bottom: 1px solid black;
-
 }
 
 .tab-item-active {
@@ -32,14 +54,14 @@
     color: #5f5f5f;
 }
 
-.stamp-correction-list-table-container {
+.admin-attendance-list-table-container {
     border-radius: 12px;
     padding: 0;
     margin: 0 auto;
     width: 100%;
 }
 
-.stamp-correction-list-table {
+.admin-attendance-list-table {
     width: 100%;
     border-collapse: separate;
     border-spacing: 0;
@@ -77,6 +99,21 @@
     background: #f3f3f3;
 }
 
+.status-pending {
+    color: #ff6b35;
+    font-weight: bold;
+}
+
+.status-approved {
+    color: #28a745;
+    font-weight: bold;
+}
+
+.status-rejected {
+    color: #dc3545;
+    font-weight: bold;
+}
+
 .detail-link {
     display: inline-block;
     padding: 4px 12px;
@@ -92,28 +129,37 @@
     background: #444;
 }
 
+.alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+}
+
+.alert-success {
+    background-color: #d4edda;
+    border: 1px solid #c3e6cb;
+    color: #155724;
+}
+
 @media (max-width: 1024px) {
-    .stamp-correction-list-container {
+    .admin-list-container {
         width: 90%;
         padding: 10px 0;
     }
 
-    .stamp-correction-list-table-container {
+    .admin-attendance-list-table-container {
         overflow-x: auto;
         overflow-y: auto;
         width: 100%;
     }
 
-    .stamp-correction-list-table {
+    .admin-correction-request-list-table {
         min-width: 800px;
         table-layout: fixed;
     }
-
 
     .table-th, .table-td,
     .detail-link {
         font-size: 0.8rem;
     }
 }
-
-

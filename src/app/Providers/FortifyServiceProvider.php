@@ -17,6 +17,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
+use Laravel\Fortify\Events\Login;
 
 class FortifyServiceProvider extends ServiceProvider
 {
@@ -34,6 +36,9 @@ class FortifyServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Fortify::loginView(function () {
+            if (request()->has('admin') || request()->is('admin*')) {
+                return view('admin.auth.login');
+            }
             return view('users.auth.login');
         });
 
@@ -44,24 +49,28 @@ class FortifyServiceProvider extends ServiceProvider
         Fortify::createUsersUsing(CreateNewUser::class);
 
         // LoginRequestを使用してログイン処理を行う
-        Fortify::authenticateUsing(function (Request $request) {
-            $loginRequest = new LoginRequest();
-            $loginRequest->setContainer($this->app);
-            $loginRequest->setRedirector($this->app['redirect']);
-            $loginRequest->merge($request->all());
+        Fortify::authenticateUsing(function ($request) {
+            $user = \App\Models\User::where('email', $request->email)->first();
 
-            // バリデーション
-            $validator = Validator::make($request->all(), $loginRequest->rules(), $loginRequest->messages());
-            if ($validator->fails()) {
-                // バリデーションエラーはValidationExceptionを投げる
-                throw ValidationException::withMessages($validator->errors()->toArray());
+            if ($user && Hash::check($request->password, $user->password)) {
+                // 管理者ログインの場合はadminのみ許可
+                if ($request->has('admin_login') && $user->role !== 'admin') {
+                    return null;
+                }
+                return $user;
             }
+            return null;
+        });
 
-            // LoginRequestのauthenticate()メソッドを使用して認証処理
-            $loginRequest->authenticate();
-
-            // 認証成功時はユーザーを返す
-            return Auth::user();
+        // ログイン後のリダイレクト先を分岐
+        app('events')->listen(Login::class, function (Login $event) {
+            $user = $event->user;
+            // セッションにリダイレクト先を保存
+            if ($user->role === 'admin') {
+                session(['url.intended' => '/admin/attendance/list']);
+            } else {
+                session(['url.intended' => '/']);
+            }
         });
     }
 }

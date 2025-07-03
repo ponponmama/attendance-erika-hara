@@ -18,15 +18,36 @@ class AttendanceFactory extends Factory
      */
     public function definition()
     {
-        $clockIn = $this->faker->dateTimeBetween('8:00:00', '10:00:00');
-        $clockOut = $this->faker->dateTimeBetween('18:00:00', '20:00:00');
+        // 土日は休みの可能性を考慮
+        $isHoliday = $this->faker->optional(0.3)->boolean();
+
+        if ($isHoliday) {
+            return [
+                'user_id' => null, // シーダーで指定される
+                'date' => $this->faker->date(),
+                'clock_in' => null,
+                'clock_out' => null,
+                'memo' => $this->faker->optional(0.5)->randomElement(['休日', '有給休暇', '病欠']),
+            ];
+        }
+
+        // 通常の勤務日
+        $clockInHour = $this->faker->randomElement([8, 9]); // 8時または9時
+        $clockInMinute = $this->faker->numberBetween(0, 59);
+        $clockIn = sprintf('%02d:%02d:00', $clockInHour, $clockInMinute);
+
+        // 退勤時間は出勤時間から8-10時間後
+        $workHours = $this->faker->numberBetween(8, 10);
+        $clockOutHour = $clockInHour + $workHours;
+        $clockOutMinute = $this->faker->numberBetween(0, 59);
+        $clockOut = sprintf('%02d:%02d:00', $clockOutHour, $clockOutMinute);
 
         return [
-            'user_id' => User::factory(),
+            'user_id' => null, // シーダーで指定される
             'date' => $this->faker->date(),
-            'clock_in' => $clockIn->format('H:i:s'),
-            'clock_out' => $clockOut->format('H:i:s'),
-            'memo' => $this->faker->optional(0.3)->randomElement(ReasonList::REASONS),
+            'clock_in' => $clockIn,
+            'clock_out' => $clockOut,
+            'memo' => $this->faker->optional(0.2)->randomElement(ReasonList::REASONS),
         ];
     }
 }
