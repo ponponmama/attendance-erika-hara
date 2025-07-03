@@ -55,7 +55,8 @@ class DatabaseSeeder extends Seeder
                 ]);
 
                 // 出勤・退勤が両方nullなら休憩・修正依頼は作らない
-                if ($attendance->clock_in && $attendance->clock_out) {
+                if (!is_null($attendance->clock_in) && !is_null($attendance->clock_out) &&
+                    $attendance->clock_in !== '' && $attendance->clock_out !== '') {
                     // 休憩データを作成（2-3回）
                     $breakCount = rand(2, 3);
                     for ($i = 0; $i < $breakCount; $i++) {

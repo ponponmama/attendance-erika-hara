@@ -45,11 +45,13 @@
                             $workHours = 0;
                             $breakHours = 0;
                             $netWorkHours = 0;
+                            $totalBreakMinutes = 0;
+                            $break_h = 0;
+                            $break_m = 0;
 
                             if ($clockIn && $clockOut) {
                                 $workHours = $clockOut->diffInSeconds($clockIn) / 3600;
 
-                                $totalBreakMinutes = 0;
                                 foreach ($attendance->breakTimes as $break) {
                                     if ($break->break_start && $break->break_end) {
                                         $start = \Carbon\Carbon::parse($break->break_start);
@@ -85,10 +87,10 @@
                                 @endif
                             </td>
                             <td class="table-td">
-                                @if ($workHours > 0)
+                                @if ($netWorkHours > 0)
                                     @php
-                                        $total_h = floor($workHours);
-                                        $total_m = ($workHours - $total_h) * 60;
+                                        $total_h = floor($netWorkHours);
+                                        $total_m = round(($netWorkHours - $total_h) * 60);
                                     @endphp
                                     <span class="total-hours">{{ sprintf('%02d:%02d', $total_h, $total_m) }}</span>
                                 @endif

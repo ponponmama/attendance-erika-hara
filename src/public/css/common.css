@@ -145,11 +145,15 @@ li {
 
 @media screen and (min-width: 541px) and (max-width: 1024px) {
     .header-logo {
-        width: 50%;
+        width: 40%;
+    }
+
+    .header-logo__image {
+        height: 25px;
     }
 
     .header-nav {
-        width: 50%;
+        width: 60%;
     }
 
     .header-nav__link {
