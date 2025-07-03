@@ -20,13 +20,13 @@
                     @if (Auth::user()->role === 'admin')
                         {{-- 管理者用ヘッダー --}}
                         <li class="header-nav__item">
-                            <a href="/admin/correction-requests" class="header-nav__link">勤怠一覧</a>
+                            <a href="/admin/attendance/list" class="header-nav__link">勤怠一覧</a>
                         </li>
                         <li class="header-nav__item">
                             <a href="#" class="header-nav__link">スタッフ一覧</a>
                         </li>
                         <li class="header-nav__item">
-                            <a href="#" class="header-nav__link">申請一覧</a>
+                            <a href="/admin/attendance/stamp_correction_list" class="header-nav__link">申請一覧</a>
                         </li>
                         <li class="header-nav__item">
                             <form method="POST" action="{{ route('logout') }}">

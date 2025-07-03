@@ -26,8 +26,14 @@ class AdminAttendanceController extends Controller
     }
 
     public function detail($id) {
-        // 勤怠詳細データ取得
-        return view('admin.attendance.detail');
+        // 勤怠データ取得
+        $attendance = \App\Models\Attendance::with(['user', 'breakTimes', 'stampCorrectionRequests.user', 'stampCorrectionRequests.attendance'])
+            ->findOrFail($id);
+
+        // 修正申請一覧
+        $requests = $attendance->stampCorrectionRequests;
+
+        return view('admin.attendance.detail', compact('attendance', 'requests'));
     }
 
     public function staffAttendance($id) {
