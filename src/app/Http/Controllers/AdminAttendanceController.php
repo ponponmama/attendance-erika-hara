@@ -40,4 +40,23 @@ class AdminAttendanceController extends Controller
         // スタッフ別勤怠データ取得
         return view('admin.attendance.staff_attendance');
     }
+
+    public function stampCorrectionList(Request $request)
+    {
+        // タブ切り替え対応
+        $status = $request->get('status', 'pending');
+
+        // 修正申請データ取得
+        $requests = \App\Models\StampCorrectionRequest::with(['user', 'attendance'])
+            ->when($status === 'pending', function ($query) {
+                return $query->where('status', 'pending');
+            })
+            ->when($status === 'approved', function ($query) {
+                return $query->where('status', 'approved');
+            })
+            ->orderBy('request_date', 'desc')
+            ->get();
+
+        return view('admin.attendance.stamp_correction_list', compact('requests', 'status'));
+    }
 }

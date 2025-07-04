@@ -44,7 +44,6 @@
     font-weight: bold;
     font-size: 1.2rem;
     padding: 4px 12px;
-    border-radius: 4px;
 }
 
 .month-arrow:hover {
@@ -57,6 +56,7 @@
     padding: 0;
     margin: 0 auto;
     width: 100%;
+    overflow: hidden;
 }
 
 .admin-attendance-list-table,
@@ -72,10 +72,10 @@
 .table-header-tr .table-th {
     border-bottom: 2px solid #5f5f5f;
     color: gray;
-    line-height: 1.8rem;
+    line-height: 2rem;
 }
 
-.table-tr {
+.table-tr, .table-th, .table-td {
     border-bottom: 1px solid #5f5f5f;
 }
 
@@ -84,15 +84,10 @@
     padding: 5px 20px;
 }
 
-.table-th {
+.table-th, .table-td {
     font-weight: bold;
     font-size: 1rem;
-    border-bottom: 1px solid #5f5f5f;
-}
-
-.table-td {
-    border-bottom: 1px solid #5f5f5f;
-    color: grey;
+    color: gray;
 }
 
 .table-tr:last-child td {

@@ -46,6 +46,7 @@ Route::middleware(['auth', 'role:user'])->group(function () {
 // 管理者用ルート
 Route::prefix('admin')->name('admin.')->middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/attendance/list', [AdminAttendanceController::class, 'list'])->name('attendance.list');
-    Route::get('/attendance/{id}', [AdminAttendanceController::class, 'detail'])->name('attendance.detail');
+    Route::get('/attendance/stamp_correction_list', [AdminAttendanceController::class, 'stampCorrectionList'])->name('attendance.stamp_correction_list');
     Route::get('/attendance/staff/{id}', [AdminAttendanceController::class, 'staffAttendance'])->name('attendance.staff');
+    Route::get('/attendance/{id}', [AdminAttendanceController::class, 'detail'])->name('attendance.detail');
 });

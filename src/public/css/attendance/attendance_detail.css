@@ -34,12 +34,14 @@
     border-spacing: 0 0;
     margin-bottom: 32px;
     font-size: 1.2rem;
-    background: #fff;
+    background: white;
     border-radius: 12px;
+    overflow: hidden;
 }
 
-.admin-detail-table tr:last-child .admin-detail-td,
-.attendance-detail-table tr:last-child .attendance-detail-td {
+/* 最後の行のセルのボーダーを削除 */
+.attendance-detail-tr:last-child .attendance-detail-th,
+.attendance-detail-tr:last-child .attendance-detail-td {
     border-bottom: none;
 }
 
@@ -47,19 +49,22 @@
     height: 120px;
 }
 
+.attendance-detail-th,
+.attendance-detail-td {
+    border-bottom: 2px solid #5f5f5f;
+}
+
 .attendance-detail-th {
     text-align: left;
-    color: #949393;
+    color: gray;
     width: 30%;
     padding: 4px 40px;
-    background: #fff;
-    border-bottom: 2px solid #e0e0e0;
+    background: white;
 }
 
 .attendance-detail-td {
     width: 70%;
     padding: 4px 20px;
-    border-bottom: 2px solid #e0e0e0;
 }
 
 
@@ -101,33 +106,29 @@
     font-size: 1rem;
 }
 
-
 .attendance-detail-btn-area {
     text-align: right;
     margin-bottom: 16px;
 }
 
 .attendance-detail-edit-btn {
-    background: #000;
-    color: #fff;
+    background: black;
+    color: white;
     border: none;
     border-radius: 8px;
     padding: 10px 40px;
     font-size: 1.2rem;
     font-weight: bold;
-    cursor: pointer;
     transition: background 0.2s;
 }
 
 .attendance-detail-edit-btn:hover {
-    background: #444;
+    background: grey;
 }
-
-
 
 .attendance-detail-input:focus {
     outline: none;
-    border: 2px solid #888;
+    border: 2px solid #5f5f5f;
 }
 
 .attendance-detail-memo {

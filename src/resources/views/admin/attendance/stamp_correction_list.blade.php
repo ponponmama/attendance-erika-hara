@@ -15,8 +15,14 @@
             </div>
         @endif
         <div class="tab-menu">
-            <span class="tab-item-active">承認待ち</span>
-            <span class="tab-item">承認済み</span>
+            <a href="{{ route('admin.attendance.stamp_correction_list', ['status' => 'pending']) }}"
+                class="tab-item {{ $status === 'pending' ? 'tab-item-active' : '' }}">
+                承認待ち
+            </a>
+            <a href="{{ route('admin.attendance.stamp_correction_list', ['status' => 'approved']) }}"
+                class="tab-item {{ $status === 'approved' ? 'tab-item-active' : '' }}">
+                承認済み
+            </a>
         </div>
         <div class="list-table-container">
             <table class="list-table">
@@ -38,8 +44,6 @@
                                     承認待ち
                                 @elseif($request->status === 'approved')
                                     承認済み
-                                @elseif($request->status === 'rejected')
-                                    却下
                                 @endif
                             </td>
                             <td class="table-td">{{ $request->user->name ?? '-' }}</td>
