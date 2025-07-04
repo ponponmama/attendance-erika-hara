@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('css')
-    <link rel="stylesheet" href="{{ asset('css/admin/admin_list.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/attendance/attendance_list.css') }}">
 @endsection
 
 @section('content')
@@ -17,7 +17,7 @@
                     class="month-arrow">← 前月</a>
                 <span class="current-month">
                     <img src="{{ asset('images/calendar.svg') }}" alt="カレンダー" class="calendar-icon">
-                    {{ $currentMonth->format('Y/m') }}
+                    {{ $currentMonth->format('Y/m/d') }}
                 </span>
                 <a href="{{ route('admin.attendance.list', ['month' => $currentMonth->copy()->addMonth()->format('Y-m')]) }}"
                     class="month-arrow">翌月 →</a>

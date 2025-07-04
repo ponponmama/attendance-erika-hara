@@ -50,8 +50,7 @@ li {
 
 .header-logo {
     width: 45%;
-    padding-left: 25px;
-    margin-bottom: 10px;
+    padding-left: 30px;
 }
 
 .header-logo__image {
@@ -64,20 +63,21 @@ li {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding-right: 2%;
+    padding-right: 30px;
 }
 
 .header-nav__list {
     width: 100%;
     display: flex;
     justify-content: flex-end;
+    align-items: center;
     margin: 0;
-    padding: 0;
+    padding: 3px;
     list-style: none;
 }
 
 .header-nav__item {
-    margin-left: 5%;
+    margin-left: 6%;
     font-size: 1.3rem;
     color: #fff;
 }

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('css')
-    <link rel="stylesheet" href="{{ asset('css/users/attendance_detail.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/attendance/attendance_detail.css') }}">
 @endsection
 
 @section('content')
@@ -10,7 +10,7 @@
             勤怠詳細
         </h1>
         @if ($errors->any())
-            <div class="alert alert-danger">
+            <div class="alert-danger">
                 <ul>
                     @foreach ($errors->all() as $error)
                         <li>{{ $error }}</li>
@@ -20,7 +20,7 @@
         @endif
 
         @if (session('success'))
-            <div class="alert alert-success">
+            <div class="alert-success">
                 {{ session('success') }}
             </div>
         @endif

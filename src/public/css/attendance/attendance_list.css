@@ -1,10 +1,12 @@
-.admin-list-container {
+.admin-list-container,
+.attendance-list-container {
     width: 60%;
     padding: 40px 0;
     background: #f3f3f3;
 }
 
-.admin-list-header {
+.admin-list-header,
+.attendance-list-header {
     margin-bottom: 5%;
 }
 
@@ -12,14 +14,32 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 24px;
+    margin-bottom: 5%;
     background: white;
     border-radius: 6px;
     padding: 10px;
 }
 
-.month-arrow {
+.current-month {
+    font-size: 1.1rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.current-month .fa-calendar {
+    font-size: 1.2em;
+}
+
+.calendar-icon {
+    width: 25px;
+    height: 25px;
     color: #5f5f5f;
+}
+
+.month-arrow {
+    color: grey;
     text-decoration: none;
     font-weight: bold;
     font-size: 1.2rem;
@@ -31,48 +51,32 @@
     background: #eee;
 }
 
-.calendar-icon {
-    width: 25px;
-    height: 25px;
-    color: #5f5f5f;
-}
-
-.tab-menu {
-    display: flex;
-    gap: 2rem;
-    margin: 4% auto;
-    padding: 3%;
-    border-bottom: 1px solid black;
-}
-
-.tab-item-active {
-    font-weight: bold;
-    color: black;
-}
-
-.tab-item {
-    color: #5f5f5f;
-}
-
-.admin-attendance-list-table-container {
+.admin-attendance-list-table-container,
+.attendance-table-container {
     border-radius: 12px;
     padding: 0;
     margin: 0 auto;
     width: 100%;
 }
 
-.admin-attendance-list-table {
+.admin-attendance-list-table,
+.attendance-table {
     width: 100%;
     border-collapse: separate;
     border-spacing: 0;
     font-size: 1rem;
+    font-weight: bold;
     background: #fff;
 }
 
-.table-header-tr {
+.table-header-tr .table-th {
     border-bottom: 2px solid #5f5f5f;
-    color: #5f5f5f;
+    color: gray;
     line-height: 1.8rem;
+}
+
+.table-tr {
+    border-bottom: 1px solid #5f5f5f;
 }
 
 .table-th, .table-td {
@@ -88,7 +92,7 @@
 
 .table-td {
     border-bottom: 1px solid #5f5f5f;
-    color: #5f5f5f;
+    color: grey;
 }
 
 .table-tr:last-child td {
@@ -111,40 +115,35 @@
 }
 
 .detail-link:hover {
-    background: #444;
+    background: grey;
 }
 
-.alert {
-    padding: 15px;
-    margin-bottom: 20px;
-    border-radius: 4px;
-}
-
-.alert-success {
-    background-color: #d4edda;
-    border: 1px solid #c3e6cb;
-    color: #155724;
-}
 
 @media (max-width: 1024px) {
-    .admin-list-container {
-        width: 90%;
+    .admin-list-container,
+    .attendance-list-container {
+        width: 80%;
         padding: 10px 0;
     }
 
-    .admin-attendance-list-table-container {
+    .admin-attendance-list-table-container,
+    .attendance-table-container {
         overflow-x: auto;
         overflow-y: auto;
-        width: 100%;
     }
 
-    .admin-correction-request-list-table {
-        min-width: 800px;
+    .admin-attendance-list-table,
+    .attendance-table {
+        min-width: 700px;
+        min-height: 100%;
         table-layout: fixed;
     }
 
     .table-th, .table-td,
     .detail-link {
+        padding: 3px 10px;
         font-size: 0.8rem;
     }
 }
+
+

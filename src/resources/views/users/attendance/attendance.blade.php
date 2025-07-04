@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('css')
-    <link rel="stylesheet" href="{{ asset('css/users/attendance.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/attendance/attendance.css') }}">
 @endsection
 
 @section('title', '打刻')

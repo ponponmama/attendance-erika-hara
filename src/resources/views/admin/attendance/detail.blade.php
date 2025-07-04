@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('css')
-    <link rel="stylesheet" href="{{ asset('css/users/attendance_detail.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/attendance/attendance_detail.css') }}">
 @endsection
 
 @section('content')
@@ -18,13 +18,11 @@
                 </ul>
             </div>
         @endif
-
         @if (session('success'))
             <div class="alert alert-success">
                 {{ session('success') }}
             </div>
         @endif
-
         <form class="admin-detail-form" action="{{ url('/admin/attendance/update/' . $attendance->id) }}" method="post">
             @csrf
             <table class="attendance-detail-table">
