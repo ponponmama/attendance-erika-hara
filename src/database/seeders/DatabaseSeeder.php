@@ -43,7 +43,7 @@ class DatabaseSeeder extends Seeder
 
         // 各ユーザーに対してFactoryを使って関連データを作成
         foreach ($users as $userIndex => $user) {
-            // 月3回だけ修正申請を作成する日をランダムに決定
+            // 修正申請を作成する日をランダムに決定（30日の中から3日）
             $correctionDays = collect(range(1, 30))->shuffle()->take(3);
             for ($day = 1; $day <= 30; $day++) {
                 $date = now()->subDays($day)->toDateString();
@@ -54,7 +54,7 @@ class DatabaseSeeder extends Seeder
                     'date' => $date,
                 ]);
 
-                // 出勤・退勤が両方nullなら休憩・修正依頼は作らない
+                // 出勤・退勤がある場合は休憩データを作成
                 if (!is_null($attendance->clock_in) && !is_null($attendance->clock_out) &&
                     $attendance->clock_in !== '' && $attendance->clock_out !== '') {
                     // 休憩データを作成（2-3回）
@@ -64,18 +64,18 @@ class DatabaseSeeder extends Seeder
                             'attendance_id' => $attendance->id,
                         ]);
                     }
+                }
 
-                    // 修正申請は月3回だけ
-                    if ($correctionDays->contains($day)) {
-                        $requestCount = rand(1, 2);
-                        for ($i = 0; $i < $requestCount; $i++) {
-                            StampCorrectionRequest::factory()->create([
-                                'user_id' => $user->id,
-                                'attendance_id' => $attendance->id,
-                                'approved_by' => $admin->id,
-                                'request_date' => $date,
-                            ]);
-                        }
+                // 修正申請は月3回だけ（勤怠データがある場合のみ）
+                if ($correctionDays->contains($day)) {
+                    $requestCount = rand(1, 2);
+                    for ($i = 0; $i < $requestCount; $i++) {
+                        StampCorrectionRequest::factory()->create([
+                            'user_id' => $user->id,
+                            'attendance_id' => $attendance->id,
+                            'approved_by' => $admin->id,
+                            'request_date' => $date,
+                        ]);
                     }
                 }
             }

@@ -53,6 +53,8 @@
                     @endif
                 </ul>
             </nav>
+        @else
+            {{-- ログイン前はナビゲーションを非表示 --}}
         @endauth
     </header>
     <main class="main-content">

@@ -19,7 +19,7 @@ class StampCorrectionRequestFactory extends Factory
      */
     public function definition()
     {
-        $status = $this->faker->randomElement(['pending', 'approved', 'rejected']);
+        $status = $this->faker->randomElement(['pending', 'approved']);
         $approved_at = ($status !== 'pending') ? $this->faker->dateTimeThisMonth() : null;
         $approved_by = ($status !== 'pending') ? null : null; // シーダーで管理者IDを設定
 

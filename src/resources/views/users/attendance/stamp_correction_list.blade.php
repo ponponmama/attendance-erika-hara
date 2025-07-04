@@ -42,7 +42,7 @@
                                 {{ \Carbon\Carbon::parse($request->attendance->date)->format('Y/m/d') ?? '-' }}</td>
                             <td class="table-td">{{ $request->reason }}</td>
                             <td class="table-td">{{ \Carbon\Carbon::parse($request->request_date)->format('Y/m/d') }}</td>
-                            <td class="table-td"><a href="#" class="detail-link">詳細</a></td>
+                            <td class="table-td"><a href="{{ url('/attendance/' . $request->attendance->id) }}" class="detail-link">詳細</a></td>
                         </tr>
                     @endforeach
                 </tbody>

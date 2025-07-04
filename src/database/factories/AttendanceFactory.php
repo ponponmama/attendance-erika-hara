@@ -18,8 +18,8 @@ class AttendanceFactory extends Factory
      */
     public function definition()
     {
-        // 30%の確率で休暇データを作成
-        $isHoliday = $this->faker->boolean(30);
+        // 10%の確率で休暇データを作成
+        $isHoliday = $this->faker->boolean(10);
 
         if ($isHoliday) {
             return [
