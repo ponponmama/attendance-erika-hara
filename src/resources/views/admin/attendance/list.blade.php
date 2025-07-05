@@ -96,8 +96,7 @@
                                 @endif
                             </td>
                             <td class="table-td">
-                                <a href="{{ route('admin.attendance.detail', $attendance->id) }}"
-                                    class="detail-link">詳細</a>
+                                <a href="{{ route('attendance_detail', $attendance->id) }}" class="detail-link">詳細</a>
                             </td>
                         </tr>
                     @endforeach

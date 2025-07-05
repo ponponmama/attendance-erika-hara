@@ -8,9 +8,11 @@ use Carbon\Carbon;
 use App\Models\Attendance;
 use App\Models\BreakTime;
 use App\Models\StampCorrectionRequest;
+use App\Http\Requests\UpdateAttendanceRequest;
 
 class AttendanceController extends Controller
 {
+    //勤怠打刻ページ表示
     public function index()
     {
         $now = Carbon::now();
@@ -34,6 +36,7 @@ class AttendanceController extends Controller
         return view('users.attendance.attendance', compact('now', 'status'));
     }
 
+    //勤怠一覧ページ表示
     public function list(Request $request)
     {
         $user = Auth::user();
@@ -56,9 +59,10 @@ class AttendanceController extends Controller
         // 月別の勤怠統計を計算
         $monthlyStats = $this->calculateMonthlyStats($attendances);
 
-        return view('users.attendance.list', compact('attendances', 'monthlyStats', 'currentMonth'));
+        return view('attendance.list', compact('attendances', 'monthlyStats', 'currentMonth'));
     }
 
+    //月別の勤怠統計を計算
     private function calculateMonthlyStats($attendances)
     {
         $totalWorkDays = 0;
@@ -95,6 +99,7 @@ class AttendanceController extends Controller
         ];
     }
 
+    //出勤処理
     public function clockIn()
     {
         $userId = Auth::id();
@@ -114,6 +119,7 @@ class AttendanceController extends Controller
         return redirect('/attendance');
     }
 
+    //休憩開始処理
     public function breakStart()
     {
         $userId = Auth::id();
@@ -135,6 +141,7 @@ class AttendanceController extends Controller
         return redirect('/attendance');
     }
 
+    //休憩終了処理
     public function breakEnd()
     {
         $userId = Auth::id();
@@ -154,6 +161,7 @@ class AttendanceController extends Controller
         return redirect('/attendance');
     }
 
+    //退勤処理
     public function clockOut()
     {
         $userId = Auth::id();
@@ -171,109 +179,103 @@ class AttendanceController extends Controller
         return redirect()->route('attendance_index')->with('message', 'お疲れ様でした。');
     }
 
+    //勤怠詳細ページ表示（管理者・一般ユーザー共通）
     public function show($id)
     {
         $user = Auth::user();
-        $attendance = Attendance::where('id', $id)
-            ->where('user_id', $user->id)
-            ->with('breakTimes')
-            ->firstOrFail();
+        $attendance = Attendance::with(['user', 'breakTimes', 'stampCorrectionRequests' => function($q) {
+            $q->latest();
+        }])->findOrFail($id);
 
-        return view('users.attendance.detail', compact('attendance'));
-    }
-
-    public function stampCorrectionList()
-    {
-        $user = Auth::user();
-        $requests = StampCorrectionRequest::where('user_id', $user->id)
-            ->whereHas('attendance', function ($query) {
-                $query->whereNotNull('memo')->where('memo', '!=', '');
-            })
-            ->orderBy('request_date', 'desc')
-            ->get();
-
-        return view('users.attendance.stamp_correction_list', compact('requests'));
-    }
-
-    public function update(Request $request, $id)
-    {
-        $user = Auth::user();
-        $attendance = Attendance::where('id', $id)
-            ->where('user_id', $user->id)
-            ->firstOrFail();
-
-        // バリデーション
-        $request->validate([
-            'clock_in' => 'nullable|date_format:H:i',
-            'clock_out' => 'nullable|date_format:H:i',
-            'break_start_1' => 'nullable|date_format:H:i',
-            'break_end_1' => 'nullable|date_format:H:i',
-            'break_start_2' => 'nullable|date_format:H:i',
-            'break_end_2' => 'nullable|date_format:H:i',
-            'memo' => 'required|string|max:1000',
-        ], [
-            'memo.required' => '備考を記入してください',
-        ]);
-
-        // 出勤時間と退勤時間の妥当性チェック
-        if ($request->clock_in && $request->clock_out) {
-            $clockIn = Carbon::parse($request->clock_in);
-            $clockOut = Carbon::parse($request->clock_out);
-
-            if ($clockIn->greaterThanOrEqualTo($clockOut)) {
-                return back()->withErrors(['clock_in' => '出勤時間もしくは退勤時間が不適切な値です']);
-            }
+        // 一般ユーザーの場合は自分の勤怠のみアクセス可能
+        if ($user->role !== 'admin' && $attendance->user_id !== $user->id) {
+            abort(403);
         }
 
-        // 休憩時間の妥当性チェック
-        if ($request->clock_in && $request->clock_out) {
-            $clockIn = Carbon::parse($request->clock_in);
-            $clockOut = Carbon::parse($request->clock_out);
+        // 申請中の最新の修正申請（なければnull）
+        $latestRequest = $attendance->stampCorrectionRequests()
+            ->where('status', 'pending')
+            ->latest()
+            ->first();
 
-            // 休憩1のバリデーション
-            if ($request->break_start_1 && $request->break_end_1) {
-                $breakStart1 = Carbon::parse($request->break_start_1);
-                $breakEnd1 = Carbon::parse($request->break_end_1);
+        // 管理者用の最新の修正申請（なければnull）
+        $stampCorrectionRequest = $attendance->stampCorrectionRequests()->latest()->first();
 
-                // 休憩開始時間が休憩終了時間より後でないこと
-                if ($breakStart1->greaterThanOrEqualTo($breakEnd1)) {
-                    return back()->withErrors(['break_start_1' => '休憩時間が不適切な値です']);
-                }
+        return view('attendance.detail', compact('attendance', 'latestRequest', 'stampCorrectionRequest'));
+    }
 
-                // 休憩時間が勤務時間内にあること
-                if ($breakStart1->lessThan($clockIn) || $breakEnd1->greaterThan($clockOut)) {
-                    return back()->withErrors(['break_start_1' => '休憩時間が勤務時間外です']);
-                }
-            }
 
-            // 休憩2のバリデーション
-            if ($request->break_start_2 && $request->break_end_2) {
-                $breakStart2 = Carbon::parse($request->break_start_2);
-                $breakEnd2 = Carbon::parse($request->break_end_2);
 
-                // 休憩開始時間が休憩終了時間より後でないこと
-                if ($breakStart2->greaterThanOrEqualTo($breakEnd2)) {
-                    return back()->withErrors(['break_start_2' => '休憩時間が不適切な値です']);
-                }
+    public function update(UpdateAttendanceRequest $request, $id)
+    {
+        $user = Auth::user();
+        $attendance = Attendance::where('id', $id)
+            ->where('user_id', $user->id)
+            ->first();
 
-                // 休憩時間が勤務時間内にあること
-                if ($breakStart2->lessThan($clockIn) || $breakEnd2->greaterThan($clockOut)) {
-                    return back()->withErrors(['break_start_2' => '休憩時間が勤務時間外です']);
-                }
-            }
+        if (!$attendance) {
+            abort(404);
         }
 
-        // 勤怠データを更新
+        // 申請中の修正申請があるかチェック
+        $pendingRequest = $attendance->stampCorrectionRequests()
+            ->where('status', 'pending')
+            ->first();
+
+        if ($pendingRequest) {
+            return redirect()->route('attendance_detail', $id)
+                ->with('error', '申請中のため修正できません。');
+        }
+
+        // 修正申請の場合
+        if ($request->input('action') === 'request') {
+            return $this->createCorrectionRequest($request, $attendance, $user);
+        }
+
+        // 通常の修正の場合
         $attendance->update([
             'clock_in' => $request->clock_in ? Carbon::parse($request->clock_in)->format('H:i:s') : null,
             'clock_out' => $request->clock_out ? Carbon::parse($request->clock_out)->format('H:i:s') : null,
             'memo' => $request->memo,
         ]);
 
-        // 休憩時間の更新
         $this->updateBreakTimes($attendance, $request);
 
         return redirect()->route('attendance_detail', $id)->with('success', '勤怠情報を更新しました');
+    }
+
+    private function createCorrectionRequest($request, $attendance, $user)
+    {
+        // 修正申請データを作成
+        $correctionData = [
+            'user_id' => $user->id,
+            'attendance_id' => $attendance->id,
+            'request_date' => $attendance->date,
+            'status' => 'pending',
+        ];
+
+        // 出勤時間の変更がある場合
+        if ($request->clock_in && ($attendance->clock_in ? $attendance->clock_in->format('H:i') : null) !== $request->clock_in) {
+            $correctionData['correction_type'] = 'clock_in';
+            $correctionData['current_time'] = $attendance->clock_in ? $attendance->clock_in->format('H:i:s') : null;
+            $correctionData['requested_time'] = Carbon::parse($request->clock_in)->format('H:i:s');
+            $correctionData['reason'] = $request->memo;
+
+            StampCorrectionRequest::create($correctionData);
+        }
+
+        // 退勤時間の変更がある場合
+        if ($request->clock_out && ($attendance->clock_out ? $attendance->clock_out->format('H:i') : null) !== $request->clock_out) {
+            $correctionData['correction_type'] = 'clock_out';
+            $correctionData['current_time'] = $attendance->clock_out ? $attendance->clock_out->format('H:i:s') : null;
+            $correctionData['requested_time'] = Carbon::parse($request->clock_out)->format('H:i:s');
+            $correctionData['reason'] = $request->memo;
+
+            StampCorrectionRequest::create($correctionData);
+        }
+
+        return redirect()->route('attendance_detail', $attendance->id)
+            ->with('success', '修正申請を送信しました。承認をお待ちください。');
     }
 
     private function updateBreakTimes($attendance, $request)

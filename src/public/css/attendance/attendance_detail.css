@@ -137,6 +137,10 @@
     text-align: left;
 }
 
+.pending-message {
+    text-align: right;
+}
+
 /* 時計アイコン・スピンボタン非表示 */
 input[type="time"].attendance-detail-input::-webkit-calendar-picker-indicator {
     display: none;

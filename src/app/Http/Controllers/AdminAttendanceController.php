@@ -8,6 +8,7 @@ use Carbon\Carbon;
 
 class AdminAttendanceController extends Controller
 {
+    //勤怠一覧
     public function list(Request $request)
     {
         // 月切り替え対応
@@ -22,41 +23,31 @@ class AdminAttendanceController extends Controller
             ->orderBy('date', 'desc')
             ->get();
 
-        return view('admin.attendance.list', compact('attendances', 'currentMonth'));
+        return view('attendance.list', compact('attendances', 'currentMonth'));
     }
 
-    public function detail($id) {
-        // 勤怠データ取得
-        $attendance = \App\Models\Attendance::with(['user', 'breakTimes', 'stampCorrectionRequests.user', 'stampCorrectionRequests.attendance'])
-            ->findOrFail($id);
 
-        // 修正申請一覧
-        $requests = $attendance->stampCorrectionRequests;
 
-        return view('admin.attendance.detail', compact('attendance', 'requests'));
-    }
-
+    //スタッフ別勤怠
     public function staffAttendance($id) {
-        // スタッフ別勤怠データ取得
-        return view('admin.attendance.staff_attendance');
-    }
+        // スタッフ情報を取得
+        $staff = \App\Models\User::findOrFail($id);
 
-    public function stampCorrectionList(Request $request)
-    {
-        // タブ切り替え対応
-        $status = $request->get('status', 'pending');
-
-        // 修正申請データ取得
-        $requests = \App\Models\StampCorrectionRequest::with(['user', 'attendance'])
-            ->when($status === 'pending', function ($query) {
-                return $query->where('status', 'pending');
-            })
-            ->when($status === 'approved', function ($query) {
-                return $query->where('status', 'approved');
-            })
-            ->orderBy('request_date', 'desc')
+        // そのスタッフの勤怠データを取得
+        $attendances = \App\Models\Attendance::with(['breakTimes'])
+            ->where('user_id', $id)
+            ->orderBy('date', 'desc')
             ->get();
 
-        return view('admin.attendance.stamp_correction_list', compact('requests', 'status'));
+        return view('admin.attendance.staff_attendance', compact('staff', 'attendances'));
     }
+
+    //スタッフ一覧
+    public function staffList() {
+        // 一般ユーザーのみを取得（管理者以外）
+        $users = \App\Models\User::where('role', 'user')->get();
+        return view('admin.staff.list', compact('users'));
+    }
+
+
 }

@@ -98,6 +98,14 @@
     background: #f3f3f3;
 }
 
+.table-tr-pending {
+    background: #fff3cd;
+}
+
+.table-tr-pending:hover {
+    background: #ffeaa7;
+}
+
 .detail-link {
     display: inline-block;
     padding: 4px 12px;
@@ -113,6 +121,28 @@
     background: grey;
 }
 
+.detail-link-disabled {
+    display: inline-block;
+    padding: 4px 12px;
+    color: #999;
+    border-radius: 4px;
+    font-size: 1rem;
+    font-weight: bold;
+    background: #f5f5f5;
+    cursor: not-allowed;
+}
+
+.pending-badge {
+    display: inline-block;
+    padding: 2px 6px;
+    color: #856404;
+    background: #fff3cd;
+    border: 1px solid #ffeaa7;
+    border-radius: 3px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    margin-top: 2px;
+}
 
 @media (max-width: 1024px) {
     .admin-list-container,

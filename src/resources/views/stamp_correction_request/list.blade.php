@@ -15,17 +15,23 @@
             </div>
         @endif
         <div class="tab-menu">
-            <a href="{{ route('admin.attendance.stamp_correction_list', ['status' => 'pending']) }}"
-                class="tab-item {{ $status === 'pending' ? 'tab-item-active' : '' }}">
-                承認待ち
-            </a>
-            <a href="{{ route('admin.attendance.stamp_correction_list', ['status' => 'approved']) }}"
-                class="tab-item {{ $status === 'approved' ? 'tab-item-active' : '' }}">
-                承認済み
-            </a>
+            @if (Auth::user()->role === 'admin')
+                <a href="{{ route('stamp_correction_request.list', ['status' => 'pending']) }}"
+                    class="tab-item {{ $status === 'pending' ? 'tab-item-active' : '' }}">
+                    承認待ち
+                </a>
+                <a href="{{ route('stamp_correction_request.list', ['status' => 'approved']) }}"
+                    class="tab-item {{ $status === 'approved' ? 'tab-item-active' : '' }}">
+                    承認済み
+                </a>
+            @else
+                <a href="?tab=pending" class="tab-item{{ $tab === 'pending' ? '-active' : '' }}">承認待ち</a>
+                <a href="?tab=approved" class="tab-item{{ $tab === 'approved' ? '-active' : '' }}">承認済み</a>
+            @endif
         </div>
-        <div class="list-table-container">
-            <table class="list-table">
+        <div
+            class="{{ Auth::user()->role === 'admin' ? 'list-table-container' : 'stamp-correction-list-table-container' }}">
+            <table class="{{ Auth::user()->role === 'admin' ? 'list-table' : 'stamp-correction-list-table' }}">
                 <thead>
                     <tr class="table-header-tr">
                         <th class="table-th">状態</th>
@@ -44,6 +50,8 @@
                                     承認待ち
                                 @elseif($request->status === 'approved')
                                     承認済み
+                                @elseif($request->status === 'rejected')
+                                    却下
                                 @endif
                             </td>
                             <td class="table-td">{{ $request->user->name ?? '-' }}</td>
@@ -52,7 +60,7 @@
                             <td class="table-td">{{ $request->reason }}</td>
                             <td class="table-td">{{ \Carbon\Carbon::parse($request->request_date)->format('Y/m/d') }}</td>
                             <td class="table-td">
-                                <a href="/admin/attendance/{{ $request->attendance->id }}" class="detail-link">
+                                <a href="{{ route('attendance_detail', $request->attendance->id) }}" class="detail-link">
                                     詳細
                                 </a>
                             </td>

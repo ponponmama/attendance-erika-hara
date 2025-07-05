@@ -101,6 +101,15 @@ li {
     width: 100%;
 }
 
+.form__error,
+.pending-message {
+    line-height: 1.5rem;
+    min-height: 1.5rem;
+    color: red;
+    font-size: 1rem;
+    margin-bottom: 2%;
+}
+
 @media screen and (max-width: 540px) {
     .header-container {
         flex-direction: column;

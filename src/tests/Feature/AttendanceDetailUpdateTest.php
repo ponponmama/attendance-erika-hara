@@ -147,6 +147,7 @@ class AttendanceDetailUpdateTest extends TestCase
         $updateData = [
             'clock_in' => '08:30',
             'clock_out' => '17:30',
+            'memo' => 'テストメモ',
         ];
 
         $response = $this->post("/attendance/update/{$attendance->id}", $updateData);

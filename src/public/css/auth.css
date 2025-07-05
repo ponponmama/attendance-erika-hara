@@ -54,13 +54,7 @@
     width: 100%;
 }
 
-.form__error {
-    line-height: 1.5rem;
-    min-height: 1.5rem;
-    color: red;
-    font-size: 1rem;
-    margin-bottom: 2%;
-}
+
 
 .submit-button {
     width: 100%;

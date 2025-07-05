@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use Laravel\Fortify\Events\Login;
+use Illuminate\Auth\Events\Login;
 
 class FortifyServiceProvider extends ServiceProvider
 {

@@ -59,13 +59,6 @@
 
                                     $netWorkHours = $workHours - $breakHours;
                                 }
-
-                                $status = 'incomplete';
-                                $statusText = '未完了';
-                                if ($clockIn && $clockOut) {
-                                    $status = 'complete';
-                                    $statusText = '完了';
-                                }
                             @endphp
                             <tr class="table-tr">
                                 <td class="table-td">
@@ -92,7 +85,9 @@
                                     @endif
                                 </td>
                                 <td class="table-td">
-                                    <a href="{{ url('/attendance/' . $attendance->id) }}" class="detail-link">詳細</a>
+                                    <a href="{{ url('/attendance/' . $attendance->id) }}" class="detail-link">
+                                        詳細
+                                    </a>
                                 </td>
                             </tr>
                         @endforeach
