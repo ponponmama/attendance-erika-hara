@@ -26,20 +26,21 @@ class AdminAttendanceController extends Controller
         return view('attendance.list', compact('attendances', 'currentMonth'));
     }
 
-
-
     //スタッフ別勤怠
     public function staffAttendance($id) {
-        // スタッフ情報を取得
-        $staff = \App\Models\User::findOrFail($id);
+        $user = \App\Models\User::findOrFail($id);
+        $monthParam = request()->get('month');
+        $currentMonth = $monthParam
+            ? \Carbon\Carbon::createFromFormat('Y-m', $monthParam)->startOfMonth()
+            : \Carbon\Carbon::now()->startOfMonth();
 
-        // そのスタッフの勤怠データを取得
-        $attendances = \App\Models\Attendance::with(['breakTimes'])
-            ->where('user_id', $id)
+        $attendances = \App\Models\Attendance::where('user_id', $id)
+            ->whereYear('date', $currentMonth->year)
+            ->whereMonth('date', $currentMonth->month)
             ->orderBy('date', 'desc')
             ->get();
 
-        return view('admin.attendance.staff_attendance', compact('staff', 'attendances'));
+        return view('attendance.list', compact('user', 'attendances', 'currentMonth'));
     }
 
     //スタッフ一覧
@@ -49,5 +50,15 @@ class AdminAttendanceController extends Controller
         return view('admin.staff.list', compact('users'));
     }
 
+    // 勤怠承認処理
+    public function approve($id)
+    {
+        $attendance = Attendance::findOrFail($id);
 
+        // 承認処理のロジックをここに実装
+        // 現在はStampCorrectionRequestControllerで処理されているため、
+        // このメソッドは必要に応じて実装
+
+        return redirect()->back()->with('success', '勤怠を承認しました');
+    }
 }

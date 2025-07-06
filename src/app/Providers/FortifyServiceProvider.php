@@ -37,13 +37,13 @@ class FortifyServiceProvider extends ServiceProvider
     {
         Fortify::loginView(function () {
             if (request()->has('admin') || request()->is('admin*')) {
-                return view('admin.auth.login');
+                return view('admin.login');
             }
-            return view('users.auth.login');
+            return view('login');
         });
 
         Fortify::registerView(function () {
-            return view('users.auth.register');
+            return view('register');
         });
 
         Fortify::createUsersUsing(CreateNewUser::class);

@@ -5,18 +5,20 @@
 @endsection
 
 @section('content')
-    <div class="{{ Auth::user()->role === 'admin' ? 'admin-list-container' : 'attendance-list-container' }}">
-        <div class="{{ Auth::user()->role === 'admin' ? 'admin-list-header' : 'attendance-list-header' }}">
+    <div class="attendance-list-container">
+        <div class="attendance-list-header">
             @if (session('success'))
                 <div class="alert-success">
                     {{ session('success') }}
                 </div>
             @endif
-            @if (Auth::user()->role !== 'admin')
-                <h1 class="attendance-list-title">
+            <h1 class="attendance-list-title">
+                @if (isset($user))
+                    {{ $user->name }}さんの勤怠
+                @else
                     勤怠一覧
-                </h1>
-            @endif
+                @endif
+            </h1>
             <div class="month-switcher">
                 @if (Auth::user()->role === 'admin')
                     <a href="{{ route('admin.attendance.list', ['month' => $currentMonth->copy()->subMonth()->format('Y-m')]) }}"
@@ -39,10 +41,9 @@
                 @endif
             </div>
         </div>
-        <div
-            class="{{ Auth::user()->role === 'admin' ? 'admin-attendance-list-table-container' : 'attendance-table-container' }}">
+        <div class="attendance-table-container">
             @if ($attendances->count() > 0)
-                <table class="{{ Auth::user()->role === 'admin' ? 'admin-attendance-list-table' : 'attendance-table' }}">
+                <table class="attendance-table">
                     <thead>
                         <tr class="table-header-tr">
                             @if (Auth::user()->role === 'admin')
@@ -88,13 +89,6 @@
 
                                     $netWorkHours = $workHours - $breakHours;
                                 }
-
-                                $status = 'incomplete';
-                                $statusText = '未完了';
-                                if ($clockIn && $clockOut) {
-                                    $status = 'complete';
-                                    $statusText = '完了';
-                                }
                             @endphp
                             <tr class="table-tr">
                                 @if (Auth::user()->role === 'admin')
@@ -116,8 +110,7 @@
                                             $total_h = floor($netWorkHours);
                                             $total_m = round(($netWorkHours - $total_h) * 60);
                                         @endphp
-                                        <span
-                                            class="{{ Auth::user()->role === 'admin' ? 'total-hours' : 'work-hours' }}">{{ sprintf('%02d:%02d', $total_h, $total_m) }}</span>
+                                        <span class="work-hours">{{ sprintf('%02d:%02d', $total_h, $total_m) }}</span>
                                     @endif
                                 </td>
                                 <td class="table-td">

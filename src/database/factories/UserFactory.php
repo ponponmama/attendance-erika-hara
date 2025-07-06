@@ -38,4 +38,32 @@ class UserFactory extends Factory
             ];
         });
     }
+
+    /**
+     * 管理者ユーザー用のfactory
+     *
+     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     */
+    public function admin()
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'role' => 'admin',
+            ];
+        });
+    }
+
+    /**
+     * 一般ユーザー用のfactory
+     *
+     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     */
+    public function user()
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'role' => 'user',
+            ];
+        });
+    }
 }

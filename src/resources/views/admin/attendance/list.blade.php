@@ -5,8 +5,8 @@
 @endsection
 
 @section('content')
-    <div class="admin-list-container">
-        <div class="admin-list-header">
+    <div class="attendance-list-container">
+        <div class="attendance-list-header">
             @if (session('success'))
                 <div class="alert-success">
                     {{ session('success') }}
@@ -23,8 +23,8 @@
                     class="month-arrow">翌月 →</a>
             </div>
         </div>
-        <div class="admin-attendance-list-table-container">
-            <table class="admin-attendance-list-table">
+        <div class="attendance-list-table-container">
+            <table class="attendance-list-table">
                 <thead>
                     <tr class="table-header-tr">
                         <th class="table-th">名前</th>
@@ -65,13 +65,6 @@
                                 $breakHours = $totalBreakMinutes / 60;
 
                                 $netWorkHours = $workHours - $breakHours;
-                            }
-
-                            $status = 'incomplete';
-                            $statusText = '未完了';
-                            if ($clockIn && $clockOut) {
-                                $status = 'complete';
-                                $statusText = '完了';
                             }
                         @endphp
                         <tr class="table-tr">

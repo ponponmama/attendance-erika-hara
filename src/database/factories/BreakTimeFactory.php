@@ -18,7 +18,7 @@ class BreakTimeFactory extends Factory
      */
     public function definition()
     {
-        // 休憩パターンを現実的に
+        // 休憩パターンを現実的に設定
         $breakPatterns = [
             // 午前休憩: 10:00〜10:59開始、15分
             [
@@ -42,13 +42,15 @@ class BreakTimeFactory extends Factory
                 'duration_max' => 20,
             ],
         ];
+
         $pattern = $this->faker->randomElement($breakPatterns);
         $start = $this->faker->dateTimeBetween($pattern['start_min'], $pattern['start_max']);
         $duration = $this->faker->numberBetween($pattern['duration_min'], $pattern['duration_max']);
         $breakStart = Carbon::instance($start);
         $breakEnd = (clone $breakStart)->addMinutes($duration);
+
         return [
-            'attendance_id' => null, // シーダーで指定
+            'attendance_id' => null, // Seederで指定
             'break_start' => $breakStart->format('H:i:s'),
             'break_end' => $breakEnd->format('H:i:s'),
         ];

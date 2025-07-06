@@ -1,12 +1,20 @@
-.admin-list-container,
 .attendance-list-container {
     width: 60%;
     padding: 40px 0;
     background: #f3f3f3;
 }
 
-.admin-list-header,
 .attendance-list-header {
+    margin-bottom: 5%;
+}
+
+.attendance-list-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: black;
+    border-left: 3px solid black;
+    padding-left: 20px;
+    text-align: left;
     margin-bottom: 5%;
 }
 
@@ -50,8 +58,7 @@
     background: #eee;
 }
 
-.admin-attendance-list-table-container,
-.attendance-table-container {
+.attendance-list-table-container {
     border-radius: 12px;
     padding: 0;
     margin: 0 auto;
@@ -59,14 +66,14 @@
     overflow: hidden;
 }
 
-.admin-attendance-list-table,
 .attendance-table {
     width: 100%;
-    border-collapse: separate;
+    border-collapse: collapse;
     border-spacing: 0;
     font-size: 1rem;
     font-weight: bold;
     background: #fff;
+    border-radius: 12px;
 }
 
 .table-header-tr .table-th {
@@ -75,35 +82,23 @@
     line-height: 2rem;
 }
 
-.table-tr, .table-th, .table-td {
-    border-bottom: 1px solid #5f5f5f;
-}
-
 .table-th, .table-td {
     text-align: center;
     padding: 5px 20px;
-}
-
-.table-th, .table-td {
     font-weight: bold;
     font-size: 1rem;
     color: gray;
-}
+    border-bottom: 1px solid #5f5f5f;
 
-.table-tr:last-child td {
-    border-bottom: none;
+
 }
 
 .table-tr:hover {
     background: #f3f3f3;
 }
 
-.table-tr-pending {
-    background: #fff3cd;
-}
-
-.table-tr-pending:hover {
-    background: #ffeaa7;
+.attendance-table tr:last-child td {
+    border-bottom: none;
 }
 
 .detail-link {

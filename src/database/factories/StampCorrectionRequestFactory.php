@@ -24,14 +24,14 @@ class StampCorrectionRequestFactory extends Factory
         $approved_by = ($status === 'approved') ? User::where('role', 'admin')->first()->id ?? 1 : null;
 
         return [
-            'user_id' => null, // シーダーで指定される
-            'attendance_id' => null, // シーダーで指定される
+            'user_id' => null, // Seederで指定
+            'attendance_id' => null, // Seederで指定
             'approved_by' => $approved_by,
-            'request_date' => $this->faker->dateTimeBetween('-30 days', '-1 day')->format('Y-m-d'),
+            'request_date' => null, // Seederで指定（ランダム生成を無効化）
             'correction_type' => $this->faker->randomElement(['clock_in', 'clock_out', 'break_start', 'break_end']),
             'current_time' => $this->faker->optional(0.7)->time('H:i:s'),
             'requested_time' => $this->faker->time('H:i:s'),
-            'reason' => $this->faker->randomElement(ReasonList::REASONS),
+            'reason' => null, // Seederで指定（ランダム生成を無効化）
             'status' => $status,
             'approved_at' => $approved_at,
         ];

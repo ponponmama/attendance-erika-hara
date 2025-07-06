@@ -21,94 +21,78 @@ class DatabaseSeeder extends Seeder
         $this->faker = Faker::create('ja_JP');
     }
 
-    /**
-     * Seed the application's database.
-     *
-     * @return void
-     */
     public function run()
     {
         // 管理者ユーザー
-        $admin = User::factory()->create([
+        $admin = User::factory()->admin()->create([
             'name' => 'Admin User',
             'email' => 'admin@example.com',
-            'role' => 'admin',
             'password' => Hash::make('user_pass'),
         ]);
 
-        // 一般ユーザーを作成
-        $users = User::factory()->count(5)->create([
-            'password' => Hash::make('user_pass'),
-        ]);
+        // 一般ユーザー5人を固定で作成
+        $users = collect([
+            [
+                'name' => '西 玲奈',
+                'email' => 'user1@example.com',
+            ],
+            [
+                'name' => '山田 太郎',
+                'email' => 'user2@example.com',
+            ],
+            [
+                'name' => '山田 花子',
+                'email' => 'user3@example.com',
+            ],
+            [
+                'name' => '佐藤 次郎',
+                'email' => 'user4@example.com',
+            ],
+            [
+                'name' => '鈴木 三郎',
+                'email' => 'user5@example.com',
+            ],
+        ])->map(function($userData) {
+            return User::factory()->user()->create(array_merge($userData, [
+                'password' => Hash::make('user_pass'),
+            ]));
+        });
 
+        // 各ユーザーに対して勤怠データを作成
         foreach ($users as $user) {
-            $attendances = [];
             for ($day = 1; $day <= 30; $day++) {
-                $date = now()->subDays($day)->toDateString();
+                // より現実的な日時を設定
+                $date = now()->subDays($day)->startOfDay();
+
+                // 同じ理由を勤怠と修正申請で使用するため、事前に決定
+                $reason = $this->faker->randomElement(ReasonList::REASONS);
+
+                // 勤怠データを作成（日付とmemoに理由を設定）
                 $attendance = Attendance::factory()->create([
                     'user_id' => $user->id,
-                    'date' => $date,
-                    'memo' => null,
+                    'date' => $date->toDateString(), // 日付のみ
+                    'memo' => $reason, // 備考欄に理由を設定
                 ]);
-                $attendances[] = $attendance;
 
-                // 出勤データだけを抽出（clock_inとclock_outが両方あるものだけ）
-                $clockIn = Carbon::parse($attendance->clock_in);
-                $clockOut = Carbon::parse($attendance->clock_out);
+                // 休憩データを作成（必ず1回は作成）
+                BreakTime::factory()->create([
+                    'attendance_id' => $attendance->id,
+                ]);
 
-                // 勤務時間内でランダムな休憩開始
-                $breakCount = rand(0, 3);
-                for ($i = 0; $i < $breakCount; $i++) {
-                    $breakStart = $clockIn->copy()->addMinutes(rand(0, $clockOut->diffInMinutes($clockIn) - 10));
-                    // 10〜60分の休憩
-                    $breakEnd = $breakStart->copy()->addMinutes(rand(10, min(60, $clockOut->diffInMinutes($breakStart))));
-                    // 退勤時間を超えないように調整
-                    if ($breakEnd->gt($clockOut)) {
-                        $breakEnd = $clockOut->copy();
-                    }
-                    \App\Models\BreakTime::factory()->create([
-                        'attendance_id' => $attendance->id,
-                        'break_start' => $breakStart->format('H:i:s'),
-                        'break_end' => $breakEnd->format('H:i:s'),
-                    ]);
-                }
-            }
+                // 修正申請データを作成（承認待ちと承認済みをランダムに）
+                $status = $this->faker->randomElement(['pending', 'approved']);
+                $approved_at = ($status === 'approved') ? $this->faker->dateTimeThisMonth() : null;
+                $approved_by = ($status === 'approved') ? $admin->id : null;
 
-            // 出勤データだけを抽出（clock_inとclock_outが両方あるものだけ）
-            $workAttendances = collect($attendances)->filter(function($a) {
-                return $a->clock_in && $a->clock_out;
-            });
-
-            // ここで「ユーザーごとに1回だけ」ランダムで3件選ぶ
-            $randomAttendances = $workAttendances->random(min(3, $workAttendances->count()));
-
-            foreach ($randomAttendances as $attendance) {
-                // correction_typeをランダムで決める
-                $correction_type = $this->faker->randomElement(['clock_in', 'clock_out']);
-                $current_time = $correction_type === 'clock_in' ? $attendance->clock_in : $attendance->clock_out;
-
-                // 必ずcurrent_timeがNULLでないものだけ申請を作る
-                if ($current_time) {
-                    $attendance->memo = $this->faker->randomElement(\Database\Factories\ReasonList::REASONS);
-                    $attendance->save();
-
-                    $status = $this->faker->randomElement(['pending', 'approved']);
-                    $approved_at = ($status === 'approved') ? $this->faker->dateTimeThisMonth() : null;
-                    $approved_by = ($status === 'approved') ? $admin->id : null;
-
-                    \App\Models\StampCorrectionRequest::factory()->create([
-                        'user_id' => $user->id,
-                        'attendance_id' => $attendance->id,
-                        'approved_by' => $approved_by,
-                        'request_date' => $attendance->date,
-                        'correction_type' => $correction_type,
-                        'current_time' => $current_time,
-                        'requested_time' => $this->faker->time('H:i:s'),
-                        'reason' => $this->faker->randomElement(\Database\Factories\ReasonList::REASONS),
-                        'status' => $status,
-                        'approved_at' => $approved_at,
-                    ]);
-                }
+                StampCorrectionRequest::factory()->create([
+                    'user_id' => $user->id,
+                    'attendance_id' => $attendance->id,
+                    'request_date' => $date->toDateString(), // 勤怠と同じ日付を設定
+                    'reason' => $reason, // 勤怠の備考と同じ理由を設定
+                    'status' => $status,
+                    'approved_at' => $approved_at,
+                    'approved_by' => $approved_by,
+                ]);
             }
         }
     }

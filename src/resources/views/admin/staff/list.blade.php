@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('css')
-    <link rel="stylesheet" href="{{ asset('css/admin/staff_list.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/attendance/staff_list.css') }}">
 @endsection
 
 @section('content')
@@ -25,7 +25,7 @@
                             <td class="table-td">{{ $user->email }}</td>
                             <td class="table-td">
                                 <a href="{{ route('admin.attendance.staff', $user->id) }}" class="detail-link">
-                                    勤怠一覧
+                                    詳細
                                 </a>
                             </td>
                         </tr>

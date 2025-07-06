@@ -29,9 +29,8 @@
                 <a href="?tab=approved" class="tab-item{{ $tab === 'approved' ? '-active' : '' }}">承認済み</a>
             @endif
         </div>
-        <div
-            class="{{ Auth::user()->role === 'admin' ? 'list-table-container' : 'stamp-correction-list-table-container' }}">
-            <table class="{{ Auth::user()->role === 'admin' ? 'list-table' : 'stamp-correction-list-table' }}">
+        <div class="list-table-container">
+            <table class="list-table">
                 <thead>
                     <tr class="table-header-tr">
                         <th class="table-th">状態</th>
@@ -50,8 +49,6 @@
                                     承認待ち
                                 @elseif($request->status === 'approved')
                                     承認済み
-                                @elseif($request->status === 'rejected')
-                                    却下
                                 @endif
                             </td>
                             <td class="table-td">{{ $request->user->name ?? '-' }}</td>
