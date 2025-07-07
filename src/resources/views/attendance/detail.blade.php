@@ -17,7 +17,6 @@
 
         @if (Auth::user()->role === 'admin')
             <table class="attendance-detail-table">
-                {{-- 名前・日付・出退勤・休憩・備考などのtr/tdはここにそのまま --}}
                 <tr class="attendance-detail-tr">
                     <th class="attendance-detail-th">名前</th>
                     <td class="attendance-detail-td td-text">{{ $attendance->user->name ?? '-' }}</td>
@@ -53,7 +52,13 @@
                 @endforeach
                 <tr class="attendance-detail-tr">
                     <th class="attendance-detail-th">備考</th>
-                    <td class="attendance-detail-td">{{ $attendance->memo }}</td>
+                    <td class="attendance-detail-td">
+                        @if ($stampCorrectionRequest && $stampCorrectionRequest->status === 'pending')
+                            {{ $stampCorrectionRequest->reason ?? $attendance->memo }}
+                        @else
+                            {{ $attendance->memo }}
+                        @endif
+                    </td>
                 </tr>
             </table>
             <div class="attendance-detail-btn-area">
@@ -87,11 +92,11 @@
                         <td class="attendance-detail-td">
                             <input type="time" name="clock_in" class="attendance-detail-input"
                                 value="{{ $attendance->clock_in ? \Carbon\Carbon::parse($attendance->clock_in)->format('H:i') : '' }}"
-                                {{ $latestRequest && $latestRequest->status === 'pending' ? 'disabled' : '' }}>
+                                {{ $latestRequest && in_array($latestRequest->status, ['pending', 'approved']) ? 'disabled' : '' }}>
                             <span class="attendance-detail-tilde">〜</span>
                             <input type="time" name="clock_out" class="attendance-detail-input"
                                 value="{{ $attendance->clock_out ? \Carbon\Carbon::parse($attendance->clock_out)->format('H:i') : '' }}"
-                                {{ $latestRequest && $latestRequest->status === 'pending' ? 'disabled' : '' }}>
+                                {{ $latestRequest && in_array($latestRequest->status, ['pending', 'approved']) ? 'disabled' : '' }}>
                             <p class="form__error">
                                 @error('clock_in')
                                     {{ $message }}
@@ -106,7 +111,7 @@
                         <tr class="attendance-detail-tr">
                             <th class="attendance-detail-th">休憩{{ $i + 1 }}</th>
                             <td class="attendance-detail-td">
-                                @if ($latestRequest && $latestRequest->status === 'pending')
+                                @if ($latestRequest && in_array($latestRequest->status, ['pending', 'approved']))
                                     <span>{{ $break->break_start ? \Carbon\Carbon::parse($break->break_start)->format('H:i') : '' }}</span>
                                     <span class="attendance-detail-tilde">〜</span>
                                     <span>{{ $break->break_end ? \Carbon\Carbon::parse($break->break_end)->format('H:i') : '' }}</span>
@@ -122,7 +127,7 @@
                             </td>
                         </tr>
                     @endforeach
-                    @if (!($latestRequest && $latestRequest->status === 'pending'))
+                    @if (!($latestRequest && in_array($latestRequest->status, ['pending', 'approved'])))
                         <tr class="attendance-detail-tr">
                             <th class="attendance-detail-th">休憩{{ count($attendance->breakTimes) + 1 }}</th>
                             <td class="attendance-detail-td">
@@ -137,8 +142,11 @@
                     <tr class="attendance-detail-tr">
                         <th class="attendance-detail-th">備考</th>
                         <td class="attendance-detail-td">
-                            <textarea name="memo" class="attendance-detail-input attendance-detail-memo"
-                                {{ $latestRequest && $latestRequest->status === 'pending' ? 'disabled' : '' }}>{{ old('memo', $attendance->memo ?? '') }}</textarea>
+                            @if ($latestRequest && $latestRequest->status === 'pending')
+                                <textarea name="memo" class="attendance-detail-input attendance-detail-memo" disabled>{{ $latestRequest->reason ?? $attendance->memo }}</textarea>
+                            @else
+                                <textarea name="memo" class="attendance-detail-input attendance-detail-memo">{{ old('memo', $attendance->memo ?? '') }}</textarea>
+                            @endif
                             <p class="form__error">
                                 @error('memo')
                                     {{ $message }}

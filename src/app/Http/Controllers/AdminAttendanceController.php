@@ -23,7 +23,7 @@ class AdminAttendanceController extends Controller
             ->orderBy('date', 'desc')
             ->get();
 
-        return view('attendance.list', compact('attendances', 'currentMonth'));
+        return view('admin.attendance.list', compact('attendances', 'currentMonth'));
     }
 
     //スタッフ別勤怠
@@ -40,7 +40,7 @@ class AdminAttendanceController extends Controller
             ->orderBy('date', 'desc')
             ->get();
 
-        return view('attendance.list', compact('user', 'attendances', 'currentMonth'));
+        return view('admin.attendance.staff', compact('user', 'attendances', 'currentMonth'));
     }
 
     //スタッフ一覧
@@ -48,17 +48,5 @@ class AdminAttendanceController extends Controller
         // 一般ユーザーのみを取得（管理者以外）
         $users = \App\Models\User::where('role', 'user')->get();
         return view('admin.staff.list', compact('users'));
-    }
-
-    // 勤怠承認処理
-    public function approve($id)
-    {
-        $attendance = Attendance::findOrFail($id);
-
-        // 承認処理のロジックをここに実装
-        // 現在はStampCorrectionRequestControllerで処理されているため、
-        // このメソッドは必要に応じて実装
-
-        return redirect()->back()->with('success', '勤怠を承認しました');
     }
 }

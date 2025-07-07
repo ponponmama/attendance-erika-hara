@@ -19,10 +19,10 @@ class CreateStampCorrectionRequestsTable extends Migration
             $table->foreignId('attendance_id')->constrained()->onDelete('cascade');
             $table->foreignId('approved_by')->nullable()->constrained('users')->onDelete('set null');
             $table->date('request_date');
-            $table->enum('correction_type', ['clock_in', 'clock_out', 'break_start', 'break_end']);
+            $table->string('correction_type', 255);
             $table->time('current_time')->nullable();
-            $table->time('requested_time');
-            $table->text('reason');
+            $table->time('requested_time')->nullable();
+            $table->text('reason')->nullable();
             $table->enum('status', ['pending', 'approved'])->default('pending');
             $table->timestamp('approved_at')->nullable();
             $table->timestamps();

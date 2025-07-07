@@ -12,33 +12,16 @@
                     {{ session('success') }}
                 </div>
             @endif
-            <h1 class="attendance-list-title">
-                @if (isset($user))
-                    {{ $user->name }}さんの勤怠
-                @else
-                    勤怠一覧
-                @endif
-            </h1>
+            <h1 class="attendance-list-title">勤怠一覧</h1>
             <div class="month-switcher">
-                @if (Auth::user()->role === 'admin')
-                    <a href="{{ route('admin.attendance.list', ['month' => $currentMonth->copy()->subMonth()->format('Y-m')]) }}"
-                        class="month-arrow">← 前月</a>
-                    <span class="current-month">
-                        <img src="{{ asset('images/calendar.svg') }}" alt="カレンダー" class="calendar-icon">
-                        {{ $currentMonth->format('Y/m/d') }}
-                    </span>
-                    <a href="{{ route('admin.attendance.list', ['month' => $currentMonth->copy()->addMonth()->format('Y-m')]) }}"
-                        class="month-arrow">翌月 →</a>
-                @else
-                    <a href="{{ route('attendance_list', ['month' => $currentMonth->copy()->subMonth()->format('Y-m')]) }}"
-                        class="month-arrow">← 前月</a>
-                    <span class="current-month">
-                        <img src="{{ asset('images/calendar.svg') }}" alt="カレンダー" class="calendar-icon">
-                        {{ $currentMonth->format('Y/m') }}
-                    </span>
-                    <a href="{{ route('attendance_list', ['month' => $currentMonth->copy()->addMonth()->format('Y-m')]) }}"
-                        class="month-arrow">翌月 →</a>
-                @endif
+                <a href="{{ route('attendance_list', ['month' => $currentMonth->copy()->subMonth()->format('Y-m')]) }}"
+                    class="month-arrow">← 前月</a>
+                <span class="current-month">
+                    <img src="{{ asset('images/calendar.svg') }}" alt="カレンダー" class="calendar-icon">
+                    {{ $currentMonth->format('Y/m') }}
+                </span>
+                <a href="{{ route('attendance_list', ['month' => $currentMonth->copy()->addMonth()->format('Y-m')]) }}"
+                    class="month-arrow">翌月 →</a>
             </div>
         </div>
         <div class="attendance-table-container">
@@ -46,9 +29,6 @@
                 <table class="attendance-table">
                     <thead>
                         <tr class="table-header-tr">
-                            @if (Auth::user()->role === 'admin')
-                                <th class="table-th">名前</th>
-                            @endif
                             <th class="table-th">日付</th>
                             <th class="table-th">出勤</th>
                             <th class="table-th">退勤</th>
@@ -91,9 +71,6 @@
                                 }
                             @endphp
                             <tr class="table-tr">
-                                @if (Auth::user()->role === 'admin')
-                                    <td class="table-td">{{ $attendance->user->name ?? '-' }}</td>
-                                @endif
                                 <td class="table-td">
                                     {{ $attendance->date->format('m/d') }}（{{ ['日', '月', '火', '水', '木', '金', '土'][$attendance->date->dayOfWeek] }}）
                                 </td>

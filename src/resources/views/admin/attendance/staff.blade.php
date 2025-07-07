@@ -5,12 +5,27 @@
 @endsection
 
 @section('content')
-    <div class="staff-attendance-container">
-        <h1 class="staff-attendance-title">
-            {{ $staff->name }}の勤怠一覧
-        </h1>
-        <div class="staff-attendance-table-container">
-            <table class="staff-attendance-table">
+    <div class="attendance-list-container">
+        <div class="attendance-list-header">
+            @if (session('success'))
+                <div class="alert-success">
+                    {{ session('success') }}
+                </div>
+            @endif
+            <h1 class="attendance-list-title">{{ $user->name }}さんの勤怠</h1>
+            <div class="month-switcher">
+                <a href="{{ route('admin.attendance.staff', ['id' => $user->id, 'month' => $currentMonth->copy()->subMonth()->format('Y-m')]) }}"
+                    class="month-arrow">← 前月</a>
+                <span class="current-month">
+                    <img src="{{ asset('images/calendar.svg') }}" alt="カレンダー" class="calendar-icon">
+                    {{ $currentMonth->format('Y/m') }}
+                </span>
+                <a href="{{ route('admin.attendance.staff', ['id' => $user->id, 'month' => $currentMonth->copy()->addMonth()->format('Y-m')]) }}"
+                    class="month-arrow">翌月 →</a>
+            </div>
+        </div>
+        <div class="attendance-list-table-container">
+            <table class="attendance-list-table">
                 <thead>
                     <tr class="table-header-tr">
                         <th class="table-th">日付</th>
@@ -73,9 +88,7 @@
                                 @endif
                             </td>
                             <td class="table-td">
-                                <a href="{{ route('attendance_detail', $attendance->id) }}" class="detail-link">
-                                    詳細
-                                </a>
+                                <a href="{{ route('attendance_detail', $attendance->id) }}" class="detail-link">詳細</a>
                             </td>
                         </tr>
                     @endforeach
