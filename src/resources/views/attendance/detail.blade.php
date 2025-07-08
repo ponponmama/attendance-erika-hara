@@ -16,6 +16,9 @@
         @endif
 
         @if (Auth::user()->role === 'admin')
+            @php
+                $latestRequest = $attendance->stampCorrectionRequests()->latest()->first();
+            @endphp
             <table class="attendance-detail-table">
                 <tr class="attendance-detail-tr">
                     <th class="attendance-detail-th">名前</th>
@@ -31,13 +34,9 @@
                 <tr class="attendance-detail-tr">
                     <th class="attendance-detail-th">出勤・退勤</th>
                     <td class="attendance-detail-td">
-                        <input type="time" name="clock_in" class="attendance-detail-input"
-                            value="{{ $attendance->clock_in ? \Carbon\Carbon::parse($attendance->clock_in)->format('H:i') : '' }}"
-                            disabled>
+                        <span>{{ $attendance->clock_in ? \Carbon\Carbon::parse($attendance->clock_in)->format('H:i') : '' }}</span>
                         <span class="attendance-detail-tilde">〜</span>
-                        <input type="time" name="clock_out" class="attendance-detail-input"
-                            value="{{ $attendance->clock_out ? \Carbon\Carbon::parse($attendance->clock_out)->format('H:i') : '' }}"
-                            disabled>
+                        <span>{{ $attendance->clock_out ? \Carbon\Carbon::parse($attendance->clock_out)->format('H:i') : '' }}</span>
                     </td>
                 </tr>
                 @foreach ($attendance->breakTimes as $i => $break)
@@ -53,23 +52,27 @@
                 <tr class="attendance-detail-tr">
                     <th class="attendance-detail-th">備考</th>
                     <td class="attendance-detail-td">
-                        @if ($stampCorrectionRequest && $stampCorrectionRequest->status === 'pending')
-                            {{ $stampCorrectionRequest->reason ?? $attendance->memo }}
-                        @else
-                            {{ $attendance->memo }}
-                        @endif
+                        {{ $attendance->memo }}
                     </td>
                 </tr>
             </table>
             <div class="attendance-detail-btn-area">
-                @if ($stampCorrectionRequest && $stampCorrectionRequest->status === 'pending')
-                    <form method="POST"
-                        action="{{ route('stamp_correction_request.approve', $stampCorrectionRequest->id) }}">
+                @if ($latestRequest)
+                    @if ($latestRequest->status === 'pending')
+                        <form method="POST" action="{{ route('stamp_correction_request.approve', $latestRequest->id) }}">
+                            @csrf
+                            <button type="submit" class="attendance-detail-edit-btn button">承認</button>
+                        </form>
+                    @elseif ($latestRequest->status === 'approved')
+                        <span class="status-approved">承認済み</span>
+                    @endif
+                @else
+                    <form class="attendance-detail-form" action="{{ route('admin.attendance.update', $attendance->id) }}"
+                        method="POST">
                         @csrf
-                        <button type="submit" class="attendance-detail-edit-btn button">承認</button>
+                        @method('PUT')
+                        <button type="submit" class="attendance-detail-edit-btn button">修正</button>
                     </form>
-                @elseif ($stampCorrectionRequest && $stampCorrectionRequest->status === 'approved' && $stampCorrectionRequest->approved_by)
-                    <button class="attendance-detail-edit-btn status-approved button" disabled>承認済み</button>
                 @endif
             </div>
         @else

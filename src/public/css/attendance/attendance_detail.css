@@ -115,16 +115,15 @@
 
 
 .attendance-detail-btn-area {
+    width: 100%;
     text-align: right;
     margin-bottom: 16px;
 }
 
-.attendance-detail-edit-btn {
-    background: black;
-    color: white;
+.attendance-detail-edit-btn,
+.status-approved {
     border: none;
     border-radius: 8px;
-    padding: 10px 40px;
     font-size: 1.2rem;
     font-weight: bold;
     transition: background 0.2s;
@@ -134,12 +133,26 @@
     background: grey;
 }
 
+.attendance-detail-edit-btn {
+    background-color: black;
+    color: white;
+    padding: 10px 40px;
+}
+
 .status-approved {
     background: grey;
+    padding: 10px 20px;
+
 }
 
 .pending-message {
     text-align: right;
+}
+
+.approved-message {
+    text-align: right;
+    color: red;
+    font-weight: bold;
 }
 
 .attendance-detail-input:disabled {

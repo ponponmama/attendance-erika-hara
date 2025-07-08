@@ -46,6 +46,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'role:admin'])->grou
     Route::get('/staff/list', [AdminAttendanceController::class, 'staffList'])->name('staff.list');
     Route::get('/attendance/staff/{id}', [AdminAttendanceController::class, 'staffAttendance'])->name('attendance.staff');
     Route::get('/attendance/staff/{user_id}/detail/{attendance_id}', [AdminAttendanceController::class, 'staffAttendanceDetail'])->name('attendance.staff.detail');
+    Route::put('/attendance/{id}', [AdminAttendanceController::class, 'update'])->name('attendance.update');
 });
 
 // 勤怠詳細（ユーザー・管理者共通、ミドルウェアで区別）
@@ -62,6 +63,6 @@ Route::post('/stamp_correction_request', [StampCorrectionRequestController::clas
     ->middleware(['auth', 'role:user'])
     ->name('stamp_correction_request.store');
 
-Route::post('/stamp_correction_request/approve/{id}', [StampCorrectionRequestController::class, 'approve'])
+Route::post('/stamp_correction_request/approve/{attendance_correct_request}', [StampCorrectionRequestController::class, 'approve'])
     ->middleware(['auth', 'role:admin'])
     ->name('stamp_correction_request.approve');

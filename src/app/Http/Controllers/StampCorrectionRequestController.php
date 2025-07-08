@@ -41,9 +41,9 @@ class StampCorrectionRequestController extends Controller
         return view('stamp_correction_request.list', compact('requests', 'status', 'tab'));
     }
 
-    public function approve($id)
+    public function approve($attendance_correct_request)
     {
-        $request = \App\Models\StampCorrectionRequest::findOrFail($id);
+        $request = \App\Models\StampCorrectionRequest::findOrFail($attendance_correct_request);
         $request->status = 'approved';
         $request->approved_at = now();
         $request->approved_by = Auth::id();
