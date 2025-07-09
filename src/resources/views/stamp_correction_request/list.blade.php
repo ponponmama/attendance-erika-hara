@@ -33,18 +33,18 @@
             <table class="list-table">
                 <thead>
                     <tr class="table-header-tr">
-                        <th class="table-th">状態</th>
+                        <th class="table-th status-th">状態</th>
                         <th class="table-th">名前</th>
                         <th class="table-th">対象日時</th>
                         <th class="table-th">申請理由</th>
                         <th class="table-th">申請日時</th>
-                        <th class="table-th">詳細</th>
+                        <th class="table-th detail-th">詳細</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($requests as $request)
                         <tr class="table-tr">
-                            <td class="table-td">
+                            <td class="table-td status-td">
                                 @if ($request->status === 'pending')
                                     承認待ち
                                 @elseif($request->status === 'approved')
@@ -56,7 +56,7 @@
                                 {{ \Carbon\Carbon::parse($request->attendance->date)->format('Y/m/d') ?? '-' }}</td>
                             <td class="table-td">{{ $request->reason }}</td>
                             <td class="table-td">{{ \Carbon\Carbon::parse($request->request_date)->format('Y/m/d') }}</td>
-                            <td class="table-td">
+                            <td class="table-td detail-td">
                                 <a href="{{ route('attendance_detail', $request->attendance->id) }}" class="detail-link">
                                     詳細
                                 </a>

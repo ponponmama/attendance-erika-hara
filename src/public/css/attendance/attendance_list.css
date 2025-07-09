@@ -66,7 +66,7 @@
     overflow: hidden;
 }
 
-.attendance-table {
+.attendance-list-table {
     width: 100%;
     border-collapse: collapse;
     border-spacing: 0;
@@ -89,8 +89,6 @@
     font-size: 1rem;
     color: gray;
     border-bottom: 1px solid #5f5f5f;
-
-
 }
 
 .table-tr:hover {
@@ -127,34 +125,19 @@
     cursor: not-allowed;
 }
 
-.pending-badge {
-    display: inline-block;
-    padding: 2px 6px;
-    color: #856404;
-    background: #fff3cd;
-    border: 1px solid #ffeaa7;
-    border-radius: 3px;
-    font-size: 0.8rem;
-    font-weight: bold;
-    margin-top: 2px;
-}
-
 @media (max-width: 1024px) {
-    .admin-list-container,
     .attendance-list-container {
         width: 80%;
         padding: 10px 0;
     }
 
-    .admin-attendance-list-table-container,
-    .attendance-table-container {
+    .attendance-list-table-container {
         overflow-x: auto;
         overflow-y: auto;
     }
 
-    .admin-attendance-list-table,
-    .attendance-table {
-        min-width: 700px;
+    .attendance-list-table {
+        min-width: 800px;
         min-height: 100%;
         table-layout: fixed;
     }
