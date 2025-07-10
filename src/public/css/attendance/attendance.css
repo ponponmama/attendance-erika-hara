@@ -22,7 +22,7 @@ body {
     padding: 10px 20px;
     border-radius: 20px;
     font-size: 1.3rem;
-    margin-bottom: 1%;
+    margin-bottom: 5%;
     background-color: #c9c9c9;
     color: #5f5f5f;
     letter-spacing: 0.3rem;
@@ -33,6 +33,7 @@ body {
     padding: 2%;
     font-size: 2.5rem;
     font-weight: normal;
+    margin-bottom: 2%;
 }
 
 .attendance-time {
@@ -45,10 +46,11 @@ body {
     display: flex;
     justify-content: space-around;
     align-items: center;
+    margin: 5% auto;
 }
 
 .attendance-actions__form {
-    width: 50%;
+    width: 35%;
     margin: 0.5%;
     font-weight: bold;
     letter-spacing: 0.3rem;
@@ -62,21 +64,21 @@ body {
 }
 
 .action-button {
-    width: 70%;
+    width: 100%;
     background-color: #000;
     color: #fff;
     border: none;
-    border-radius: 20px;
+    border-radius: 15px;
     padding: 16px 30px;
     transition: opacity 0.3s;
 }
 
 .action-break-button {
-    width: 70%;
+    width: 100%;
     background-color: #fff;
     color: #000;
     border: none;
-    border-radius: 20px;
+    border-radius: 15px;
     padding: 16px 30px;
     font-size: 2.2rem;
     transition: opacity 0.3s;
@@ -102,15 +104,15 @@ body {
     }
 
     .attendance-date {
-        font-size: 2rem;
-    }
-
-    .attendance-actions__form {
-        width: 90%;
+        font-size: 1.5rem;
     }
 
     .attendance-actions {
         width: 100%;
+    }
+
+    .attendance-actions__form {
+        width: 45%;
     }
 
     .action-button, .action-break-button {
@@ -126,6 +128,6 @@ body {
     }
 
     .attendance-actions {
-        width: 90%;
+        width: 70%;
     }
 }

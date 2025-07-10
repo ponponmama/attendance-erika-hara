@@ -1,3 +1,4 @@
+
 .attendance-detail-container {
     width: 60%;
     display: flex;
@@ -53,28 +54,37 @@
 .attendance-detail-th {
     text-align: left;
     color: gray;
-    width: 30%;
-    padding: 4px 40px;
+    width: 40%;
+    padding: 4px 20px 4px 60px;
     background: white;
 }
 
-.attendance-detail-td {
-    width: 70%;
-    padding: 4px 20px;
+.attendance-detail-td,
+.attendance-detail-input {
+    color: black;
+    text-align: left;
+    font-weight: bold;
+    font-size: 1rem;
 }
 
-.td-text {
-    padding: 4px 34px;
+
+.attendance-detail-td {
+    width: 60%;
+    padding: 4px 20px;
 }
 
 .attendance-detail-date {
     display: inline-block;
-    width: 30%;
-    padding: 4px 25px;
+    width: 45%;
+    padding: 0;
+    text-align: left;
 }
 
-.attendance-detail-date:first-child {
-    margin-right: 14%;
+.attendance-detail-tilde {
+    display: inline-block;
+    width: 34%;
+    text-align: center;
+    padding: 0;
 }
 
 .attendance-detail-input {
@@ -88,18 +98,6 @@
     transition: border 0.2s;
 }
 
-.attendance-detail-tilde {
-    padding: 4px 25px;
-    margin: 0 10px;
-}
-
-.attendance-detail-td,
-.attendance-detail-input {
-    color: black;
-    text-align: left;
-    font-weight: bold;
-    font-size: 1rem;
-}
 
 .attendance-detail-input:focus {
     outline: none;
