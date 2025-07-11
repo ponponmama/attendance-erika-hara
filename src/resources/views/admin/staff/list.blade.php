@@ -1,3 +1,4 @@
+{{-- スタッフ一覧画面（管理者） /admin/staff/list --}}
 @extends('layouts.app')
 
 @section('css')

@@ -1,3 +1,4 @@
+{{-- スタッフ別勤怠一覧画面（管理者） /admin/attendance/staff/{id} --}}
 @extends('layouts.app')
 
 @section('css')

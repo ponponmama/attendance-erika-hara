@@ -36,9 +36,6 @@ class FortifyServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Fortify::loginView(function () {
-            if (request()->has('admin') || request()->is('admin*')) {
-                return view('admin.login');
-            }
             return view('login');
         });
 
@@ -69,7 +66,7 @@ class FortifyServiceProvider extends ServiceProvider
             if ($user->role === 'admin') {
                 session(['url.intended' => '/admin/attendance/list']);
             } else {
-                session(['url.intended' => '/']);
+                session(['url.intended' => '/attendance']);
             }
         });
     }

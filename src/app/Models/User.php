@@ -7,8 +7,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use App\Mail\VerifyEmailCustom;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\URL;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -51,5 +54,21 @@ class User extends Authenticatable
     public function stampCorrectionRequests()
     {
         return $this->hasMany(StampCorrectionRequest::class);
+    }
+
+    public function sendEmailVerificationNotification()
+    {
+        // 管理者の場合はメール認証をスキップ
+        if ($this->role === 'admin') {
+            return;
+        }
+
+        $verificationUrl = URL::temporarySignedRoute(
+            'verification.verify',
+            now()->addMinutes(60),
+            ['id' => $this->getKey(), 'hash' => sha1($this->getEmailForVerification())]
+        );
+
+        Mail::to($this->email)->send(new VerifyEmailCustom($this, $verificationUrl));
     }
 }

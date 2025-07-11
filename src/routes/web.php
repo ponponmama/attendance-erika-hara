@@ -7,6 +7,7 @@ use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
 use Laravel\Fortify\Http\Controllers\RegisteredUserController;
 use App\Http\Controllers\AdminAttendanceController;
 use App\Http\Controllers\StampCorrectionRequestController;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,12 +28,38 @@ Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('l
 Route::get('/admin/login', [AuthenticatedSessionController::class, 'create'])->name('admin.login');
 Route::post('/login', [AuthenticatedSessionController::class, 'store']);
 
-Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
+Route::post('/logout', function () {
+    $user = auth()->user();
+    $isAdmin = $user && $user->role === 'admin';
+
+    auth()->logout();
+    request()->session()->invalidate();
+    request()->session()->regenerateToken();
+
+    if ($isAdmin) {
+        return redirect('/admin/login');
+    }
+    return redirect('/login');
+})->name('logout');
+
+// メール認証関連
+Route::get('/email/verify', function () {
+    return view('verify-email');
+})->middleware('auth')->name('verification.notice');
+
+Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+    $request->fulfill();
+    return redirect('/attendance')->with('success', 'メール認証が完了しました。');
+})->middleware(['auth', 'signed'])->name('verification.verify');
+
+Route::post('/email/verification-notification', function () {
+    request()->user()->sendEmailVerificationNotification();
+    return back()->with('status', 'verification-link-sent');
+})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
 // 一般ユーザー用ルート
-Route::middleware(['auth', 'role:user'])->group(function () {
-    Route::get('/', [AttendanceController::class, 'index'])->name('attendance_index');
-    Route::get('/attendance', [AttendanceController::class, 'index']);
+Route::middleware(['auth', 'role:user', 'verified'])->group(function () {
+    Route::get('/attendance', [AttendanceController::class, 'index'])->name('attendance_index');
     Route::get('/attendance/list', [AttendanceController::class, 'list'])->name('attendance_list');
     Route::post('/clock-in', [AttendanceController::class, 'clockIn'])->name('attendance_clock_in');
     Route::post('/clock-out', [AttendanceController::class, 'clockOut'])->name('attendance_clock_out');
@@ -60,7 +87,7 @@ Route::get('/stamp_correction_request/list', [StampCorrectionRequestController::
     ->name('stamp_correction_request.list');
 
 Route::post('/stamp_correction_request', [StampCorrectionRequestController::class, 'store'])
-    ->middleware(['auth', 'role:user'])
+    ->middleware(['auth', 'role:user', 'verified'])
     ->name('stamp_correction_request.store');
 
 Route::post('/stamp_correction_request/approve/{attendance_correct_request}', [StampCorrectionRequestController::class, 'approve'])

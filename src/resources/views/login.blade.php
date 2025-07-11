@@ -1,3 +1,4 @@
+{{-- ログイン画面（一般ユーザー・管理者共通） /login, /admin/login --}}
 @extends('layouts.app')
 
 @section('css')
@@ -17,10 +18,12 @@
             </p>
             <form action="{{ route('login') }}" method="POST">
                 @csrf
+                @if(request()->is('admin*'))
+                    <input type="hidden" name="admin_login" value="1">
+                @endif
                 <div class="form-group">
                     <label class="form-label" for="email">メールアドレス</label>
-                    <input class="form-input" type="email" name="email" id="email" value="{{ old('email') }}"
-                        autocomplete="email">
+                    <input class="form-input" type="email" name="email" id="email" value="{{ old('email') }}" autocomplete="email">
                 </div>
                 <p class="form__error">
                     @error('email')
@@ -29,8 +32,7 @@
                 </p>
                 <div class="form-group">
                     <label class="form-label" for="password">パスワード</label>
-                    <input class="form-input" type="password" name="password" id="password"
-                        autocomplete="current-password">
+                    <input class="form-input" type="password" name="password" id="password" autocomplete="current-password">
                 </div>
                 <p class="form__error">
                     @error('password')
@@ -41,7 +43,9 @@
                     <button type="submit" class="submit-button button">ログインする</button>
                 </div>
             </form>
-            <p class="login-register"><a href="{{ route('register') }}">会員登録はこちら</a></p>
+            @unless(request()->is('admin*'))
+                <p class="login-register"><a href="{{ route('register') }}">会員登録はこちら</a></p>
+            @endunless
         </div>
     </div>
 @endsection

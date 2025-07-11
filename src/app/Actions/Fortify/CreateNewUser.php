@@ -27,10 +27,18 @@ class CreateNewUser implements CreatesNewUsers
 
         Validator::make($input, $registerRequest->rules(), $registerRequest->messages())->validate();
 
-        return User::create([
+        $user = User::create([
             'name' => $input['name'],
             'email' => $input['email'],
             'password' => Hash::make($input['password']),
         ]);
+
+        // 管理者の場合はメール認証を自動的に完了
+        if ($user->role === 'admin') {
+            $user->email_verified_at = now();
+            $user->save();
+        }
+
+        return $user;
     }
 }

@@ -1,3 +1,4 @@
+{{-- 勤怠一覧画面（管理者） /admin/attendance/list --}}
 @extends('layouts.app')
 
 @section('css')
@@ -23,8 +24,8 @@
                     class="month-arrow">翌月 →</a>
             </div>
         </div>
-        <div class="attendance-list-table-container">
-            <table class="attendance-list-table">
+        <div class="attendance-table-container">
+            <table class="attendance-table">
                 <thead>
                     <tr class="table-header-tr">
                         <th class="table-th">名前</th>

@@ -20,6 +20,25 @@
     height: 100%;
 }
 
+.auth-message {
+    line-height: 1.5rem;
+    color: #333;
+    font-size: 1rem;
+    margin-bottom: 2%;
+    text-align: center;
+    width: 100%;
+}
+
+.auth-success-message {
+    line-height: 1.5rem;
+    color: #28a745;
+    font-size: 1rem;
+    margin-bottom: 2%;
+    text-align: center;
+    width: 100%;
+    font-weight: bold;
+}
+
 .form-group {
     width: 100%;
     display: flex;

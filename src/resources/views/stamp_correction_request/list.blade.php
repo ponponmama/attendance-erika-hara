@@ -1,3 +1,4 @@
+{{-- 申請一覧画面（一般ユーザー・管理者共通） /stamp_correction_request/list --}}
 @extends('layouts.app')
 
 @section('css')

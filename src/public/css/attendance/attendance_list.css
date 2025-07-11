@@ -58,6 +58,7 @@
     background: #eee;
 }
 
+.attendance-list-table-container,
 .attendance-table-container {
     border-radius: 12px;
     padding: 0;
@@ -66,6 +67,7 @@
     overflow: hidden;
 }
 
+.attendance-list-table,
 .attendance-table {
     width: 100%;
     min-height: 100%;
@@ -132,11 +134,13 @@
         padding: 10px 0;
     }
 
+    .attendance-list-table-container,
     .attendance-table-container {
         overflow-x: auto;
         overflow-y: auto;
     }
 
+    .attendance-list-table,
     .attendance-table {
         min-width: 800px;
         min-height: 100%;

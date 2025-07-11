@@ -1,3 +1,4 @@
+{{-- 勤怠登録画面（一般ユーザー） /attendance --}}
 @extends('layouts.app')
 
 @section('css')
