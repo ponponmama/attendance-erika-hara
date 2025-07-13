@@ -128,6 +128,31 @@
     cursor: not-allowed;
 }
 
+.attendance-list-btn-area {
+    width: 100%;
+    text-align: right;
+    margin: 5% auto;
+}
+
+.attendance-list-csv-btn {
+    border: none;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    transition: background 0.2s;
+}
+
+.attendance-list-csv-btn:hover {
+    background: grey;
+}
+
+.attendance-list-csv-btn {
+    background-color: black;
+    color: white;
+    padding: 4px 40px;
+}
+
+
 @media (max-width: 1024px) {
     .attendance-list-container {
         width: 80%;

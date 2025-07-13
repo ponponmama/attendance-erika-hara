@@ -5,12 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Attendance;
 use App\Models\BreakTime;
-use App\Models\StampCorrectionRequest;
 use Carbon\Carbon;
 
 class AdminAttendanceController extends Controller
 {
-    //勤怠一覧
+    //管理者の勤怠一覧
     public function list(Request $request)
     {
         // 月切り替え対応
@@ -28,7 +27,7 @@ class AdminAttendanceController extends Controller
         return view('admin.attendance.list', compact('attendances', 'currentMonth'));
     }
 
-    //スタッフ別勤怠
+    //スタッフ別勤怠一覧
     public function staffAttendance($id) {
         $user = \App\Models\User::findOrFail($id);
         $monthParam = request()->get('month');
@@ -52,7 +51,7 @@ class AdminAttendanceController extends Controller
         return view('admin.staff.list', compact('users'));
     }
 
-    //管理者用勤怠更新
+    //管理者による勤怠データの更新
     public function update(Request $request, $id)
     {
         $attendance = Attendance::findOrFail($id);
@@ -129,5 +128,73 @@ class AdminAttendanceController extends Controller
         }
 
         return redirect()->route('admin.attendance.list')->with('success', '勤怠を更新しました。');
+    }
+
+    // スタッフ別勤怠CSV出力
+    public function exportStaffCsv(Request $request, $id)
+    {
+        // 1. 月情報を取得（例: '2023-06'）
+        $month = $request->input('month');
+        $currentMonth = $month
+            ? \Carbon\Carbon::createFromFormat('Y-m', $month)->startOfMonth()
+            : \Carbon\Carbon::now()->startOfMonth();
+
+        // 2. ユーザー情報取得
+        $user = \App\Models\User::findOrFail($id);
+
+        // 3. 勤怠データ取得（指定月のデータを昇順で取得）
+        $attendances = \App\Models\Attendance::where('user_id', $id)
+            ->whereYear('date', $currentMonth->year)
+            ->whereMonth('date', $currentMonth->month)
+            ->orderBy('date', 'asc')
+            ->get();
+
+        // 4. CSVデータ作成
+        // ヘッダー行
+        $csv = "日付,出勤,退勤,休憩,合計\n";
+        $wday = ['日', '月', '火', '水', '木', '金', '土']; // 曜日リスト
+        foreach ($attendances as $attendance) {
+            // 日付（例: 07/01（火））
+            $date = $attendance->date ? $attendance->date->format('m/d') . '（' . $wday[$attendance->date->dayOfWeek] . '）' : '';
+            // 出勤
+            $clockIn = $attendance->clock_in ? \Carbon\Carbon::parse($attendance->clock_in)->format('H:i') : '';
+            // 退勤
+            $clockOut = $attendance->clock_out ? \Carbon\Carbon::parse($attendance->clock_out)->format('H:i') : '';
+            // 休憩（分単位の合計をhh:mmに変換）
+            $totalBreakMinutes = 0;
+            foreach ($attendance->breakTimes as $break) {
+                if ($break->break_start && $break->break_end) {
+                    $start = \Carbon\Carbon::parse($break->break_start);
+                    $end = \Carbon\Carbon::parse($break->break_end);
+                    $totalBreakMinutes += $end->diffInMinutes($start);
+                }
+            }
+            $break_h = floor($totalBreakMinutes / 60);
+            $break_m = $totalBreakMinutes % 60;
+            $breakStr = $totalBreakMinutes > 0 ? sprintf('%d:%02d', $break_h, $break_m) : '';
+            // 合計（実働時間）
+            $netWorkHours = '';
+            if ($attendance->clock_in && $attendance->clock_out) {
+                $clockInTime = \Carbon\Carbon::parse($attendance->clock_in);
+                $clockOutTime = \Carbon\Carbon::parse($attendance->clock_out);
+                $workMinutes = $clockOutTime->diffInMinutes($clockInTime) - $totalBreakMinutes;
+                $work_h = floor($workMinutes / 60);
+                $work_m = $workMinutes % 60;
+                $netWorkHours = sprintf('%d:%02d', $work_h, $work_m);
+            }
+            // 1行分をCSVに追加
+            $csv .= "$date,$clockIn,$clockOut,$breakStr,$netWorkHours\n";
+        }
+
+        // 5. ファイル名を作成（例: 西玲奈_2023年6月_勤怠.csv）
+        $fileName = $user->name . '_' . $currentMonth->format('Y年n月') . '_勤怠.csv';
+
+        // ★ここでBOMを付与
+        $csv = "\xEF\xBB\xBF" . $csv;
+
+        // 6. ダウンロードレスポンスを返す
+        return response($csv)
+            ->header('Content-Type', 'text/csv; charset=UTF-8')
+            ->header('Content-Disposition', 'attachment; filename="' . $fileName . '"');
     }
 }

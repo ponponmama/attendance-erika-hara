@@ -95,6 +95,12 @@
                     @endforeach
                 </tbody>
             </table>
+            <div class="attendance-list-btn-area">
+                <form method="GET" action="{{ route('admin.attendance.staff.csv', ['id' => $user->id]) }}">
+                    <input type="hidden" name="month" value="{{ $currentMonth->format('Y-m') }}">
+                    <button type="submit" class="attendance-list-csv-btn button">CSV出力</button>
+                </form>
+            </div>
         </div>
     </div>
 @endsection

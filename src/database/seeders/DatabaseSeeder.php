@@ -29,33 +29,14 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('user_pass'),
         ]);
 
-        // 一般ユーザー5人を固定で作成
-        $users = collect([
-            [
-                'name' => '西 玲奈',
-                'email' => 'user1@example.com',
-            ],
-            [
-                'name' => '山田 太郎',
-                'email' => 'user2@example.com',
-            ],
-            [
-                'name' => '山田 花子',
-                'email' => 'user3@example.com',
-            ],
-            [
-                'name' => '佐藤 次郎',
-                'email' => 'user4@example.com',
-            ],
-            [
-                'name' => '鈴木 三郎',
-                'email' => 'user5@example.com',
-            ],
-        ])->map(function($userData) {
-            return User::factory()->user()->create(array_merge($userData, [
-                'password' => Hash::make('user_pass'),
-            ]));
-        });
+        // 1. ユーザーをランダムで20人作成
+        $users = User::factory()->count(20)->create();
+
+        // 2. id順でメールアドレスを上書き
+        foreach ($users as $user) {
+            $user->email = 'user' . $user->id . '@example.com';
+            $user->save();
+        }
 
         // 各ユーザーに対して勤怠データを作成
         foreach ($users as $user) {
