@@ -59,7 +59,7 @@
                     <tr class="attendance-detail-tr">
                         <th class="attendance-detail-th">備考</th>
                         <td class="attendance-detail-td">
-                            {{ $attendance->memo }}
+                            <span class="attendance-detail-memo">{{ $attendance->memo }}</span>
                         </td>
                     </tr>
                 </table>
