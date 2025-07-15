@@ -80,8 +80,6 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'role:admin'])->grou
     Route::get('/attendance/staff/{id}', [AdminAttendanceController::class, 'staffAttendance'])->name('attendance.staff');
     //勤怠詳細
     Route::get('/attendance/staff/{user_id}/detail/{attendance_id}', [AdminAttendanceController::class, 'staffAttendanceDetail'])->name('attendance.staff.detail');
-    //管理者による勤怠データの更新
-    Route::put('/attendance/{id}', [AdminAttendanceController::class, 'update'])->name('attendance.update');
     //スタッフ別勤怠一覧のCSV出力
     Route::get('/attendance/staff/{id}/csv', [AdminAttendanceController::class, 'exportStaffCsv'])
         ->name('attendance.staff.csv')
@@ -100,9 +98,9 @@ Route::get('/stamp_correction_request/list', [StampCorrectionRequestController::
     ->middleware(['auth'])
     ->name('stamp_correction_request.list');
 
-// 【一般ユーザー】修正申請の新規作成（申請ボタン押下時）
+// 【一般ユーザー・管理者】修正申請の新規作成（申請ボタン押下時）
 Route::post('/stamp_correction_request', [StampCorrectionRequestController::class, 'store'])
-    ->middleware(['auth', 'role:user', 'verified'])
+    ->middleware(['auth'])
     ->name('stamp_correction_request.store');
 
 // 【管理者】修正申請の承認（承認ボタン押下時）

@@ -79,7 +79,7 @@ class StampCorrectionRequestController extends Controller
         if ($request->clock_out && $request->clock_out !== ($attendance->clock_out ? \Carbon\Carbon::parse($attendance->clock_out)->format('H:i') : '')) {
             $correctionTypes[] = 'clock_out';
         }
-        for ($i = 1; $i <= 10; $i++) {
+        for ($i = 0; $i <= 10; $i++) {
             if ($request->input("break_start_{$i}") || $request->input("break_end_{$i}")) {
                 $correctionTypes[] = 'break';
                 break; // 1つでもあればbreakでOK

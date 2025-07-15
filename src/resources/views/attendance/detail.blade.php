@@ -74,11 +74,9 @@
                     @endif
                 </div>
             @else
-                {{-- 修正申請がない場合や承認済み以外の場合は管理者が直接修正可能 --}}
-                <form class="attendance-detail-form" action="{{ route('admin.attendance.update', $attendance->id) }}"
-                    method="POST">
+                {{-- 管理者も修正申請システムを使用 --}}
+                <form class="attendance-detail-form" action="{{ route('stamp_correction_request.store') }}" method="POST">
                     @csrf
-                    @method('PUT')
                     <table class="attendance-detail-table">
                         <tr class="attendance-detail-tr">
                             <th class="attendance-detail-th">名前</th>
@@ -169,7 +167,8 @@
                         </tr>
                     </table>
                     <div class="attendance-detail-btn-area">
-                        <button type="submit" class="attendance-detail-edit-btn button">修正</button>
+                        <input type="hidden" name="attendance_id" value="{{ $attendance->id }}">
+                        <button type="submit" class="attendance-detail-edit-btn button">修正申請</button>
                     </div>
                 </form>
             @endif
