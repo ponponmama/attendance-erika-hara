@@ -130,6 +130,19 @@ class AdminAttendanceController extends Controller
         return redirect()->route('admin.attendance.list')->with('success', '勤怠を更新しました。');
     }
 
+        //管理者による勤怠詳細表示
+    public function show($id)
+    {
+        $attendance = Attendance::with(['user', 'breakTimes'])->findOrFail($id);
+
+        // 管理者のみアクセス可能
+        if (auth()->user()->role !== 'admin') {
+            abort(403);
+        }
+
+        return view('attendance.detail', compact('attendance'));
+    }
+
     // スタッフ別勤怠CSV出力
     public function exportStaffCsv(Request $request, $id)
     {

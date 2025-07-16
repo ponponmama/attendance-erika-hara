@@ -78,8 +78,6 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'role:admin'])->grou
     Route::get('/staff/list', [AdminAttendanceController::class, 'staffList'])->name('staff.list');
     //スタッフ別勤怠一覧
     Route::get('/attendance/staff/{id}', [AdminAttendanceController::class, 'staffAttendance'])->name('attendance.staff');
-    //勤怠詳細
-    Route::get('/attendance/staff/{user_id}/detail/{attendance_id}', [AdminAttendanceController::class, 'staffAttendanceDetail'])->name('attendance.staff.detail');
     //スタッフ別勤怠一覧のCSV出力
     Route::get('/attendance/staff/{id}/csv', [AdminAttendanceController::class, 'exportStaffCsv'])
         ->name('attendance.staff.csv')

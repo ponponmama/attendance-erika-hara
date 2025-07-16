@@ -71,6 +71,72 @@ class StampCorrectionRequestController extends Controller
             abort(403);
         }
 
+        // 管理者の場合は直接更新
+        if ($user->role === 'admin') {
+            // 勤怠データを更新
+            $updateData = [];
+
+            if ($request->filled('clock_in')) {
+                $updateData['clock_in'] = \Carbon\Carbon::parse($attendance->date)->setTimeFromTimeString($request->clock_in);
+            } else {
+                $updateData['clock_in'] = null;
+            }
+
+            if ($request->filled('clock_out')) {
+                $updateData['clock_out'] = \Carbon\Carbon::parse($attendance->date)->setTimeFromTimeString($request->clock_out);
+            } else {
+                $updateData['clock_out'] = null;
+            }
+
+            if ($request->has('memo')) {
+                $updateData['memo'] = $request->memo;
+            }
+
+            $attendance->update($updateData);
+
+            // 休憩時間を更新
+            $breakTimes = $attendance->breakTimes;
+            foreach ($breakTimes as $i => $break) {
+                $breakStartKey = "break_start_" . $i;
+                $breakEndKey = "break_end_" . $i;
+
+                $breakData = [];
+
+                if ($request->filled($breakStartKey)) {
+                    $breakData['break_start'] = \Carbon\Carbon::parse($attendance->date)->setTimeFromTimeString($request->input($breakStartKey));
+                }
+
+                if ($request->filled($breakEndKey)) {
+                    $breakData['break_end'] = \Carbon\Carbon::parse($attendance->date)->setTimeFromTimeString($request->input($breakEndKey));
+                } else {
+                    $breakData['break_end'] = null;
+                }
+
+                // 開始時間が入力されている場合のみ更新
+                if (isset($breakData['break_start'])) {
+                    $break->update($breakData);
+                }
+            }
+
+            // 新しい休憩時間の処理
+            $newBreakIndex = count($breakTimes);
+            $newBreakStartKey = "break_start_" . $newBreakIndex;
+            $newBreakEndKey = "break_end_" . $newBreakIndex;
+
+            if ($request->filled($newBreakStartKey)) {
+                $newBreakData = [
+                    'attendance_id' => $attendance->id,
+                    'break_start' => \Carbon\Carbon::parse($attendance->date)->setTimeFromTimeString($request->input($newBreakStartKey)),
+                    'break_end' => $request->filled($newBreakEndKey) ? \Carbon\Carbon::parse($attendance->date)->setTimeFromTimeString($request->input($newBreakEndKey)) : null,
+                ];
+
+                \App\Models\BreakTime::create($newBreakData);
+            }
+
+            return redirect()->back()->with('success', '勤怠を更新しました');
+        }
+
+        // 一般ユーザーの場合は修正申請を作成
         // どの項目を修正したいかをまとめて記録
         $correctionTypes = [];
         if ($request->clock_in && $request->clock_in !== ($attendance->clock_in ? \Carbon\Carbon::parse($attendance->clock_in)->format('H:i') : '')) {

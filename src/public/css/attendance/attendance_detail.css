@@ -83,7 +83,7 @@
 }
 
 .attendance-detail-date:first-child  {
-    margin-right: 12%;
+    margin-right: 15%;
 }
 
 .attendance-detail-tilde {
@@ -103,7 +103,7 @@
     border-radius: 6px;
     padding: 4px 15px;
     box-sizing: border-box;
-    margin: 0 4px;
+    margin: 0;
     resize: none;
     font-family: inherit;
     transition: border 0.2s;
@@ -151,7 +151,8 @@
 
 .status-approved {
     background: grey;
-    padding: 10px 20px;
+    color: white;
+    padding: 4px 20px;
 
 }
 
