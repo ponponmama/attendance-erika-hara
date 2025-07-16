@@ -102,10 +102,11 @@ Coachtech 勤怠管理アプリ
 
 ````bash
 git clone https://github.com/ponponmama/attendance-erika-hara.git
+```
 
 ```bash
 cd coachtech-attendance
-````
+```
 
 2. 必要なパッケージのインストール
 
