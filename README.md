@@ -100,7 +100,7 @@ Coachtech 勤怠管理アプリ
 
 1. リポジトリのクローン
 
-````bash
+```bash
 git clone https://github.com/ponponmama/attendance-erika-hara.git
 ```
 
