@@ -6,5 +6,4 @@
 .env
 .env.backup
 .styleci.yml
-docker-compose.yml
 cspell.json
