@@ -35,14 +35,19 @@
 #### ユーザー画面
 
 - ユーザー登録
+
 <p align="center">
     <img src="user_register.png" alt="ユーザー登録画面">
 </p>
+
 - ログイン
+
 <p align="center">
     <img src="user_login.png" alt="ユーザーログイン画面">
 </p>
+
 - 勤怠打刻画面
+
 <p align="center">
     <img src="user_attendance_pre-work status.png" alt="ユーザー打刻勤務前画面">
 </p>
@@ -52,15 +57,21 @@
 <p align="center">
     <img src="user_leave work.png" alt="ユーザー打刻勤務中画面">
 </p>
+
 - 勤怠一覧画面
+
 <p align="center">
     <img src="user_attendance_list.png" alt="ユーザー勤怠一覧画面">
 </p>
+
 - 勤怠詳細画面
+
 <p align="center">
     <img src="user_detail.png" alt="ユーザー修正申請画面">
 </p>
+
 - 修正申請一覧画面
+
 <p align="center">
     <img src="user_stamp_correction_request_list.png" alt="修正申請一覧画面">
 </p>
