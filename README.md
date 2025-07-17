@@ -77,31 +77,31 @@
 
 ### 管理者画面
 
-- ログイン
+- ログイン <br>
 <p align="center">
     <img src="admin_login.png" alt="ログイン画面">
 </p>
-- 勤怠一覧画面
+- 勤怠一覧画面 <br>
 <p align="center">
     <img src="admin_attendance.png" alt="勤怠一覧画面">
 </p>
-- スタッフ一覧画面
+- スタッフ一覧画面 <br>
 <p align="center">
     <img src="admin_staff_list.png" alt="スタッフ一覧画面">
 </p>
-- スタッフ別勤怠一覧画面
+- スタッフ別勤怠一覧画面 <br>
 <p align="center">
     <img src="admin_attendance_staff.png" alt="スタッフ別勤怠一覧画面">
 </p>
-- 勤怠詳細・修正画面
+- 勤怠詳細・修正画面 <br>
 <p align="center">
     <img src="admin_detail.png" alt="勤怠詳細・修正画面">
 </p>
-- 修正申請一覧画面
+- 修正申請一覧画面 <br>
 <p align="center">
     <img src="admin_stamp_correction_request_list.png" alt="スタッフ一覧画面">
 </p>
-- 修正申請の承認画面
+- 修正申請の承認画面 <br>
 <p align="center">
     <img src="admin_approved.png" alt="スタッフ一覧画面">
 </p>
