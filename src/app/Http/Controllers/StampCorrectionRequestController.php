@@ -158,7 +158,7 @@ class StampCorrectionRequestController extends Controller
                 \App\Models\BreakTime::create($newBreakData);
             }
 
-            return redirect()->back()->with('succ            ess', '勤怠を更新しました');
+            return redirect()->back()->with('success', '勤怠を更新しました');
         }
 
         // 一般ユーザーの場合は修正申請を作成
