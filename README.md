@@ -2,7 +2,6 @@
       <img src="https://img.shields.io/badge/-Laravel-black.svg?logo=laravel&style=plastic"> <img src="https://img.shields.io/badge/-Html5-pink.svg?logo=html5&style=plastic"> <img src="https://img.shields.io/badge/-CSS3-blue.svg?logo=css3&style=plastic"> <img src="https://img.shields.io/badge/-Php-orange.svg?logo=php&style=plastic"> <img src="https://img.shields.io/badge/-Mysql-green.svg?logo=mysql&style=plastic"> <img src="https://img.shields.io/badge/-Windows-0078D6.svg?logo=windows&style=plastic"> <img src="https://img.shields.io/badge/-Docker-1488C6.svg?logo=docker&style=plastic"> <img src="https://img.shields.io/badge/-Nginx-red.svg?logo=nginx&style=plastic"> <img src="https://img.shields.io/badge/-Github-181717.svg?logo=github&style=plastic">
 </p>
 
-
 ### サービス概要
 
 企業が開発した独自の勤怠管理アプリです。ユーザーの勤怠管理と管理者による勤怠監視を目的としています。
@@ -33,30 +32,82 @@
 - 勤怠詳細表示・修正申請
 - 修正申請一覧表示
 
+#### ユーザー画面
+
+- ユーザー登録
+<p align="center">
+    <img src="user_register.png" alt="ユーザー登録画面">
+</p>
+- ログイン
+<p align="center">
+    <img src="user_login.png" alt="ユーザーログイン画面">
+</p>
+- 勤怠打刻画面
+<p align="center">
+    <img src="user_attendance_pre-work status.png" alt="ユーザー打刻勤務前画面">
+</p>
+<p align="center">
+    <img src="user_attendance_working.png" alt="ユーザー打刻勤務中画面">
+</p>
+<p align="center">
+    <img src="user_leave work.png" alt="ユーザー打刻勤務中画面">
+</p>
+- 勤怠一覧画面
+<p align="center">
+    <img src="user_attendance_list.png" alt="ユーザー勤怠一覧画面">
+</p>
+- 勤怠詳細画面
+<p align="center">
+    <img src="user_detail.png" alt="ユーザー修正申請画面">
+</p>
+- 修正申請一覧画面
+<p align="center">
+    <img src="user_stamp_correction_request_list.png" alt="修正申請一覧画面">
+</p>
+
 ### 管理者機能
 
 - 全ユーザーの勤怠一覧表示
 - スタッフ一覧表示
 - スタッフ別勤怠一覧表示
 - 勤怠詳細表示・直接修正
+- 修正申請一覧表示
 - 修正申請の承認
 - CSV 出力機能
 
-## 画面一覧
-
-### ユーザー画面
-
-- 勤怠打刻画面
-- 勤怠一覧画面
-- 勤怠詳細画面
-- 修正申請一覧画面
-
 ### 管理者画面
 
+- ログイン
+<p align="center">
+    <img src="admin_login.png" alt="ログイン画面">
+</p>
 - 勤怠一覧画面
+<p align="center">
+    <img src="admin_attendance.png" alt="勤怠一覧画面">
+</p>
 - スタッフ一覧画面
+<p align="center">
+    <img src="admin_staff_list.png" alt="スタッフ一覧画面">
+</p>
 - スタッフ別勤怠一覧画面
+<p align="center">
+    <img src="admin_attendance_staff.png" alt="スタッフ別勤怠一覧画面">
+</p>
+- 勤怠詳細・修正画面
+<p align="center">
+    <img src="admin_detail.png" alt="勤怠詳細・修正画面">
+</p>
 - 修正申請一覧画面
+<p align="center">
+    <img src="admin_stamp_correction_request_list.png" alt="スタッフ一覧画面">
+</p>
+- 修正申請の承認画面
+<p align="center">
+    <img src="admin_approved.png" alt="スタッフ一覧画面">
+</p>
+<p align="center">
+    <img src="admin_pending.png" alt="スタッフ一覧画面">
+</p>
 
 ### 開発言語・フレームワーク
 
@@ -69,7 +120,6 @@
 ### 開発プロセス
 
 - 設計 → コーディング → テスト
-
 
 ### ER 図
 
