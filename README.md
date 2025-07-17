@@ -2,13 +2,6 @@
       <img src="https://img.shields.io/badge/-Laravel-black.svg?logo=laravel&style=plastic"> <img src="https://img.shields.io/badge/-Html5-pink.svg?logo=html5&style=plastic"> <img src="https://img.shields.io/badge/-CSS3-blue.svg?logo=css3&style=plastic"> <img src="https://img.shields.io/badge/-Php-orange.svg?logo=php&style=plastic"> <img src="https://img.shields.io/badge/-Mysql-green.svg?logo=mysql&style=plastic"> <img src="https://img.shields.io/badge/-Windows-0078D6.svg?logo=windows&style=plastic"> <img src="https://img.shields.io/badge/-Docker-1488C6.svg?logo=docker&style=plastic"> <img src="https://img.shields.io/badge/-Nginx-red.svg?logo=nginx&style=plastic"> <img src="https://img.shields.io/badge/-Github-181717.svg?logo=github&style=plastic">
 </p>
 
-# CoachTech 勤怠管理アプリ
-
-## プロジェクト概要
-
-### サービス名
-
-Coachtech 勤怠管理アプリ
 
 ### サービス概要
 
@@ -24,13 +17,14 @@ Coachtech 勤怠管理アプリ
 
 - 初年度でのユーザー数 1000 人達成
 
-### ターゲット環境
+### 主な機能一覧
 
-- **ターゲットユーザー**: 社会人全般
-- **ターゲットブラウザ**: PC（Chrome/Firefox/Safari 最新バージョン）
-- **OS**: Windows, macOS, Linux
+### 認証機能
 
-## 機能要件
+- ユーザー登録・ログイン
+- メール認証（一般ユーザーのみ）
+- ロールベースアクセス制御（ユーザー・管理者）
+- Laravel Fortify による認証システム
 
 ### ユーザー機能
 
@@ -48,13 +42,6 @@ Coachtech 勤怠管理アプリ
 - 修正申請の承認
 - CSV 出力機能
 
-### 認証機能
-
-- ユーザー登録・ログイン
-- メール認証（一般ユーザーのみ）
-- ロールベースアクセス制御（ユーザー・管理者）
-- Laravel Fortify による認証システム
-
 ## 画面一覧
 
 ### ユーザー画面
@@ -71,10 +58,6 @@ Coachtech 勤怠管理アプリ
 - スタッフ別勤怠一覧画面
 - 修正申請一覧画面
 
-### 開発プロセス
-
-- 設計 → コーディング → テスト
-
 ### 開発言語・フレームワーク
 
 - **開発言語**: PHP
@@ -82,6 +65,11 @@ Coachtech 勤怠管理アプリ
 - **データベース**: MySQL
 - **バージョン管理**: GitHub
 - **コンテナ化技術**: Docker
+
+### 開発プロセス
+
+- 設計 → コーディング → テスト
+
 
 ### ER 図
 
@@ -99,14 +87,16 @@ Coachtech 勤怠管理アプリ
 
 ### セットアップ手順
 
-1. リポジトリのクローン
+####クローン作製手順
+
+1. Github リポジトリのクローン
 
 ```bash
 git clone https://github.com/ponponmama/attendance-erika-hara.git
 ```
 
 ```bash
-cd coachtech-attendance
+cd attendance-erika-hara
 ```
 
 2. 必要なパッケージのインストール
@@ -137,6 +127,10 @@ docker-compose exec php bash
 chmod +x setup.sh
 ```
 
+```bash
+./setup.sh
+```
+
 - 以下のフォルダが作成されます
 
 ```
@@ -157,14 +151,6 @@ chmod +x setup.sh
 #### "ディレクトリが正常に作成されました。" ← このメッセージが出ます。<br>
 
 <br>
-
-```bash
-./setup.sh
-```
-
-```bash
-composer install
-```
 
 - 3-3 Docker 環境で PHP コンテナに入り、依存関係をインストールします。<br>
 
@@ -206,6 +192,8 @@ php artisan key:generate
 
 6. データベースのセットアップ
 
+#### データベースのマイグレーション
+
 ```bash
 php artisan migrate
 ```
@@ -220,12 +208,6 @@ php artisan db:seed
 
 ```bash
 php artisan migrate --seed
-```
-
-7. ストレージリンクの作成
-
-```bash
-php artisan storage:link
 ```
 
 ## 使用方法
