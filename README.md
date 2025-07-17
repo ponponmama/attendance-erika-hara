@@ -325,6 +325,12 @@ php artisan test
   - `AdminAttendanceListTest.php` - 管理者勤怠一覧機能テスト
   - `AttendanceDetailTest.php` - 勤怠詳細機能テスト
 
+  *テストで一旦dbがリセットされます。マイグレートリフレッシュとシーダーしてください。
+
+```bash
+php artisan migrate:fresh --seed
+```
+
 ### メール設定
 
 プロジェクトでは開発環境でのメール送信のテストに Mailtrap を使用しています。

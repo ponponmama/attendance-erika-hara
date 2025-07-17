@@ -37,22 +37,43 @@
                     <tr class="attendance-detail-tr">
                         <th class="attendance-detail-th">出勤・退勤</th>
                         <td class="attendance-detail-td">
-                            <span
-                                class="attendance-detail-time">{{ $attendance->clock_in ? \Carbon\Carbon::parse($attendance->clock_in)->format('H:i') : '' }}</span>
+                            @php
+                                $correctionData = $latestRequest->correction_data
+                                    ? json_decode($latestRequest->correction_data, true)
+                                    : null;
+                            @endphp
+                            @if ($correctionData && isset($correctionData['clock_in']))
+                                <span class="attendance-detail-time">{{ $correctionData['clock_in']['requested'] }}</span>
+                            @else
+                                <span
+                                    class="attendance-detail-time">{{ $attendance->clock_in ? \Carbon\Carbon::parse($attendance->clock_in)->format('H:i') : '' }}</span>
+                            @endif
                             <span class="attendance-detail-tilde">〜</span>
-                            <span
-                                class="attendance-detail-time">{{ $attendance->clock_out ? \Carbon\Carbon::parse($attendance->clock_out)->format('H:i') : '' }}</span>
+                            @if ($correctionData && isset($correctionData['clock_out']))
+                                <span class="attendance-detail-time">{{ $correctionData['clock_out']['requested'] }}</span>
+                            @else
+                                <span
+                                    class="attendance-detail-time">{{ $attendance->clock_out ? \Carbon\Carbon::parse($attendance->clock_out)->format('H:i') : '' }}</span>
+                            @endif
                         </td>
                     </tr>
                     @foreach ($attendance->breakTimes as $i => $break)
                         <tr class="attendance-detail-tr">
                             <th class="attendance-detail-th">休憩{{ $i + 1 }}</th>
                             <td class="attendance-detail-td">
-                                <span
-                                    class="attendance-detail-time">{{ $break->break_start ? \Carbon\Carbon::parse($break->break_start)->format('H:i') : '' }}</span>
-                                <span class="attendance-detail-tilde">〜</span>
-                                <span
-                                    class="attendance-detail-time">{{ $break->break_end ? \Carbon\Carbon::parse($break->break_end)->format('H:i') : '' }}</span>
+                                @if ($correctionData && isset($correctionData['breaks'][$i]))
+                                    <span
+                                        class="attendance-detail-time">{{ $correctionData['breaks'][$i]['break_start']['requested'] }}</span>
+                                    <span class="attendance-detail-tilde">〜</span>
+                                    <span
+                                        class="attendance-detail-time">{{ $correctionData['breaks'][$i]['break_end']['requested'] }}</span>
+                                @else
+                                    <span
+                                        class="attendance-detail-time">{{ $break->break_start ? \Carbon\Carbon::parse($break->break_start)->format('H:i') : '' }}</span>
+                                    <span class="attendance-detail-tilde">〜</span>
+                                    <span
+                                        class="attendance-detail-time">{{ $break->break_end ? \Carbon\Carbon::parse($break->break_end)->format('H:i') : '' }}</span>
+                                @endif
                             </td>
                         </tr>
                     @endforeach
@@ -191,11 +212,11 @@
                         <th class="attendance-detail-th">出勤・退勤</th>
                         <td class="attendance-detail-td">
                             <input type="time" name="clock_in" class="attendance-detail-input"
-                                value="{{ $attendance->clock_in ? \Carbon\Carbon::parse($attendance->clock_in)->format('H:i') : '' }}"
+                                value="{{ $latestRequest && in_array($latestRequest->status, ['pending', 'approved']) ? (old('clock_in') ?: ($attendance->clock_in ? \Carbon\Carbon::parse($attendance->clock_in)->format('H:i') : '')) : ($attendance->clock_in ? \Carbon\Carbon::parse($attendance->clock_in)->format('H:i') : '') }}"
                                 {{ $latestRequest && in_array($latestRequest->status, ['pending', 'approved']) ? 'disabled' : '' }}>
                             <span class="attendance-detail-tilde">〜</span>
                             <input type="time" name="clock_out" class="attendance-detail-input"
-                                value="{{ $attendance->clock_out ? \Carbon\Carbon::parse($attendance->clock_out)->format('H:i') : '' }}"
+                                value="{{ $latestRequest && in_array($latestRequest->status, ['pending', 'approved']) ? (old('clock_out') ?: ($attendance->clock_out ? \Carbon\Carbon::parse($attendance->clock_out)->format('H:i') : '')) : ($attendance->clock_out ? \Carbon\Carbon::parse($attendance->clock_out)->format('H:i') : '') }}"
                                 {{ $latestRequest && in_array($latestRequest->status, ['pending', 'approved']) ? 'disabled' : '' }}>
                             <p class="form__error">
                                 @error('clock_in')
@@ -217,12 +238,12 @@
                             <td class="attendance-detail-td">
                                 <input type="time" name="break_start_{{ $i }}"
                                     class="attendance-detail-input"
-                                    value="{{ isset($attendance->breakTimes[$i]) && $attendance->breakTimes[$i]->break_start ? \Carbon\Carbon::parse($attendance->breakTimes[$i]->break_start)->format('H:i') : '' }}"
+                                    value="{{ $latestRequest && in_array($latestRequest->status, ['pending', 'approved']) ? (old('break_start_' . $i) ?: (isset($attendance->breakTimes[$i]) && $attendance->breakTimes[$i]->break_start ? \Carbon\Carbon::parse($attendance->breakTimes[$i]->break_start)->format('H:i') : '')) : (isset($attendance->breakTimes[$i]) && $attendance->breakTimes[$i]->break_start ? \Carbon\Carbon::parse($attendance->breakTimes[$i]->break_start)->format('H:i') : '') }}"
                                     {{ $latestRequest && in_array($latestRequest->status, ['pending', 'approved']) ? 'disabled' : '' }}>
                                 <span class="attendance-detail-tilde">〜</span>
                                 <input type="time" name="break_end_{{ $i }}"
                                     class="attendance-detail-input"
-                                    value="{{ isset($attendance->breakTimes[$i]) && $attendance->breakTimes[$i]->break_end ? \Carbon\Carbon::parse($attendance->breakTimes[$i]->break_end)->format('H:i') : '' }}"
+                                    value="{{ $latestRequest && in_array($latestRequest->status, ['pending', 'approved']) ? (old('break_end_' . $i) ?: (isset($attendance->breakTimes[$i]) && $attendance->breakTimes[$i]->break_end ? \Carbon\Carbon::parse($attendance->breakTimes[$i]->break_end)->format('H:i') : '')) : (isset($attendance->breakTimes[$i]) && $attendance->breakTimes[$i]->break_end ? \Carbon\Carbon::parse($attendance->breakTimes[$i]->break_end)->format('H:i') : '') }}"
                                     {{ $latestRequest && in_array($latestRequest->status, ['pending', 'approved']) ? 'disabled' : '' }}>
                                 <p class="form__error">
                                     @error('break_start_' . $i)
