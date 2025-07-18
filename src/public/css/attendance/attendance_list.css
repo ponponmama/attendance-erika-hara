@@ -8,15 +8,6 @@
     margin-bottom: 5%;
 }
 
-.attendance-list-title {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: black;
-    border-left: 3px solid black;
-    padding-left: 20px;
-    text-align: left;
-    margin-bottom: 5%;
-}
 
 .month-switcher {
     display: flex;
@@ -75,7 +66,7 @@
     border-spacing: 0;
     font-size: 1rem;
     font-weight: bold;
-    background: #fff;
+    background: white;
     border-radius: 12px;
 }
 

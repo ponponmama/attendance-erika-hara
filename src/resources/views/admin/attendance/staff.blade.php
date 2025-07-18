@@ -9,11 +9,11 @@
     <div class="attendance-list-container">
         <div class="attendance-list-header">
             @if (session('success'))
-                <div class="alert-success">
+                <p class="alert-success">
                     {{ session('success') }}
-                </div>
+                </p>
             @endif
-            <h1 class="attendance-list-title">{{ $user->name }}さんの勤怠</h1>
+            <h1 class="attendance-title">{{ $user->name }}さんの勤怠</h1>
             <div class="month-switcher">
                 <a href="{{ route('admin.attendance.staff', ['id' => $user->id, 'month' => $currentMonth->copy()->subMonth()->format('Y-m')]) }}"
                     class="month-arrow">← 前月</a>

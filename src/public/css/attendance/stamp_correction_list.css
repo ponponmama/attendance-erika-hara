@@ -4,15 +4,6 @@
     background: #f3f3f3;
 }
 
-.stamp-correction-list-title {
-    font-size: 2rem;
-    font-weight: bold;
-    color: black;
-    text-align: left;
-    margin-bottom:5%;
-    padding-left: 3%;
-    border-left: 6px solid black;
-}
 
 .tab-menu {
     display: flex;
@@ -20,7 +11,6 @@
     margin: 4% auto;
     padding: 3%;
     border-bottom: 1px solid black;
-
 }
 
 .tab-item {

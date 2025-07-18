@@ -9,9 +9,9 @@
     <div class="attendance-list-container">
         <div class="attendance-list-header">
             @if (session('success'))
-                <div class="alert-success">
+                <p class="alert-success">
                     {{ session('success') }}
-                </div>
+                </p>
             @endif
             <div class="month-switcher">
                 <a href="{{ route('admin.attendance.list', ['month' => $currentMonth->copy()->subMonth()->format('Y-m')]) }}"

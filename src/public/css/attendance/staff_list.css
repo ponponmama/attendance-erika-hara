@@ -4,16 +4,6 @@
     background: #f3f3f3;
 }
 
-.staff-list-title {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: black;
-    border-left: 3px solid black;
-    padding-left: 20px;
-    text-align: left;
-    margin-bottom: 5%;
-}
-
 .staff-list-table-container {
     border-radius: 12px;
     padding: 0;

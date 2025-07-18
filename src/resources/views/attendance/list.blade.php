@@ -9,11 +9,11 @@
     <div class="attendance-list-container">
         <div class="attendance-list-header">
             @if (session('success'))
-                <div class="alert-success">
+                <p class="alert-success">
                     {{ session('success') }}
-                </div>
+                </p>
             @endif
-            <h1 class="attendance-list-title">勤怠一覧</h1>
+            <h1 class="attendance-title">勤怠一覧</h1>
             <div class="month-switcher">
                 <a href="{{ route('attendance_list', ['month' => $currentMonth->copy()->subMonth()->format('Y-m')]) }}"
                     class="month-arrow">← 前月</a>

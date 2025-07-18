@@ -7,13 +7,13 @@
 
 @section('content')
     <div class="stamp-correction-list-container">
-        <h1 class="stamp-correction-list-title">
+        <h1 class="attendance-title">
             申請一覧
         </h1>
         @if (session('success'))
-            <div class="alert alert-success">
+            <p class="alert-success">
                 {{ session('success') }}
-            </div>
+            </p>
         @endif
         <div class="tab-menu">
             @if (Auth::user()->role === 'admin')

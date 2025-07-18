@@ -110,6 +110,26 @@ li {
     margin-bottom: 1%;
 }
 
+.alert-success {
+    line-height: 1.5rem;
+    min-height: 1.5rem;
+    color: black;
+    font-size: 1rem;
+    margin: 1%;
+}
+
+.attendance-title {
+    width: 100%;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: black;
+    border-left: 6px solid black;
+    padding-left: 20px;
+    text-align: left;
+    margin-bottom: 5%;
+}
+
+
 @media screen and (max-width: 540px) {
     .header-container {
         flex-direction: column;
@@ -150,6 +170,7 @@ li {
     .header-nav__link {
         font-size: 1rem;
     }
+
 }
 
 @media screen and (min-width: 541px) and (max-width: 1024px) {
