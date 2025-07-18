@@ -34,9 +34,9 @@
             <form class="attendance-actions__form" method="POST" action="{{ route('attendance_clock_out') }}">
                 @csrf
                 @if (session('message'))
-                    <div class="alert alert-success">
+                    <p class="alert-success>
                         {{ session('message') }}
-                    </div>
+                    </p>
                 @else
                     <button type="submit" class="action-button button">退勤</button>
                 @endif

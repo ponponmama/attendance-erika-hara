@@ -20,25 +20,6 @@
     height: 100%;
 }
 
-.auth-message {
-    line-height: 1.5rem;
-    color: #333;
-    font-size: 1rem;
-    margin-bottom: 2%;
-    text-align: center;
-    width: 100%;
-}
-
-.auth-success-message {
-    line-height: 1.5rem;
-    color: #28a745;
-    font-size: 1rem;
-    margin-bottom: 2%;
-    text-align: center;
-    width: 100%;
-    font-weight: bold;
-}
-
 .form-group {
     width: 100%;
     display: flex;
@@ -73,8 +54,6 @@
     width: 100%;
 }
 
-
-
 .submit-button {
     width: 100%;
     padding: 10px;
@@ -91,6 +70,38 @@
     font-size: 1rem;
     margin: 2% auto;
     color: rgb(74, 128, 245)
+}
+
+/* メール認証誘導画面（一般ユーザー） /email/verify */
+.auth-message {
+    line-height: 2.2rem;
+    color: black;
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 2%;
+    text-align: center;
+    width: 100%;
+}
+
+.auth-success-message {
+    line-height: 1.5rem;
+    color: #0073CC;
+    font-size: 1.25rem;
+    margin-bottom: 2%;
+    text-align: center;
+    width: 100%;
+    font-weight: 400;
+}
+
+.verify-email-button {
+    display: block;
+    margin: 3% auto;
+    padding: 15px 25px;
+    border: 1px solid #D9D9D9;    background-color: #D9D9D9;
+    color: black;
+    border-radius: 10px;
+    font-size: 2rem;
+    font-weight: 700;
 }
 
 @media screen and (max-width: 768px) {
