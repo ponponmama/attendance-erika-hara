@@ -16,13 +16,20 @@
             <h1 class="attendance-title">勤怠一覧</h1>
             <div class="month-switcher">
                 <a href="{{ route('attendance_list', ['month' => $currentMonth->copy()->subMonth()->format('Y-m')]) }}"
-                    class="month-arrow">← 前月</a>
+                    class="month-arrow">
+                    <img src="{{ asset('images/arrow.png') }}" alt="前月" class="month-arrow-icon">
+                    前月
+                </a>
                 <span class="current-month">
                     <img src="{{ asset('images/calendar.svg') }}" alt="カレンダー" class="calendar-icon">
                     {{ $currentMonth->format('Y/m') }}
                 </span>
                 <a href="{{ route('attendance_list', ['month' => $currentMonth->copy()->addMonth()->format('Y-m')]) }}"
-                    class="month-arrow">翌月 →</a>
+                    class="month-arrow">
+                    翌月
+                    <img src="{{ asset('images/arrow.png') }}" alt="翌月"
+                        class="month-arrow-icon month-arrow-icon-right">
+                </a>
             </div>
         </div>
         <div class="attendance-table-container">

@@ -1,17 +1,19 @@
+.main-content {
+    background-color: white;
+}
 .auth-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     width: 50%;
-    padding: 20px;
+    padding: 28px;
     color: black;
     font-weight: bold;
-    background-color: #f0f0f0;
 }
 
 .auth-title {
-    font-size: 2rem;
+    font-size: 2.25rem;
     margin: 2% auto;
 }
 
@@ -27,19 +29,33 @@
     margin: 1% auto;
 }
 
-.form-label,.form-input {
-    line-height: 2rem;
-    padding: 4px 10px;
-    font-size: 1.3rem;
+/*　register　*/
+.register-label{
+    height: 36px;
+    font-size: 1.5rem;
+    text-align: left;
 }
 
+.register-input {
+    height: 45px;
+    border-radius: 4px;
+    border: 1px solid black;
+    padding: 4px 10px;
+    font-size: 1.5rem;
+    text-align: left;
+}
+
+/*　login　*/
 .form-label {
+    height: 36px;
+    font-size: 1.5rem;
     text-align: left;
 }
 
 .form-input {
-    padding: 10px;
-    border-radius: 5px;
+    height: 58px;
+    padding: 4px 10px;
+    border-radius: 4px;
     border: 1px solid black;
     margin-bottom: 1%;
 }
@@ -56,18 +72,20 @@
 
 .submit-button {
     width: 100%;
-    padding: 10px;
+    height: 60px;
     background-color: black;
     color: white;
     border-radius: 5px;
     border: none;
-    font-size: 1.2rem;
-    font-weight: bold;
+    font-size: 1.6rem;
+    transition: all 0ms;
     margin: 5% auto;
 }
 
-.login-register {
-    font-size: 1rem;
+/*　loginとregister共通　*/
+.login-register-link {
+    font-size: 1.25rem;
+    font-weight: 400;
     margin: 2% auto;
     color: rgb(74, 128, 245)
 }
@@ -77,7 +95,6 @@
     line-height: 2.2rem;
     color: black;
     font-size: 2rem;
-    font-weight: 700;
     margin-bottom: 2%;
     text-align: center;
     width: 100%;

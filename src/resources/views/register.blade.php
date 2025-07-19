@@ -14,8 +14,8 @@
             <form action="{{ route('register') }}" method="POST">
                 @csrf
                 <div class="form-group">
-                    <label class="form-label" for="name">名前</label>
-                    <input class="form-input" type="text" name="name" id="name" value="{{ old('name') }}"
+                    <label class="register-label" for="name">名前</label>
+                    <input class="register-input" type="text" name="name" id="name" value="{{ old('name') }}"
                         autocomplete="name">
                 </div>
                 <p class="form__error">
@@ -24,8 +24,8 @@
                     @enderror
                 </p>
                 <div class="form-group">
-                    <label class="form-label" for="email">メールアドレス</label>
-                    <input class="form-input" type="email" name="email" id="email" value="{{ old('email') }}"
+                    <label class="register-label" for="email">メールアドレス</label>
+                    <input class="register-input" type="email" name="email" id="email" value="{{ old('email') }}"
                         autocomplete="email">
                 </div>
                 <p class="form__error">
@@ -34,8 +34,8 @@
                     @enderror
                 </p>
                 <div class="form-group">
-                    <label class="form-label" for="password">パスワード</label>
-                    <input class="form-input" type="password" name="password" id="password" autocomplete="new-password">
+                    <label class="register-label" for="password">パスワード</label>
+                    <input class="register-input" type="password" name="password" id="password" autocomplete="new-password">
                 </div>
                 <p class="form__error">
                     @error('password')
@@ -43,8 +43,8 @@
                     @enderror
                 </p>
                 <div class="form-group">
-                    <label class="form-label" for="password_confirmation">パスワード確認</label>
-                    <input class="form-input" type="password" name="password_confirmation" id="password_confirmation"
+                    <label class="register-label" for="password_confirmation">パスワード確認</label>
+                    <input class="register-input" type="password" name="password_confirmation" id="password_confirmation"
                         autocomplete="new-password">
                 </div>
                 <p class="form__error">
@@ -54,7 +54,7 @@
                 </p>
                 <button type="submit" class="submit-button button">登録する</button>
             </form>
-            <p class="login-register"><a href="{{ route('login') }}">ログインはこちら</a></p>
+            <p class="login-register-link"><a href="{{ route('login') }}">ログインはこちら</a></p>
         </div>
     </div>
 @endsection

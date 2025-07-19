@@ -52,11 +52,16 @@ class FortifyServiceProvider extends ServiceProvider
             if ($user && Hash::check($request->password, $user->password)) {
                 // 管理者ログインの場合はadminのみ許可
                 if ($request->has('admin_login') && $user->role !== 'admin') {
-                    return null;
+                    throw ValidationException::withMessages([
+                        'failed' => 'ログイン情報が登録されていません'
+                    ]);
                 }
                 return $user;
             }
-            return null;
+
+            throw ValidationException::withMessages([
+                'failed' => 'ログイン情報が登録されていません'
+            ]);
         });
 
         // ログイン後のリダイレクト先を分岐

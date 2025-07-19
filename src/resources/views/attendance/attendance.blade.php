@@ -11,17 +11,16 @@
     <div class="attendance-container">
         <div class="attendance-status">
             @if ($status === 'not_clocked_in')
-                <span>勤務外</span>
+                <span class="status-text">勤務外</span>
             @elseif($status === 'clocked_in')
-                <span>出勤中</span>
+                <span class="status-text">出勤中</span>
             @elseif($status === 'on_break')
-                <span>休憩中</span>
+                <span class="status-text">休憩中</span>
             @else
-                <span>勤務終了</span>
+                <span class="status-text">勤務終了</span>
             @endif
         </div>
-        <p class="attendance-date">
-            {{ $now->format('Y年n月j日') }}({{ ['日', '月', '火', '水', '木', '金', '土'][$now->dayOfWeek] }})</p>
+        <p class="attendance-date">{{ $now->format('Y年n月j日') }}({{ ['日', '月', '火', '水', '木', '金', '土'][$now->dayOfWeek] }})</p>
         <p class="attendance-time">{{ $now->format('H:i') }}</p>
     </div>
     <div class="attendance-actions">
