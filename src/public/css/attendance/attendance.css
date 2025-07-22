@@ -31,7 +31,7 @@ body {
     line-height: 22px;
     font-size: 1.12rem;
     color: #696969;
-    letter-spacing: 0.15rem;
+    letter-spacing: 2.688px;
 }
 
 .attendance-date {
@@ -70,7 +70,7 @@ body {
     transition: opacity 0.3s;
     font-size: 2rem;
     margin: 3% auto;
-    letter-spacing: 0.15rem;
+    letter-spacing: 4.8px;
 }
 
 .action-button {
