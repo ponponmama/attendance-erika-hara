@@ -13,7 +13,10 @@
                     {{ session('success') }}
                 </p>
             @endif
-            <h1 class="attendance-title">{{ $user->name }}さんの勤怠</h1>
+            <div class="title-container">
+                <span class="title-border"></span>
+                <h1 class="attendance-title">{{ $user->name }}さんの勤怠</h1>
+            </div>
             <div class="month-switcher">
                 <a href="{{ route('admin.attendance.staff', ['id' => $user->id, 'month' => $currentMonth->copy()->subMonth()->format('Y-m')]) }}"
                     class="month-arrow">← 前月</a>

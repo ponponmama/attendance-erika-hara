@@ -8,56 +8,65 @@
     margin-bottom: 5%;
 }
 
-
+.date-switcher,
 .month-switcher {
+    width: 100%;
+    height: 60px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 5%;
     background: #FFFFFF;
     border-radius: 6px;
     padding: 10px;
 }
 
+.current-date,
 .current-month {
-    width: 123px;
+    width: 155px;
     height: 25px;
-    font-size: 1.25rem;
+    font-size: 1.2rem;
     font-weight: bold;
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
 }
 
-.calendar-icon {
-    width: 23px;
-    height: 23px;
-    color: black;
-}
-
+.date-arrow,
 .month-arrow {
     color: #737373;
     text-decoration: none;
-    font-weight: bold;
-    font-size: 1rem;
     padding: 4px 12px;
     display: flex;
+    justify-content: space-around;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
 }
 
-.month-arrow-icon {
+.arrow-text {
+    font-size: 1.1rem;
+    font-weight: bold;
+    letter-spacing: 2.4px;
+}
+
+.arrow-icon {
     width: 20px;
     height: 15px;
     opacity: 0.3;
 }
 
-.month-arrow-icon-right {
-    transform: scaleX(-1);  /* 水平方向に反転 */
+.arrow-icon-right {
+    transform: scaleX(-1);
 }
 
+.date-arrow:hover,
 .month-arrow:hover {
     background: #eee;
+}
+
+.calendar-icon {
+    width: 20px;
+    height: 20px;
+    color: black;
 }
 
 .attendance-list-table-container,
@@ -72,27 +81,26 @@
 .attendance-list-table,
 .attendance-table {
     width: 900px;
-    min-height: 900px;
     border-collapse: collapse;
     border-spacing: 0;
     font-size: 1.25rem;
     font-weight: bold;
     background: #FFFFFF;
-    border-radius: 12px;
+    border-radius: 10px;
 }
 
 .table-header-tr .table-th {
     border-bottom: 3px solid #E1E1E1;
-    line-height: 25px;
+    height: 45px;
     color: #737373;
 }
 
+
 .table-th, .table-td {
     text-align: center;
-    padding: 5px 20px;
+    padding: 0 20px;
     font-weight: bold;
-    line-height: 29px;
-    font-size: 1.25rem;
+    height: 45px;
     color: #737373;
     border-bottom: 2px solid #E1E1E1;
 }
@@ -144,7 +152,7 @@
 }
 
 .attendance-list-csv-btn:hover {
-    background: grey;
+    background: #737373;
 }
 
 .attendance-list-csv-btn {

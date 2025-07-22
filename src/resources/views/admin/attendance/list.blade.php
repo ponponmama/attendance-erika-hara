@@ -13,15 +13,25 @@
                     {{ session('success') }}
                 </p>
             @endif
-            <div class="month-switcher">
-                <a href="{{ route('admin.attendance.list', ['month' => $currentMonth->copy()->subMonth()->format('Y-m')]) }}"
-                    class="month-arrow">← 前月</a>
-                <span class="current-month">
+            <div class="title-container">
+                <span class="title-border"></span>
+                <h1 class="attendance-title">{{ $currentDate->format('Y年m月d日') }}の勤怠</h1>
+            </div>
+            <div class="date-switcher">
+                <a href="{{ route('admin.attendance.list', ['date' => $currentDate->copy()->subDay()->format('Y-m-d')]) }}"
+                    class="date-arrow link">
+                    <img src="{{ asset('images/arrow.png') }}" alt="前日" class="arrow-icon">
+                    <span class="arrow-text">前日</span>
+                </a>
+                <span class="current-date">
                     <img src="{{ asset('images/calendar.svg') }}" alt="カレンダー" class="calendar-icon">
-                    {{ $currentMonth->format('Y/m/d') }}
+                    {{ $currentDate->format('Y/m/d') }}
                 </span>
-                <a href="{{ route('admin.attendance.list', ['month' => $currentMonth->copy()->addMonth()->format('Y-m')]) }}"
-                    class="month-arrow">翌月 →</a>
+                <a href="{{ route('admin.attendance.list', ['date' => $currentDate->copy()->addDay()->format('Y-m-d')]) }}"
+                    class="date-arrow link">
+                    <span class="arrow-text">翌日</span>
+                    <img src="{{ asset('images/arrow.png') }}" alt="翌日" class="arrow-icon arrow-icon-right">
+                    </a>
             </div>
         </div>
         <div class="attendance-table-container">

@@ -7,20 +7,29 @@
 
 .tab-menu {
     display: flex;
-    gap: 2rem;
-    margin: 4% auto;
-    padding: 3%;
-    border-bottom: 1px solid black;
+    gap: 5%;
+}
+
+.tab-item,
+.tab-item-active {
+    font-size: 1rem;
+    letter-spacing: 2.4px;
+    color: black;
+
 }
 
 .tab-item {
-    font-weight: bold;
-    color: #5f5f5f;
+    font-weight: 400;
 }
 
 .tab-item-active {
     font-weight: bold;
-    color: black;
+}
+
+.tab-item-border {
+    width: 100%;
+    border-bottom: 1px solid black;
+    margin: 2% 0;
 }
 
 .list-table-container {
@@ -37,28 +46,31 @@
     border-collapse: collapse;
     border-spacing: 0;
     font-size: 1rem;
-    background: #fff;
+    background: #FFFFFF;
     border-radius: 12px;
 }
 
 .table-header-tr {
-    border-bottom: 2px solid #5f5f5f;
-    color: gray;
-    line-height: 2rem;
+    border-bottom: 1px solid #E1E1E1;
+    color: #737373;
+    line-height: 2.8rem;
 }
 
 .table-th,
 .table-td {
     font-weight: bold;
+    line-height: 2.8rem;
     font-size: 1rem;
-    border-bottom: 1px solid #5f5f5f;
-    color: #5f5f5f;
+    border-bottom: 1px solid #E1E1E1;
+    color: #737373;
     padding: 4px 0 4px 30px;
     text-align: left;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 120px;
+    letter-spacing: 2.4px;
+
 }
 
 .table-tr:last-child td {
@@ -66,7 +78,7 @@
 }
 
 .table-tr:hover {
-    background: #f3f3f3;
+    background: #E1E1E1;
 }
 
 .detail-link {
@@ -78,7 +90,7 @@
 }
 
 .detail-link:hover {
-    background: #444;
+    background: #E1E1E1;
 }
 
 @media (max-width: 1024px) {

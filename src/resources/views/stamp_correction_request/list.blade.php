@@ -7,9 +7,12 @@
 
 @section('content')
     <div class="stamp-correction-list-container">
-        <h1 class="attendance-title">
-            申請一覧
-        </h1>
+        <div class="title-container">
+            <span class="title-border"></span>
+            <h1 class="attendance-title">
+                申請一覧
+            </h1>
+        </div>
         @if (session('success'))
             <p class="alert-success">
                 {{ session('success') }}
@@ -18,18 +21,19 @@
         <div class="tab-menu">
             @if (Auth::user()->role === 'admin')
                 <a href="{{ route('stamp_correction_request.list', ['status' => 'pending']) }}"
-                    class="tab-item {{ $status === 'pending' ? 'tab-item-active' : '' }}">
+                    class="tab-item{{ $status === 'pending' ? 'tab-item-active' : '' }} link">
                     承認待ち
                 </a>
                 <a href="{{ route('stamp_correction_request.list', ['status' => 'approved']) }}"
-                    class="tab-item {{ $status === 'approved' ? 'tab-item-active' : '' }}">
+                    class="tab-item{{ $status === 'approved' ? 'tab-item-active' : '' }} link">
                     承認済み
                 </a>
             @else
-                <a href="?tab=pending" class="tab-item{{ $tab === 'pending' ? '-active' : '' }}">承認待ち</a>
-                <a href="?tab=approved" class="tab-item{{ $tab === 'approved' ? '-active' : '' }}">承認済み</a>
+                <a href="?tab=pending" class="tab-item{{ $tab === 'pending' ? '-active' : '' }} link ">承認待ち</a>
+                <a href="?tab=approved" class="tab-item{{ $tab === 'approved' ? '-active' : '' }} link">承認済み</a>
             @endif
         </div>
+        <p class="tab-item-border"></p>
         <div class="list-table-container">
             <table class="list-table">
                 <thead>
@@ -53,12 +57,11 @@
                                 @endif
                             </td>
                             <td class="table-td">{{ $request->user->name ?? '-' }}</td>
-                            <td class="table-td">
-                                {{ \Carbon\Carbon::parse($request->attendance->date)->format('Y/m/d') ?? '-' }}</td>
+                            <td class="table-td">{{ \Carbon\Carbon::parse($request->attendance->date)->format('Y/m/d') ?? '-' }}</td>
                             <td class="table-td">{{ $request->reason }}</td>
                             <td class="table-td">{{ \Carbon\Carbon::parse($request->request_date)->format('Y/m/d') }}</td>
                             <td class="table-td detail-td">
-                                <a href="{{ route('attendance_detail', $request->attendance->id) }}" class="detail-link">
+                                <a href="{{ route('attendance_detail', $request->attendance->id) }}" class="detail-link link">
                                     詳細
                                 </a>
                             </td>

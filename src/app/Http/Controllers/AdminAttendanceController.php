@@ -13,18 +13,18 @@ class AdminAttendanceController extends Controller
     public function list(Request $request)
     {
         // 月切り替え対応
-        $monthParam = $request->get('month');
-        $currentMonth = $monthParam
-            ? Carbon::createFromFormat('Y-m', $monthParam)->startOfMonth()
-            : Carbon::now()->startOfMonth();
+        $dateParam = $request->get('date');
+        $currentDate = $dateParam
+            ? Carbon::createFromFormat('Y-m-d', $dateParam)
+            : Carbon::now();
 
         $attendances = Attendance::with(['user', 'breakTimes'])
-            ->whereYear('date', $currentMonth->year)
-            ->whereMonth('date', $currentMonth->month)
+            ->whereDate('date', $currentDate->format('Y-m-d'))
             ->orderBy('date', 'desc')
             ->get();
 
-        return view('admin.attendance.list', compact('attendances', 'currentMonth'));
+
+        return view('admin.attendance.list', compact('attendances', 'currentDate'));
     }
 
     //スタッフ別勤怠一覧

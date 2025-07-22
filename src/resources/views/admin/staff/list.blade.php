@@ -7,9 +7,12 @@
 
 @section('content')
     <div class="staff-list-container">
-        <h1 class="attendance-title">
-            スタッフ一覧
-        </h1>
+        <div class="title-container">
+            <span class="title-border"></span>
+            <h1 class="attendance-title">
+                スタッフ一覧
+            </h1>
+        </div>
         <div class="staff-list-table-container">
             <table class="staff-list-table">
                 <thead>

@@ -13,11 +13,14 @@
                     {{ session('success') }}
                 </p>
             @endif
-            <h1 class="attendance-title">勤怠一覧</h1>
+            <div class="title-container">
+                <span class="title-border"></span>
+                <h1 class="attendance-title">勤怠一覧</h1>
+            </div>
             <div class="month-switcher">
                 <a href="{{ route('attendance_list', ['month' => $currentMonth->copy()->subMonth()->format('Y-m')]) }}"
                     class="month-arrow">
-                    <img src="{{ asset('images/arrow.png') }}" alt="前月" class="month-arrow-icon">
+                    <img src="{{ asset('images/arrow.png') }}" alt="前月" class="arrow-icon">
                     前月
                 </a>
                 <span class="current-month">
@@ -28,7 +31,7 @@
                     class="month-arrow">
                     翌月
                     <img src="{{ asset('images/arrow.png') }}" alt="翌月"
-                        class="month-arrow-icon month-arrow-icon-right">
+                        class="arrow-icon arrow-icon-right">
                 </a>
             </div>
         </div>
