@@ -46,7 +46,7 @@
                 </div>
             </form>
             @unless (request()->is('admin*'))
-                <p class="login-register-link"><a href="{{ route('register') }}">会員登録はこちら</a></p>
+                <a class="login-register-link link" href="{{ route('register') }}">会員登録はこちら</a>
             @endunless
         </div>
     </div>

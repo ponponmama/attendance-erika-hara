@@ -1,5 +1,5 @@
 .attendance-detail-container {
-    width: 60%;
+    width: 900px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -15,7 +15,7 @@
 }
 
 .table-wrapper {
-    width: 900px;
+    width: 100%;
     background: #FFFFFF;
     border-radius: 10px;
 }

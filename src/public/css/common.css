@@ -3,7 +3,8 @@ body * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: 'Hiragino Kaku Gothic ProN', 'ヒラギノ角ゴ ProN W3', Meiryo, メイリオ, Osaka, 'MS PGothic', arial, helvetica, sans-serif;
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
 }
 
 *,
@@ -37,6 +38,7 @@ li {
     flex-direction: column;
     margin: 0;
     padding: 0;
+    background-color: #F0EFF2;
 }
 
 .header-container {
@@ -55,6 +57,7 @@ li {
 }
 
 .header-logo__image {
+    width: 370px;
     height: 36px;
     vertical-align: middle;
 }
@@ -98,7 +101,6 @@ li {
     align-items: center;
     text-align: center;
     padding: 20px;
-    background-color: #f2f2f2;
     flex: 1;
     width: 100%;
 }
@@ -143,7 +145,7 @@ li {
 
 .attendance-title {
     width: 100%;
-    font-size: 1.875rem;
+    font-size: 1.8rem;
     font-weight: bold;
     color: black;
     text-align: left;

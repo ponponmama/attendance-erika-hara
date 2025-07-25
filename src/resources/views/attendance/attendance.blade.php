@@ -17,7 +17,7 @@
             @elseif($status === 'on_break')
                 <span class="status-text">休憩中</span>
             @else
-                <span class="status-text">勤務終了</span>
+                <span class="status-text">終了済</span>
             @endif
         </div>
         <p class="attendance-date">{{ $now->format('Y年n月j日') }}({{ ['日', '月', '火', '水', '木', '金', '土'][$now->dayOfWeek] }})</p>

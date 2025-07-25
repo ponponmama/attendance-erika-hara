@@ -1,7 +1,7 @@
 .attendance-list-container {
-    width: 60%;
+    width: 900px;
     padding: 40px 0;
-    background: #f3f3f3;
+    margin-top: 30px;
 }
 
 .attendance-list-header {
@@ -43,9 +43,8 @@
 }
 
 .arrow-text {
-    font-size: 1.1rem;
-    font-weight: bold;
-    letter-spacing: 2.4px;
+    font-size: 1rem;
+    letter-spacing: 0.15rem;
 }
 
 .arrow-icon {
@@ -80,29 +79,32 @@
 
 .attendance-list-table,
 .attendance-table {
-    width: 900px;
+    width: 100%;
     border-collapse: collapse;
     border-spacing: 0;
     font-size: 1.25rem;
-    font-weight: bold;
     background: #FFFFFF;
     border-radius: 10px;
+    table-layout: fixed;
 }
 
 .table-header-tr .table-th {
     border-bottom: 3px solid #E1E1E1;
     height: 45px;
     color: #737373;
+    padding: 0 10px;
 }
 
 
 .table-th, .table-td {
     text-align: center;
-    padding: 0 20px;
-    font-weight: bold;
+    padding: 0 10px;
+    font-size: 1rem;
+    letter-spacing: 0.15rem;
     height: 45px;
     color: #737373;
     border-bottom: 2px solid #E1E1E1;
+    font-feature-settings: "tnum";
 }
 
 .table-tr:hover {
@@ -113,11 +115,22 @@
     border-bottom: none;
 }
 
+.table-header-tr .date-th, .table-tr .date-td {
+    padding-left: 45px;
+    text-align: left;
+}
+
+.table-header-tr .detail-link-th, .table-tr .detail-link-td {
+    text-align: center;
+    padding-right: 20px;
+    padding-left: 0;
+}
+
 .detail-link {
     display: inline-block;
-    padding: 4px 12px;
     color: black;
-    font-size: 1.25rem;
+    font-size: 1rem;
+    letter-spacing: 0.15rem;
     font-weight: bold;
     text-decoration: none;
     transition: background 0.2s;
