@@ -10,7 +10,7 @@
         <div class="title-container">
             <span class="title-border"></span>
             <h1 class="attendance-title">
-            勤怠詳細
+                勤怠詳細
             </h1>
         </div>
         @if (session('success'))
@@ -30,7 +30,7 @@
                     <table class="attendance-detail-table">
                         <tr class="attendance-detail-tr">
                             <th class="attendance-detail-th">名前</th>
-                            <td class="attendance-detail-td td-text">{{ $attendance->user->name ?? '-' }}</td>
+                            <td class="attendance-detail-td td-text">{{ $attendance->user->name }}</td>
                         </tr>
                         <tr class="attendance-detail-tr">
                             <th class="attendance-detail-th">日付</th>
@@ -48,15 +48,19 @@
                                         : null;
                                 @endphp
                                 @if ($correctionData && isset($correctionData['clock_in']))
-                                    <span class="attendance-detail-time">{{ $correctionData['clock_in']['requested'] }}</span>
+                                    <span
+                                        class="attendance-detail-time">{{ $correctionData['clock_in']['requested'] }}</span>
                                 @else
-                                    <span class="attendance-detail-time">{{ $attendance->clock_in ? \Carbon\Carbon::parse($attendance->clock_in)->format('H:i') : '' }}</span>
+                                    <span
+                                        class="attendance-detail-time">{{ $attendance->clock_in ? \Carbon\Carbon::parse($attendance->clock_in)->format('H:i') : '' }}</span>
                                 @endif
                                 <span class="attendance-detail-tilde">〜</span>
                                 @if ($correctionData && isset($correctionData['clock_out']))
-                                    <span class="attendance-detail-time">{{ $correctionData['clock_out']['requested'] }}</span>
+                                    <span
+                                        class="attendance-detail-time">{{ $correctionData['clock_out']['requested'] }}</span>
                                 @else
-                                    <span class="attendance-detail-time">{{ $attendance->clock_out ? \Carbon\Carbon::parse($attendance->clock_out)->format('H:i') : '' }}</span>
+                                    <span
+                                        class="attendance-detail-time">{{ $attendance->clock_out ? \Carbon\Carbon::parse($attendance->clock_out)->format('H:i') : '' }}</span>
                                 @endif
                             </td>
                         </tr>
@@ -65,13 +69,17 @@
                                 <th class="attendance-detail-th">休憩{{ $i + 1 }}</th>
                                 <td class="attendance-detail-td">
                                     @if ($correctionData && isset($correctionData['breaks'][$i]))
-                                        <span class="attendance-detail-time">{{ $correctionData['breaks'][$i]['break_start']['requested'] }}</span>
+                                        <span
+                                            class="attendance-detail-time">{{ $correctionData['breaks'][$i]['break_start']['requested'] }}</span>
                                         <span class="attendance-detail-tilde">〜</span>
-                                        <span class="attendance-detail-time">{{ $correctionData['breaks'][$i]['break_end']['requested'] }}</span>
+                                        <span
+                                            class="attendance-detail-time">{{ $correctionData['breaks'][$i]['break_end']['requested'] }}</span>
                                     @else
-                                        <span class="attendance-detail-time">{{ $break->break_start ? \Carbon\Carbon::parse($break->break_start)->format('H:i') : '' }}</span>
+                                        <span
+                                            class="attendance-detail-time">{{ $break->break_start ? \Carbon\Carbon::parse($break->break_start)->format('H:i') : '' }}</span>
                                         <span class="attendance-detail-tilde">〜</span>
-                                        <span class="attendance-detail-time">{{ $break->break_end ? \Carbon\Carbon::parse($break->break_end)->format('H:i') : '' }}</span>
+                                        <span
+                                            class="attendance-detail-time">{{ $break->break_end ? \Carbon\Carbon::parse($break->break_end)->format('H:i') : '' }}</span>
                                     @endif
                                 </td>
                             </tr>
@@ -79,7 +87,8 @@
                         <tr class="attendance-detail-tr">
                             <th class="attendance-detail-th">備考</th>
                             <td class="attendance-detail-td">
-                                <span class="attendance-detail-memo">{{ $latestRequest->reason ?? $attendance->memo }}</span>
+                                <span
+                                    class="attendance-detail-memo">{{ $latestRequest->reason ?? $attendance->memo }}</span>
                             </td>
                         </tr>
                     </table>
@@ -103,7 +112,7 @@
                         <table class="attendance-detail-table">
                             <tr class="attendance-detail-tr">
                                 <th class="attendance-detail-th">名前</th>
-                                <td class="attendance-detail-td td-text">{{ $attendance->user->name ?? '-' }}</td>
+                                <td class="attendance-detail-td td-text">{{ $attendance->user->name }}</td>
                             </tr>
                             <tr class="attendance-detail-tr">
                                 <th class="attendance-detail-th td-date">日付</th>
@@ -211,7 +220,7 @@
                     <table class="attendance-detail-table">
                         <tr class="attendance-detail-tr">
                             <th class="attendance-detail-th">名前</th>
-                            <td class="attendance-detail-td td-text">{{ $attendance->user->name ?? '-' }}</td>
+                            <td class="attendance-detail-td td-text">{{ $attendance->user->name }}</td>
                         </tr>
                         <tr class="attendance-detail-tr">
                             <th class="attendance-detail-th">日付</th>
@@ -252,22 +261,36 @@
                         </tr>
                         @php
                             $breakCount = count($attendance->breakTimes);
+                            $isPendingOrApproved =
+                                $latestRequest && in_array($latestRequest->status, ['pending', 'approved']);
                         @endphp
 
                         @for ($i = 0; $i < $breakCount + 1; $i++)
+                            @php
+                                $hasBreakData =
+                                    isset($attendance->breakTimes[$i]) &&
+                                    ($attendance->breakTimes[$i]->break_start ||
+                                        $attendance->breakTimes[$i]->break_end);
+                                $hasCorrectionData = $correctionData && isset($correctionData['breaks'][$i]);
+
+                                // 承認待ち・承認済みの場合は、データがある休憩のみ表示
+                                if ($isPendingOrApproved && !$hasBreakData && !$hasCorrectionData) {
+                                    continue;
+                                }
+                            @endphp
                             <tr class="attendance-detail-tr">
                                 <th class="attendance-detail-th">休憩{{ $i + 1 }}</th>
                                 <td class="attendance-detail-td">
                                     <input type="time" name="break_start_{{ $i }}"
                                         class="attendance-detail-input"
                                         value="{{ $correctionData && isset($correctionData['breaks'][$i]) ? $correctionData['breaks'][$i]['break_start']['requested'] : (old('break_start_' . $i) ?: (isset($attendance->breakTimes[$i]) && $attendance->breakTimes[$i]->break_start ? \Carbon\Carbon::parse($attendance->breakTimes[$i]->break_start)->format('H:i') : '')) }}"
-                                        {{ $latestRequest && in_array($latestRequest->status, ['pending', 'approved']) ? 'disabled' : '' }}>
+                                        {{ $isPendingOrApproved ? 'disabled' : '' }}>
                                     <span class="attendance-detail-tilde">〜</span>
                                     <input type="time" name="break_end_{{ $i }}"
                                         class="attendance-detail-input"
                                         value="{{ $correctionData && isset($correctionData['breaks'][$i]) ? $correctionData['breaks'][$i]['break_end']['requested'] : (old('break_end_' . $i) ?: (isset($attendance->breakTimes[$i]) && $attendance->breakTimes[$i]->break_end ? \Carbon\Carbon::parse($attendance->breakTimes[$i]->break_end)->format('H:i') : '')) }}"
-                                        {{ $latestRequest && in_array($latestRequest->status, ['pending', 'approved']) ? 'disabled' : '' }}>
-                                    @if (!($latestRequest && in_array($latestRequest->status, ['pending', 'approved'])))
+                                        {{ $isPendingOrApproved ? 'disabled' : '' }}>
+                                    @if (!$isPendingOrApproved)
                                         <p class="form__error">
                                             @error('break_start_' . $i)
                                                 {{ $message }}
@@ -312,4 +335,27 @@
             </form>
         @endif
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 空の時間入力フィールドの「--:--」を非表示にする
+            const timeInputs = document.querySelectorAll('input[type="time"]');
+            timeInputs.forEach(function(input) {
+                if (!input.value) {
+                    input.style.color = 'transparent';
+                }
+
+                // フォーカス時に文字色を元に戻す
+                input.addEventListener('focus', function() {
+                    this.style.color = 'black';
+                });
+
+                // フォーカスが外れた時に、値が空なら透明に戻す
+                input.addEventListener('blur', function() {
+                    if (!this.value) {
+                        this.style.color = 'transparent';
+                    }
+                });
+            });
+        });
+    </script>
 @endsection

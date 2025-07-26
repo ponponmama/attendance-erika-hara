@@ -54,7 +54,7 @@ body {
     display: flex;
     justify-content: space-around;
     align-items: center;
-    margin: 5% auto;
+    margin: 4.5% auto;
 }
 
 .attendance-actions__form {

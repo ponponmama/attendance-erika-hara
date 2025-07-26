@@ -14,14 +14,15 @@
     width: 50%;
     padding: 28px;
     color: black;
-    font-weight: bold;
 }
 
 .auth-title {
     width: 144px;
-    height: 44px;
-    font-size: 2.25rem;
+    line-height: 44px;
+    font-size: 36px;
     margin: 2% auto;
+    line-height: 44px;
+    text-align: center;
 }
 
 .auth-content {
@@ -37,41 +38,40 @@
 }
 
 /*　register　*/
-.register-label{
-    height: 36px;
-    font-size: 1.5rem;
+.register-label {
+    line-height: 36px;
+    font-size: 24px;
     text-align: left;
 }
 
 .register-input {
-    height: 45px;
+    line-height: 43px;
     border-radius: 4px;
     border: 1px solid black;
-    padding: 4px 10px;
-    font-size: 1.5rem;
+    padding: 0 10px;
+    font-size: 24px;
     text-align: left;
 }
 
 /*　login　*/
 .form-label {
-    height: 36px;
-    font-size: 1.5rem;
+    line-height: 36px;
+    font-size: 24px;
     text-align: left;
 }
 
 .form-input {
-    height: 58px;
-    padding: 4px 10px;
+    line-height: 58px;
+    padding: 0 10px;
     border-radius: 4px;
     border: 1px solid black;
-    margin-bottom: 1%;
 }
 
 .auth-error-message {
-    line-height: 1.5rem;
-    min-height: 1.5rem;
+    line-height: 18px;
+    min-height: 18px;
     color: red;
-    font-size: 1rem;
+    font-size: 16px;
     margin-bottom: 2%;
     text-align: center;
     width: 100%;
@@ -84,52 +84,22 @@
     color: white;
     border-radius: 5px;
     border: none;
-    font-size: 1.6rem;
+    font-size: 24px;
     transition: all 0ms;
-    margin: 5% auto;
+    margin-top: 4%;
 }
 
 /*　loginとregister共通　*/
 .login-register-link {
     display: inline-block;
     width: 257px;
-    height: 49px;
-    font-size: 1.25rem;
+    line-height: 49px;
+    font-size: 20px;
     font-weight: 400;
-    margin: 2% auto;
+    margin-top: 3%;
     color: rgb(74, 128, 245)
 }
 
-/* メール認証誘導画面（一般ユーザー） /email/verify */
-.auth-message {
-    line-height: 2.2rem;
-    color: black;
-    font-size: 2rem;
-    margin-bottom: 2%;
-    text-align: center;
-    width: 100%;
-}
-
-.auth-success-message {
-    line-height: 1.5rem;
-    color: #0073CC;
-    font-size: 1.25rem;
-    margin-bottom: 2%;
-    text-align: center;
-    width: 100%;
-    font-weight: 400;
-}
-
-.verify-email-button {
-    display: block;
-    margin: 3% auto;
-    padding: 15px 25px;
-    border: 1px solid #D9D9D9;    background-color: #D9D9D9;
-    color: black;
-    border-radius: 10px;
-    font-size: 2rem;
-    font-weight: 700;
-}
 
 @media screen and (max-width: 768px) {
     .auth-container {

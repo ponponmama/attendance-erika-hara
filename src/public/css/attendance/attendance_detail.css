@@ -25,9 +25,6 @@
     min-height: 100%;
     border-collapse:collapse;
     border-spacing: 0;
-    margin-bottom: 3%;
-    font-size: 1rem;
-    font-weight: bold;
 }
 
 /* 最後の行のセルのボーダーを削除 */
@@ -43,8 +40,9 @@
 .attendance-detail-th {
     text-align: left;
     color: #737373;
-    font-size: 1.2rem;
-    width: 250px;
+    font-size: 18px;
+    letter-spacing: 2.7px;
+    width: 35%;
     padding: 10px 10px 10px 50px;
     border-bottom: 2px solid #E1E1E1;
 }
@@ -53,8 +51,8 @@
 .attendance-detail-input {
     color: black;
     text-align: left;
-    font-weight: bold;
-    font-size: 1.2rem;
+    font-size: 18px;
+    letter-spacing: 2.7px;
     line-height: 19px;
     padding: 10px 20px;
 }
@@ -99,7 +97,6 @@
     box-sizing: border-box;
     margin: 0;
     resize: none;
-    font-family: inherit;
     text-align: center;
 }
 
@@ -107,7 +104,7 @@
     width: 316px;
     height: 70px;
     text-align: left;
-    font-size: 0.875rem;
+    font-size: 14px;
 }
 
 .attendance-detail-btn-area {
@@ -148,6 +145,7 @@
     text-align: right;
     color: #FF000080;
     font-weight: 800;
+    margin: 5% auto;
 }
 
 
