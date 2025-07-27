@@ -38,13 +38,12 @@
             <table class="attendance-table">
                 <thead>
                     <tr class="table-header-tr">
-                        <th class="table-th">名前</th>
-                        <th class="table-th">日付</th>
+                        <th class="table-th table-th-name">名前</th>
                         <th class="table-th">出勤</th>
                         <th class="table-th">退勤</th>
                         <th class="table-th">休憩</th>
                         <th class="table-th">合計</th>
-                        <th class="table-th">詳細</th>
+                        <th class="table-th detail-link-th">詳細</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -79,10 +78,7 @@
                             }
                         @endphp
                         <tr class="table-tr">
-                            <td class="table-td">{{ $attendance->user->name ?? '-' }}</td>
-                            <td class="table-td">
-                                {{ $attendance->date->format('m/d') }}（{{ ['日', '月', '火', '水', '木', '金', '土'][$attendance->date->dayOfWeek] }}）
-                            </td>
+                            <td class="table-td table-td-name">{{ $attendance->user->name ?? '-' }}</td>
                             <td class="table-td">{{ $clockIn ? $clockIn->format('H:i') : '' }}</td>
                             <td class="table-td">{{ $clockOut ? $clockOut->format('H:i') : '' }}</td>
                             <td class="table-td">
@@ -99,7 +95,7 @@
                                     <span class="total-hours">{{ sprintf('%02d:%02d', $total_h, $total_m) }}</span>
                                 @endif
                             </td>
-                            <td class="table-td">
+                            <td class="table-td detail-link-td">
                                 <a href="{{ route('attendance_detail', $attendance->id) }}" class="detail-link">詳細</a>
                             </td>
                         </tr>

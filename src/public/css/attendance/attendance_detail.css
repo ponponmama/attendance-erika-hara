@@ -16,7 +16,6 @@
 
 .table-wrapper {
     width: 100%;
-    background: #FFFFFF;
     border-radius: 10px;
 }
 
@@ -25,6 +24,8 @@
     min-height: 100%;
     border-collapse:collapse;
     border-spacing: 0;
+        background: #FFFFFF;
+
 }
 
 /* 最後の行のセルのボーダーを削除 */
@@ -34,7 +35,7 @@
 }
 
 .attendance-detail-tr {
-    height: 115px;
+    height: 82.5px;
 }
 
 .attendance-detail-th {
@@ -54,11 +55,12 @@
     font-size: 18px;
     letter-spacing: 2.7px;
     line-height: 19px;
-    padding: 10px 20px;
 }
 
 .attendance-detail-td {
     border-bottom: 2px solid #E1E1E1;
+    padding: 4px 20px;
+
 }
 
 .td-text,
@@ -74,37 +76,39 @@
 }
 
 .attendance-detail-date-year {
-    margin-right: 12%;
+    margin-right: 13%;
 }
 
 .attendance-detail-date-day {
-    margin-left: 12%;
+    margin-left: 13%;
 }
 
 .attendance-detail-tilde {
     display: inline-block;
-    width: 16%;
+    width: 18%;
     text-align: center;
     padding: 0;
 }
 
 .attendance-detail-input {
-    width: 100px;
+    width: 103px;
     border: 1px solid #E1E1E1;
-    line-height: 26px;
+    line-height: 21px;
     border-radius: 4px;
-    padding: 4px 15px;
+    padding: 2px 15px;
     box-sizing: border-box;
     margin: 0;
+    margin-top: 4%;
     resize: none;
+    outline: none;
     text-align: center;
 }
 
 .attendance-detail-memo {
     width: 316px;
-    height: 70px;
+    height: 72px;
     text-align: left;
-    font-size: 14px;
+    font-size: 16px;
 }
 
 .attendance-detail-btn-area {
@@ -119,8 +123,8 @@
     height: 50px;
     border: none;
     border-radius: 5px;
-    font-size: 1.2rem;
-    font-weight: bold;
+    font-size: 18px;
+    letter-spacing: 2.7px;
     transition: background 0.2s;
 }
 

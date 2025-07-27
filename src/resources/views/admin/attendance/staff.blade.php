@@ -15,7 +15,7 @@
             @endif
             <div class="title-container">
                 <span class="title-border"></span>
-                <h1 class="attendance-title">{{ $user->name }}さんの勤怠</h1>
+                <h1 class="attendance-title">{{ str_replace('　', '', $user->name) }}さんの勤怠</h1>
             </div>
             <div class="month-switcher">
                 <a href="{{ route('admin.attendance.staff', ['id' => $user->id, 'month' => $currentMonth->copy()->subMonth()->format('Y-m')]) }}"
