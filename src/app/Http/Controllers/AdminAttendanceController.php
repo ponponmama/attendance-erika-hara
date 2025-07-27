@@ -35,6 +35,7 @@ class AdminAttendanceController extends Controller
             ? \Carbon\Carbon::createFromFormat('Y-m', $monthParam)->startOfMonth()
             : \Carbon\Carbon::now()->startOfMonth();
 
+        // 指定月の全勤怠データを取得
         $attendances = \App\Models\Attendance::where('user_id', $id)
             ->whereYear('date', $currentMonth->year)
             ->whereMonth('date', $currentMonth->month)

@@ -92,7 +92,9 @@
                                 @endif
                             </td>
                             <td class="table-td">
-                                <a href="{{ route('attendance_detail', $attendance->id) }}" class="detail-link">詳細</a>
+                                @if (is_numeric($attendance->id))
+                                    <a href="{{ route('attendance_detail', $attendance->id) }}" class="detail-link">詳細</a>
+                                @endif
                             </td>
                         </tr>
                     @endforeach

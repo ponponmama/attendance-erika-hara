@@ -44,6 +44,18 @@ class DatabaseSeeder extends Seeder
                 $date = now()->subDays($day)->startOfDay();
                 $reason = $this->faker->randomElement(ReasonList::REASONS);
 
+                // 土日（0=日曜日、6=土曜日）は休日として空の勤怠データを作成
+                if ($date->dayOfWeek === 0) {
+                    $attendance = Attendance::factory()->create([
+                        'user_id' => $user->id,
+                        'date' => $date->toDateString(),
+                        'clock_in' => null,
+                        'clock_out' => null,
+                        'memo' => null,
+                    ]);
+                    continue;
+                }
+
                 // 勤怠データは必ず作成
                 $attendance = Attendance::factory()->create([
                     'user_id' => $user->id,
