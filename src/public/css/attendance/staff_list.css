@@ -24,14 +24,13 @@
 
 .table-header-tr .table-th {
     border-bottom: 2px solid #E1E1E1;
-    color: #737373;
-    line-height: 45px;
 }
 
 .table-th, .table-td {
     text-align: center;
     padding: 5px 20px;
     color: #737373;
+    height: 45px;
     border-bottom: 1px solid #E1E1E1;
 }
 

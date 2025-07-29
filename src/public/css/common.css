@@ -82,7 +82,6 @@ li {
 
 .header-nav__item {
     margin-left: 6%;
-    font-size: 1.5rem;
     color: #fff;
 }
 
@@ -90,7 +89,7 @@ li {
     text-decoration: none;
     border: none;
     color: #fff;
-    font-size: 1.3rem;
+    font-size: 20.8px;
     background-color: black;
 }
 
@@ -138,7 +137,7 @@ li {
 .title-border {
     width: 40px;
     height: 0;
-    border-bottom: 8px solid black;
+    border-bottom: 8px solid #000000;
     transform: rotate(90deg);
     transform-origin: 50% 50%;
 }
