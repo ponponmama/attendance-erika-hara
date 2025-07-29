@@ -83,8 +83,8 @@ class AdminAttendanceListTest extends TestCase
         $response = $this->get('/admin/attendance/list');
         $response->assertStatus(200);
 
-        // 現在の月が表示されていることを確認
-        $response->assertSee('2024/06/01');
+        // 現在の日付が表示されていることを確認（Y/m/d形式）
+        $response->assertSee('2024/06/25');
     }
 
     /**
@@ -106,20 +106,20 @@ class AdminAttendanceListTest extends TestCase
         // 一般ユーザーを作成
         $user = User::factory()->create();
 
-        // 前月の勤怠記録を作成
+        // 前日の勤怠記録を作成
         Attendance::factory()->create([
             'user_id' => $user->id,
-            'date' => '2024-05-25',
+            'date' => '2024-06-24',
             'clock_in' => '09:00:00',
             'clock_out' => '18:00:00',
         ]);
 
-        // 前月の勤怠一覧画面にアクセス
-        $response = $this->get('/admin/attendance/list?month=2024-05');
+        // 前日の勤怠一覧画面にアクセス
+        $response = $this->get('/admin/attendance/list?date=2024-06-24');
         $response->assertStatus(200);
 
-        // 前月の情報が表示されていることを確認
-        $response->assertSee('2024/05/01');
+        // 前日の情報が表示されていることを確認
+        $response->assertSee('2024/06/24');
         $response->assertSee('09:00');
     }
 
@@ -142,20 +142,20 @@ class AdminAttendanceListTest extends TestCase
         // 一般ユーザーを作成
         $user = User::factory()->create();
 
-        // 翌月の勤怠記録を作成
+        // 翌日の勤怠記録を作成
         Attendance::factory()->create([
             'user_id' => $user->id,
-            'date' => '2024-07-25',
+            'date' => '2024-06-26',
             'clock_in' => '09:00:00',
             'clock_out' => '18:00:00',
         ]);
 
-        // 翌月の勤怠一覧画面にアクセス
-        $response = $this->get('/admin/attendance/list?month=2024-07');
+        // 翌日の勤怠一覧画面にアクセス
+        $response = $this->get('/admin/attendance/list?date=2024-06-26');
         $response->assertStatus(200);
 
-        // 翌月の情報が表示されていることを確認
-        $response->assertSee('2024/07/01');
+        // 翌日の情報が表示されていることを確認
+        $response->assertSee('2024/06/26');
         $response->assertSee('09:00');
     }
 }

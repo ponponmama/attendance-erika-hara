@@ -51,10 +51,10 @@ class EmailVerificationTest extends TestCase
     }
 
     /**
-     * メール認証誘導画面で「認証メール再送」ボタンが表示されることを確認
+     * メール認証誘導画面で「認証はこちらから」ボタンが表示されることを確認
      * @return void
      */
-    public function test_redirects_to_email_verification_page()
+    public function test_displays_verification_button_on_verification_page()
     {
         // 未認証ユーザーを作成
         $user = User::factory()->create([
@@ -69,8 +69,8 @@ class EmailVerificationTest extends TestCase
         $response->assertStatus(200);
 
         // 認証誘導画面の内容を確認
-        $response->assertSee('メールアドレスの確認');
-        $response->assertSee('認証メール再送');
+        $response->assertSee('登録していただいたメールアドレスに認証メールを送付しました');
+        $response->assertSee('認証はこちらから');
 
         // 認証メール再送フォームが存在することを確認
         $response->assertSee('email/verification-notification');

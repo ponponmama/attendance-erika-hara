@@ -119,7 +119,7 @@ class AdminCorrectionRequestTest extends TestCase
     }
 
     /**
-     * 修正申請一覧で申請内容が正しく表示されていることを確認
+     * 修正申請の詳細内容が正しく表示されていることを確認
      * @return void
      */
     public function test_displays_correction_request_in_list()
@@ -191,21 +191,28 @@ class AdminCorrectionRequestTest extends TestCase
             'status' => 'pending',
             'reason' => '出勤時刻修正',
             'request_date' => '2024-07-15',
-            'correction_type' => 'clock_in',
-            'current_time' => '09:00:00',
-            'requested_time' => '08:30:00',
+            'correction_data' => json_encode([
+                'clock_in' => ['requested' => '08:30'],
+                'clock_out' => ['requested' => '18:00']
+            ]),
         ]);
 
-        // 承認処理を実行
+        // 修正申請の承認処理を実行
         $response = $this->post("/stamp_correction_request/approve/{$request->id}");
-        $response->assertStatus(302); // リダイレクトされることを確認
+        $response->assertStatus(302);
 
-        // 修正申請のステータスがapprovedになっていることを確認
-        $request->refresh();
-        $this->assertEquals('approved', $request->status);
+        // 修正申請のステータスが承認済みに更新されることを確認
+        $this->assertDatabaseHas('stamp_correction_requests', [
+            'id' => $request->id,
+            'status' => 'approved',
+            'approved_by' => $admin->id,
+        ]);
 
-        // 勤怠情報が更新されていることを確認
-        $attendance->refresh();
-        $this->assertEquals('08:30:00', $attendance->clock_in instanceof \Carbon\Carbon ? $attendance->clock_in->format('H:i:s') : $attendance->clock_in);
+        // 勤怠情報が更新されることを確認
+        $this->assertDatabaseHas('attendances', [
+            'id' => $attendance->id,
+            'clock_in' => '08:30:00',
+            'clock_out' => '18:00:00',
+        ]);
     }
 }

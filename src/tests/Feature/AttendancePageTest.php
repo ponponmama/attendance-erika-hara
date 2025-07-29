@@ -87,8 +87,8 @@ class AttendancePageTest extends TestCase
         $response = $this->get('/attendance');
         $response->assertStatus(200);
 
-        // 退勤後はステータスが「勤務終了」となり、出勤ボタンが押せない状態であることを確認
-        $response->assertSee('勤務終了');
+        // 退勤後はステータスが「終了済」となり、出勤ボタンが押せない状態であることを確認
+        $response->assertSee('終了済');
         $response->assertDontSee('勤務外');
     }
 
@@ -183,8 +183,8 @@ class AttendancePageTest extends TestCase
         $response = $this->get('/attendance');
         $response->assertStatus(200);
 
-        // 退勤済の場合、ステータスが「勤務終了」となっていることを確認
-        $response->assertSee('勤務終了');
+        // 退勤済の場合、ステータスが「終了済」となっていることを確認
+        $response->assertSee('終了済');
     }
 
     /**
@@ -458,8 +458,8 @@ class AttendancePageTest extends TestCase
             'clock_out' => Carbon::now()->format('H:i:s'),
         ]);
 
-        // ステータスが勤務終了になっていることを確認
-        $this->get('/attendance')->assertSee('勤務終了');
+        // ステータスが終了済になっていることを確認
+        $this->get('/attendance')->assertSee('終了済');
     }
 
     /**

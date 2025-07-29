@@ -312,7 +312,7 @@ docker-compose exec php bash
 php artisan test
 ```
 
-### テスト項目（58 項目）
+### テスト項目（70 項目）
 
 - **機能テスト**
 
@@ -324,8 +324,12 @@ php artisan test
   - `AttendanceListTest.php` - 勤怠一覧機能テスト
   - `AdminAttendanceListTest.php` - 管理者勤怠一覧機能テスト
   - `AttendanceDetailTest.php` - 勤怠詳細機能テスト
+  - `AttendanceDetailCorrectionTest.php` - 勤怠詳細修正機能テスト（一般ユーザー）
+  - `Auth/LoginTest.php` - ログイン認証機能テスト（一般ユーザー）
+  - `Auth/RegisterTest.php` - ユーザー登録機能テスト
+  - `Auth/AdminLoginTest.php` - ログイン認証機能テスト（管理者）
 
-  *テストで一旦dbがリセットされます。マイグレートリフレッシュとシーダーしてください。
+  *テストで一旦 db がリセットされます。マイグレートリフレッシュとシーダーしてください。
 
 ```bash
 php artisan migrate:fresh --seed

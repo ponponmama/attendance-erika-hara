@@ -73,10 +73,10 @@ class LoginTest extends TestCase
         ]);
 
         // 3. レスポンスを検証する
-        //    - 'email' フィールドでエラーが発生していることを確認 (Fortifyはemailキーでエラーを返す)
+        //    - 'failed' フィールドでエラーが発生していることを確認
         //    - エラーメッセージが「ログイン情報が登録されていません」であることを確認
         $response->assertSessionHasErrors([
-            'email' => 'ログイン情報が登録されていません'
+            'failed' => 'ログイン情報が登録されていません'
         ]);
         //    - ログイン状態になっていないこと(ゲスト状態であること)を確認
         $this->assertGuest();
