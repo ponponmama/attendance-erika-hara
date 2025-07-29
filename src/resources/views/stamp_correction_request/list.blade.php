@@ -21,11 +21,11 @@
         <div class="tab-menu">
             @if (Auth::user()->role === 'admin')
                 <a href="{{ route('stamp_correction_request.list', ['status' => 'pending']) }}"
-                    class="tab-item{{ $status === 'pending' ? 'tab-item-active' : '' }} link">
+                    class="tab-item{{ $status === 'pending' ? ' tab-item-active' : '' }} link">
                     承認待ち
                 </a>
                 <a href="{{ route('stamp_correction_request.list', ['status' => 'approved']) }}"
-                    class="tab-item{{ $status === 'approved' ? 'tab-item-active' : '' }} link">
+                    class="tab-item{{ $status === 'approved' ? ' tab-item-active' : '' }} link">
                     承認済み
                 </a>
             @else
@@ -39,11 +39,11 @@
                 <thead>
                     <tr class="table-header-tr">
                         <th class="table-th status-th">状態</th>
-                        <th class="table-th">名前</th>
-                        <th class="table-th">対象日時</th>
-                        <th class="table-th">申請理由</th>
-                        <th class="table-th">申請日時</th>
-                        <th class="table-th detail-th">詳細</th>
+                        <th class="table-th name-th">名前</th>
+                        <th class="table-th target-date-th">対象日時</th>
+                        <th class="table-th reason-th">申請理由</th>
+                        <th class="table-th request-date-th">申請日時</th>
+                        <th class="table-th detail-link-th">詳細</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -56,12 +56,15 @@
                                     承認済み
                                 @endif
                             </td>
-                            <td class="table-td">{{ $request->user->name ?? '-' }}</td>
-                            <td class="table-td">{{ \Carbon\Carbon::parse($request->attendance->date)->format('Y/m/d') ?? '-' }}</td>
-                            <td class="table-td">{{ $request->reason }}</td>
-                            <td class="table-td">{{ \Carbon\Carbon::parse($request->request_date)->format('Y/m/d') }}</td>
-                            <td class="table-td detail-td">
-                                <a href="{{ route('attendance_detail', $request->attendance->id) }}" class="detail-link link">
+                            <td class="table-td name-td">{{ str_replace([' ', '　'], '', $request->user->name) ?? '-' }}</td>
+                            <td class="table-td target-date-td date-td">
+                                {{ \Carbon\Carbon::parse($request->attendance->date)->format('Y/m/d') ?? '-' }}</td>
+                            <td class="table-td reason-td">{{ $request->reason }}</td>
+                            <td class="table-td request-date-td date-td">
+                                {{ \Carbon\Carbon::parse($request->request_date)->format('Y/m/d') }}</td>
+                            <td class="table-td detail-link-td">
+                                <a href="{{ route('attendance_detail', $request->attendance->id) }}"
+                                    class="detail-link link">
                                     詳細
                                 </a>
                             </td>

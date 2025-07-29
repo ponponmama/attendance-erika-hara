@@ -4,18 +4,18 @@
     background: #f3f3f3;
 }
 
-
 .tab-menu {
     display: flex;
-    gap: 5%;
+    gap: 12%;
+    padding-left: 45px;
 }
 
 .tab-item,
 .tab-item-active {
-    font-size: 1rem;
+    height: 19px;
+    font-size: 16px;
     letter-spacing: 2.4px;
     color: black;
-
 }
 
 .tab-item {
@@ -23,7 +23,7 @@
 }
 
 .tab-item-active {
-    font-weight: bold;
+    font-weight: 700;
 }
 
 .tab-item-border {
@@ -45,33 +45,44 @@
     min-height: 100%;
     border-collapse: collapse;
     border-spacing: 0;
-    font-size: 1rem;
+    font-size: 16px;
+    letter-spacing: 2.4px;
+    font-weight: 400;
     background: #FFFFFF;
-    border-radius: 12px;
+    border-radius: 10px;
+    table-layout: fixed;
 }
 
-.table-header-tr {
-    border-bottom: 1px solid #E1E1E1;
-    color: #737373;
-    line-height: 2.8rem;
+.table-header-tr .table-th {
+    border-bottom: 3px solid #E1E1E1;
 }
 
 .table-th,
 .table-td {
-    font-weight: bold;
-    line-height: 2.8rem;
-    font-size: 1rem;
-    border-bottom: 1px solid #E1E1E1;
-    color: #737373;
-    padding: 4px 0 4px 30px;
+    height: 45px;
     text-align: left;
+    border-bottom: 2px solid #E1E1E1;
+    color: #737373;
+    padding: 0 15px;
+    font-feature-settings: "tnum";
+}
+
+.table-td.reason-td {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 120px;
-    letter-spacing: 2.4px;
-
 }
+
+/* 日付の部分はletter-spacingを無効にする */
+.table-td.date-td {
+    letter-spacing: normal;
+}
+
+.table-header-tr .status-th, .table-tr .status-td {
+    padding-left: 45px;
+    text-align: left;
+}
+
 
 .table-tr:last-child td {
     border-bottom: none;
@@ -84,8 +95,7 @@
 .detail-link {
     display: inline-block;
     color: black;
-    font-size: 1rem;
-    font-weight: bold;
+    font-size: 16px;
     text-decoration: none;
 }
 

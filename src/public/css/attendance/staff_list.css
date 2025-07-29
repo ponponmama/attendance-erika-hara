@@ -20,6 +20,7 @@
     letter-spacing: 2.7px;
     background: #fff;
     border-radius: 12px;
+    table-layout: fixed;
 }
 
 .table-header-tr .table-th {
@@ -27,11 +28,17 @@
 }
 
 .table-th, .table-td {
+    width: 33.33%;
     text-align: center;
     padding: 5px 20px;
     color: #737373;
     height: 45px;
     border-bottom: 1px solid #E1E1E1;
+}
+
+.table-th.name-th,
+.table-td.name-td {
+    padding-left: 100px;
 }
 
 .table-tr:hover {
@@ -48,7 +55,6 @@
     color: black;
     border-radius: 4px;
     font-size: 16px;
-    font-weight: bold;
     text-decoration: none;
     transition: background 0.2s;
 }

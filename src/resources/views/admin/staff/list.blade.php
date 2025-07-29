@@ -17,15 +17,15 @@
             <table class="staff-list-table">
                 <thead>
                     <tr class="table-header-tr">
-                        <th class="table-th">名前</th>
+                        <th class="table-th name-th">名前</th>
                         <th class="table-th">メールアドレス</th>
-                        <th class="table-th">勤怠一覧</th>
+                        <th class="table-th">月次勤怠</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($users as $user)
                         <tr class="table-tr">
-                            <td class="table-td">{{ $user->name }}</td>
+                            <td class="table-td name-td">{{ $user->name }}</td>
                             <td class="table-td">{{ $user->email }}</td>
                             <td class="table-td">
                                 <a href="{{ route('admin.attendance.staff', $user->id) }}" class="detail-link">
