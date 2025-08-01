@@ -164,10 +164,10 @@ class StampCorrectionRequestController extends Controller
         // 一般ユーザーの場合は修正申請を作成
         // どの項目を修正したいかをまとめて記録
         $correctionTypes = [];
-        if ($request->clock_in && $request->clock_in !== ($attendance->clock_in ? \Carbon\Carbon::parse($attendance->clock_in)->format('H:i') : '')) {
+        if ($request->has('clock_in') && $request->clock_in !== ($attendance->clock_in ? \Carbon\Carbon::parse($attendance->clock_in)->format('H:i') : '')) {
             $correctionTypes[] = 'clock_in';
         }
-        if ($request->clock_out && $request->clock_out !== ($attendance->clock_out ? \Carbon\Carbon::parse($attendance->clock_out)->format('H:i') : '')) {
+        if ($request->has('clock_out') && $request->clock_out !== ($attendance->clock_out ? \Carbon\Carbon::parse($attendance->clock_out)->format('H:i') : '')) {
             $correctionTypes[] = 'clock_out';
         }
         for ($i = 0; $i <= 10; $i++) {
@@ -176,7 +176,7 @@ class StampCorrectionRequestController extends Controller
                 break; // 1つでもあればbreakでOK
             }
         }
-        if ($request->memo && $request->memo !== $attendance->memo) {
+        if ($request->has('memo') && $request->memo !== ($attendance->memo ?? '')) {
             $correctionTypes[] = 'memo';
         }
 

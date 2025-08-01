@@ -114,26 +114,27 @@ li {
 
 .alert-success {
     width: 100%;
-    line-height: 31px;
-    min-height: 31px;
+    line-height: 18px;
+    min-height: 18px;
     color: black;
-    font-size: 26px;
-    font-weight: bold;
-    letter-spacing: 3.9px;
-    margin: 1%;
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: 2.4px;
+    margin-bottom: 2%;
 }
 
 .title-container {
     width: 100%;
     height: 40px;
     display: flex;
-    align-items: center;
+    align-items:center;
     justify-self: left;
     text-align: left;
     gap: 20px;
-    margin-bottom: 5%;
+    margin-bottom: 7%;
 }
 
+/* タイトルの左線 */
 .title-border {
     width: 40px;
     height: 0;
@@ -142,6 +143,7 @@ li {
     transform-origin: 50% 50%;
 }
 
+/* タイトル */
 .attendance-title {
     width: 100%;
     line-height: 36px;

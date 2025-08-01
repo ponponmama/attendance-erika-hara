@@ -1,3 +1,5 @@
+/* 勤怠詳細画面(一般ユーザー・管理者共通) /attendance/{id} */
+/* 共通style */
 .attendance-detail-container {
     width: 900px;
     display: flex;
@@ -24,13 +26,16 @@
     min-height: 100%;
     border-collapse:collapse;
     border-spacing: 0;
-        background: #FFFFFF;
-
+    background: #FFFFFF;
+    border-radius: 10px;
+    font-feature-settings: "tnum";
 }
 
 /* 最後の行のセルのボーダーを削除 */
 .attendance-detail-tr:last-child .attendance-detail-th,
-.attendance-detail-tr:last-child .attendance-detail-td {
+.attendance-detail-tr:last-child .attendance-detail-td,
+.attendance-detail-tr:last-child .detail-td,
+.attendance-detail-tr:last-child .input-area {
     border-bottom: none;
 }
 
@@ -55,48 +60,15 @@
     font-size: 18px;
     letter-spacing: 2.7px;
     line-height: 19px;
-}
-
-.attendance-detail-td {
     border-bottom: 2px solid #E1E1E1;
-    padding: 4px 20px;
-
-}
-
-.td-text,
-.td-date {
-    padding: 10px 35px;
-}
-
-.attendance-detail-date {
-    display: inline-block;
-    padding:0;
-    text-align: left;
-    box-sizing: border-box;
-}
-
-.attendance-detail-date-year {
-    margin-right: 13%;
-}
-
-.attendance-detail-date-day {
-    margin-left: 13%;
-}
-
-.attendance-detail-tilde {
-    display: inline-block;
-    width: 18%;
-    text-align: center;
-    padding: 0;
 }
 
 .attendance-detail-input {
     width: 103px;
-    border: 1px solid #E1E1E1;
     line-height: 21px;
+    border: 2px solid #E1E1E1;
     border-radius: 4px;
     padding: 2px 15px;
-    box-sizing: border-box;
     margin: 0;
     margin-top: 4%;
     resize: none;
@@ -104,12 +76,65 @@
     text-align: center;
 }
 
-.attendance-detail-memo {
+.attendance-detail-td {
+    border-bottom: 2px solid #E1E1E1;
+    padding: 4px 20px;
+}
+
+.attendance-detail-td .attendance-detail-memo {
     width: 316px;
     height: 72px;
     text-align: left;
     font-size: 16px;
 }
+
+/* 管理者ルート申請一覧より詳細画面style */
+.attendance-detail-text-year,
+.attendance-detail-text-day {
+    display: inline-block;
+    width: 26%;
+}
+
+.attendance-detail-text-year {
+    margin-right: 18%;
+}
+
+.attendance-detail-text-time {
+    width: 13%;
+    display: inline-block;
+    box-sizing: border-box;
+    text-align: left;
+}
+
+.attendance-detail-text-tilde {
+    width: 30%;
+    display: inline-block;
+    text-align: center;
+}
+
+/* 管理者ルート修正画面style */
+.left-date,
+.right-date {
+    width: 28%;
+    display: inline-block;
+    text-align: left;
+    padding: 0 15px;
+}
+
+.left-date {
+    text-align: left;
+}
+
+.right-date {
+    text-align: right;
+}
+
+.attendance-detail-tilde {
+    width: 16%;
+    display: inline-block;
+    text-align: center;
+}
+
 
 .attendance-detail-btn-area {
     width: 100%;
@@ -117,10 +142,16 @@
     margin: 5% auto;
 }
 
+.detail-td {
+    padding: 4px 35px;
+}
+
+
+
 .attendance-detail-edit-btn,
 .status-approved {
     width: 130px;
-    height: 50px;
+    line-height: 50px;
     border: none;
     border-radius: 5px;
     font-size: 18px;
@@ -129,20 +160,20 @@
 }
 
 .attendance-detail-edit-btn:hover {
-    background: grey;
+    background: #737373;
 }
 
 .attendance-detail-edit-btn {
     background-color: black;
     color: white;
-    padding: 4px 40px;
+    padding: 0 40px;
 }
 
 .status-approved {
-    background: grey;
+    display: inline-block;
+    background: #737373;
     color: white;
-    padding: 4px 20px;
-
+    padding: 0 20px;
 }
 
 .pending-message {
