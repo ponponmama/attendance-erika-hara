@@ -27,12 +27,9 @@ body {
 }
 
 .status-text {
-    width: 60px;
-    height: 22px;
-    line-height: 22px;
-    font-size: 1.125rem;
+    font-size: 18px;
     color: #696969;
-    letter-spacing: 1.5px;
+    letter-spacing: 0.15em;
 }
 
 .attendance-date {
@@ -45,7 +42,7 @@ body {
 
 .attendance-time {
     line-height: 97px;
-    font-size: 5rem;
+    font-size: 80px;
     margin-bottom: 3%;
 }
 
@@ -59,18 +56,18 @@ body {
 
 .attendance-actions__form {
     width: 221px;
+    height: 77px;
 }
 
 .action-button, .action-break-button {
     width: 100%;
-    height: 77px;
     border: none;
     border-radius: 20px;
-    padding: 16px 20px;
+    padding: 15.5px 20px;
     transition: opacity 0.3s;
-    font-size: 2rem;
+    font-size: 32px;
     margin: 3% auto;
-    letter-spacing: 5px;
+    letter-spacing: 0.15em;
 }
 
 .action-button {
@@ -98,7 +95,7 @@ body {
     }
 
     .attendance-date {
-        font-size: 1.5rem;
+        font-size: 24px;
     }
 
     .attendance-actions {
@@ -110,10 +107,9 @@ body {
     }
 
     .action-button, .action-break-button {
-        font-size: 1.2rem;
+        font-size: 18px;
         padding: 10px 20px;
     }
-
 }
 
 @media screen and (min-width: 541px) and (max-width: 1024px) {

@@ -37,14 +37,15 @@
     line-height: 69px;
     display: block;
     margin: 3% auto;
-    border: 1px solid #D9D9D9;    background-color: #D9D9D9;
+    border: 1px solid #000000;
+    background-color: #D9D9D9;
     color: black;
     border-radius: 10px;
     font-size: 24px;
 }
 
 .auth-success-message {
-    line-height: 53.29px;
+    line-height: 53px;
     color: #0073CC;
     font-size: 20px;
     text-align: center;

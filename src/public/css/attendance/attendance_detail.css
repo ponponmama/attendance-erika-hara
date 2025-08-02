@@ -28,14 +28,15 @@
     border-spacing: 0;
     background: #FFFFFF;
     border-radius: 10px;
+    letter-spacing: 0.15em;
+    font-size: 18px;
     font-feature-settings: "tnum";
 }
 
 /* 最後の行のセルのボーダーを削除 */
 .attendance-detail-tr:last-child .attendance-detail-th,
 .attendance-detail-tr:last-child .attendance-detail-td,
-.attendance-detail-tr:last-child .detail-td,
-.attendance-detail-tr:last-child .input-area {
+.attendance-detail-tr:last-child .detail-td {
     border-bottom: none;
 }
 
@@ -46,8 +47,6 @@
 .attendance-detail-th {
     text-align: left;
     color: #737373;
-    font-size: 18px;
-    letter-spacing: 2.7px;
     width: 35%;
     padding: 10px 10px 10px 50px;
     border-bottom: 2px solid #E1E1E1;
@@ -57,10 +56,7 @@
 .attendance-detail-input {
     color: black;
     text-align: left;
-    font-size: 18px;
-    letter-spacing: 2.7px;
     line-height: 19px;
-    border-bottom: 2px solid #E1E1E1;
 }
 
 .attendance-detail-input {
@@ -69,16 +65,32 @@
     border: 2px solid #E1E1E1;
     border-radius: 4px;
     padding: 2px 15px;
+    font-size: 18px;
     margin: 0;
     margin-top: 4%;
     resize: none;
     outline: none;
     text-align: center;
+    letter-spacing: 0.15em;
 }
+
+.attendance-detail-input:disabled,
+.attendance-detail-td .attendance-detail-memo:disabled {
+    border: none;
+    background: none;
+    color: black;
+    cursor: not-allowed;
+}
+
 
 .attendance-detail-td {
     border-bottom: 2px solid #E1E1E1;
     padding: 4px 20px;
+}
+
+/* 修正画面style */
+.detail-td {
+    padding: 4px 35px;
 }
 
 .attendance-detail-td .attendance-detail-memo {
@@ -86,67 +98,44 @@
     height: 72px;
     text-align: left;
     font-size: 16px;
+    padding: 2px 15px;
 }
 
 /* 管理者ルート申請一覧より詳細画面style */
-.attendance-detail-text-year,
-.attendance-detail-text-day {
-    display: inline-block;
-    width: 26%;
-}
-
-.attendance-detail-text-year {
-    margin-right: 18%;
-}
-
-.attendance-detail-text-time {
-    width: 13%;
-    display: inline-block;
-    box-sizing: border-box;
+.attendance-detail-text-memo {
+    width: 316px;
+    height: 72px;
     text-align: left;
+    font-size: 16px;
+    padding: 0;
 }
 
-.attendance-detail-text-tilde {
-    width: 30%;
-    display: inline-block;
-    text-align: center;
-}
-
-/* 管理者ルート修正画面style */
 .left-date,
-.right-date {
-    width: 28%;
+.right-date,
+.attendance-detail-time {
+    width: 103px;
     display: inline-block;
     text-align: left;
-    padding: 0 15px;
+    padding: 0;
 }
 
 .left-date {
-    text-align: left;
-}
-
-.right-date {
-    text-align: right;
+    margin-right: 18%;
 }
 
 .attendance-detail-tilde {
     width: 16%;
     display: inline-block;
     text-align: center;
+    letter-spacing: 0.15em;
+    font-size: 18px;
 }
-
 
 .attendance-detail-btn-area {
     width: 100%;
     text-align: right;
     margin: 5% auto;
 }
-
-.detail-td {
-    padding: 4px 35px;
-}
-
-
 
 .attendance-detail-edit-btn,
 .status-approved {
@@ -183,14 +172,6 @@
     margin: 5% auto;
 }
 
-
-.attendance-detail-input:disabled {
-    border: none;
-    background: none;
-    color: black;
-    cursor: not-allowed;
-}
-
 /* 時計アイコン・スピンボタン非表示 */
 input[type="time"].attendance-detail-input::-webkit-calendar-picker-indicator {
     display: none;
@@ -205,6 +186,9 @@ input[type="time"].attendance-detail-input::-webkit-outer-spin-button {
 input[type="time"].attendance-detail-input {
     -moz-appearance: textfield;
     appearance: textfield;
+    font-size: 18px;
+    letter-spacing: 0.15em;
+    font-family: inherit;
 }
 
 @media (max-width: 1024px) {
@@ -232,34 +216,11 @@ input[type="time"].attendance-detail-input {
 
     .attendance-detail-th {
         width: 30%;
-        padding: 4px 15px;
+        padding: 4px 30px;
     }
 
-    .attendance-detail-td,
-    .detail-link,
-    .attendance-detail-date,
-    .attendance-detail-input,
-    .attendance-detail-memo {
-        padding: 4px 10px;
+    .detail-td {
+        padding: 4px 35px;
     }
 
-    .attendance-detail-date:first-child {
-        margin-right: 2%;
-    }
-
-    .td-text {
-        padding: 4px 20px;
-    }
-
-    .attendance-detail-date {
-        width: 32%;
-    }
-
-    .attendance-detail-tilde {
-        width: 10%;
-    }
-
-    .attendance-detail-btn-area {
-        margin: 10% auto;
-    }
 }

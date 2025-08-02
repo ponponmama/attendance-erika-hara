@@ -2,6 +2,8 @@
     width: 900px;
     padding: 40px 0;
     background: #f3f3f3;
+    letter-spacing: 0.15em;
+
 }
 
 .tab-menu {
@@ -46,7 +48,6 @@
     border-collapse: collapse;
     border-spacing: 0;
     font-size: 16px;
-    letter-spacing: 2.4px;
     font-weight: 400;
     background: #FFFFFF;
     border-radius: 10px;
@@ -82,7 +83,6 @@
     padding-left: 45px;
     text-align: left;
 }
-
 
 .table-tr:last-child td {
     border-bottom: none;

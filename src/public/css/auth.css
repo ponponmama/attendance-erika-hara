@@ -17,11 +17,10 @@
 }
 
 .auth-title {
-    width: 144px;
+    width: 252px;
     line-height: 44px;
     font-size: 36px;
     margin: 2% auto;
-    line-height: 44px;
     text-align: center;
 }
 
@@ -37,7 +36,7 @@
     margin: 1% auto;
 }
 
-/*　register　*/
+/* register */
 .register-label {
     line-height: 36px;
     font-size: 24px;
@@ -53,7 +52,7 @@
     text-align: left;
 }
 
-/*　login　*/
+/* login */
 .form-label {
     line-height: 36px;
     font-size: 24px;
@@ -67,6 +66,7 @@
     border: 1px solid black;
 }
 
+/* loginとregister共通*/
 .auth-error-message {
     line-height: 18px;
     min-height: 18px;
@@ -89,7 +89,6 @@
     margin-top: 4%;
 }
 
-/*　loginとregister共通　*/
 .login-register-link {
     display: inline-block;
     width: 257px;

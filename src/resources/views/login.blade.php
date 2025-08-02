@@ -9,7 +9,11 @@
 
 @section('content')
     <div class="auth-container">
-        <p class="auth-title">ログイン</p>
+        @if (request()->is('admin*'))
+            <p class="auth-title">管理者ログイン</p>
+        @else
+            <p class="auth-title">ログイン</p>
+        @endif
         <div class="auth-content">
             <p class="auth-error-message">
                 @error('failed')
@@ -42,7 +46,11 @@
                     @enderror
                 </p>
                 <div class="form-group">
-                    <button type="submit" class="submit-button button">ログインする</button>
+                    @if (request()->is('admin*'))
+                        <button type="submit" class="submit-button button">管理者ログインする</button>
+                    @else
+                        <button type="submit" class="submit-button button">ログインする</button>
+                    @endif
                 </div>
             </form>
             @unless (request()->is('admin*'))

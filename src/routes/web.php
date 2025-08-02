@@ -26,6 +26,7 @@ Route::post('/register', [RegisteredUserController::class, 'store']);
 //ログイン(userとadmin共通)
 Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('login');
 Route::get('/admin/login', [AuthenticatedSessionController::class, 'create'])->name('admin.login');
+Route::post('/admin/login', [AuthenticatedSessionController::class, 'store']);
 Route::post('/login', [AuthenticatedSessionController::class, 'store']);
 //ログアウト(userとadmin共通)
 Route::post('/logout', function () {
