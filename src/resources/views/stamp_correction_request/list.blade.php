@@ -40,9 +40,9 @@
                     <tr class="table-header-tr">
                         <th class="table-th status-th">状態</th>
                         <th class="table-th name-th">名前</th>
-                        <th class="table-th target-date-th">対象日時</th>
+                        <th class="table-th date-th">対象日時</th>
                         <th class="table-th reason-th">申請理由</th>
-                        <th class="table-th request-date-th">申請日時</th>
+                        <th class="table-th date-th">申請日時</th>
                         <th class="table-th detail-link-th">詳細</th>
                     </tr>
                 </thead>
@@ -57,10 +57,10 @@
                                 @endif
                             </td>
                             <td class="table-td name-td">{{ str_replace([' ', '　'], '', $request->user->name) ?? '-' }}</td>
-                            <td class="table-td target-date-td date-td">
+                            <td class="table-td date-td">
                                 {{ \Carbon\Carbon::parse($request->attendance->date)->format('Y/m/d') ?? '-' }}</td>
                             <td class="table-td reason-td">{{ $request->reason }}</td>
-                            <td class="table-td request-date-td date-td">
+                            <td class="table-td date-td">
                                 {{ \Carbon\Carbon::parse($request->request_date)->format('Y/m/d') }}</td>
                             <td class="table-td detail-link-td">
                                 <a href="{{ route('attendance_detail', $request->attendance->id) }}"

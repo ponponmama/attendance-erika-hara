@@ -24,7 +24,7 @@
                     <span class="arrow-text">前日</span>
                 </a>
                 <span class="current-date">
-                    <img src="{{ asset('images/calendar.svg') }}" alt="カレンダー" class="calendar-icon">
+                    <img src="{{ asset('images/calendar.png') }}" alt="カレンダー" class="calendar-icon">
                     {{ $currentDate->format('Y/m/d') }}
                 </span>
                 <a href="{{ route('admin.attendance.list', ['date' => $currentDate->copy()->addDay()->format('Y-m-d')]) }}"

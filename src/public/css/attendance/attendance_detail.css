@@ -29,7 +29,7 @@
     background: #FFFFFF;
     border-radius: 10px;
     letter-spacing: 0.15em;
-    font-size: 18px;
+    font-size: 16px;
     font-feature-settings: "tnum";
 }
 
@@ -61,11 +61,11 @@
 
 .attendance-detail-input {
     width: 103px;
-    line-height: 21px;
-    border: 2px solid #E1E1E1;
+    height: 28px;
+    border: 1px solid #E1E1E1;
     border-radius: 4px;
-    padding: 2px 15px;
-    font-size: 18px;
+    padding: 3.5px 15px;
+    font-size: 16px;
     margin: 0;
     margin-top: 4%;
     resize: none;
@@ -82,7 +82,6 @@
     cursor: not-allowed;
 }
 
-
 .attendance-detail-td {
     border-bottom: 2px solid #E1E1E1;
     padding: 4px 20px;
@@ -97,8 +96,7 @@
     width: 316px;
     height: 72px;
     text-align: left;
-    font-size: 16px;
-    padding: 2px 15px;
+    padding: 3.5px 15px;
 }
 
 /* 管理者ルート申請一覧より詳細画面style */
@@ -120,7 +118,7 @@
 }
 
 .left-date {
-    margin-right: 18%;
+    margin-right: 20%;
 }
 
 .attendance-detail-tilde {
@@ -128,7 +126,7 @@
     display: inline-block;
     text-align: center;
     letter-spacing: 0.15em;
-    font-size: 18px;
+    font-size: 16px;
 }
 
 .attendance-detail-btn-area {
@@ -143,9 +141,10 @@
     line-height: 50px;
     border: none;
     border-radius: 5px;
-    font-size: 18px;
-    letter-spacing: 2.7px;
+    font-size: 22px;
+    letter-spacing: 0.15em;
     transition: background 0.2s;
+    text-align: center;
 }
 
 .attendance-detail-edit-btn:hover {
@@ -154,15 +153,13 @@
 
 .attendance-detail-edit-btn {
     background-color: black;
-    color: white;
-    padding: 0 40px;
+    color: #FFFFFF;
 }
 
 .status-approved {
     display: inline-block;
     background: #737373;
-    color: white;
-    padding: 0 20px;
+    color: #FFFFFF;
 }
 
 .pending-message {
@@ -186,8 +183,6 @@ input[type="time"].attendance-detail-input::-webkit-outer-spin-button {
 input[type="time"].attendance-detail-input {
     -moz-appearance: textfield;
     appearance: textfield;
-    font-size: 18px;
-    letter-spacing: 0.15em;
     font-family: inherit;
 }
 
@@ -218,9 +213,4 @@ input[type="time"].attendance-detail-input {
         width: 30%;
         padding: 4px 30px;
     }
-
-    .detail-td {
-        padding: 4px 35px;
-    }
-
 }

@@ -1,14 +1,18 @@
+/* 各一覧共通部分 */
 .attendance-list-container {
     width: 900px;
     padding: 30px 0;
     margin-top: 30px;
 }
 
+/* 共通title&ナビゲーション用要素 */
 .attendance-list-header {
     margin-bottom: 5%;
 }
 
+/* 管理者スタッフ勤怠一覧日次*/
 .date-switcher,
+/* user用勤怠一覧,スタッフ別一覧月次 */
 .month-switcher {
     width: 100%;
     height: 60px;
@@ -20,19 +24,23 @@
     padding: 10px;
 }
 
+/* 日次 */
 .current-date,
+/* 月次 */
 .current-month {
     width: 155px;
     height: 25px;
-    font-size: 1.2rem;
-    font-weight: bold;
+    font-size: 24px;
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 10px;
 }
 
+/* 矢印ボタン&矢印横文字要素 */
+/* 日次 */
 .date-arrow,
+/* 月次 */
 .month-arrow {
     color: #737373;
     text-decoration: none;
@@ -43,35 +51,40 @@
     gap: 10px;
 }
 
+/* 矢印横文字 */
 .arrow-text {
     font-size: 16px;
-    letter-spacing: 2.4px;
+    letter-spacing: 0.15em;
 }
 
+/* 矢印アイコン */
 .arrow-icon {
     width: 20px;
     height: 15px;
     opacity: 0.3;
 }
 
+/* 矢印アイコン右向き */
 .arrow-icon-right {
     transform: scaleX(-1);
 }
 
+/* 矢印ボタンホバー */
 .date-arrow:hover,
 .month-arrow:hover {
     background: #E1E1E1;
 }
 
+/* カレンダーアイコン */
 .calendar-icon {
     width: 25px;
     height: 25px;
     color: black;
 }
 
-/* スタッフ別勤怠一覧 */
+/* 管理者スタッフ別勤怠一覧 */
 .attendance-list-table-container,
-/* 勤怠一覧 */
+/* 管理者,スタッフ勤怠一覧,ユーザー勤怠一覧共通 */
 .attendance-table-container {
     border-radius: 12px;
     padding: 0;
@@ -80,20 +93,21 @@
     overflow: hidden;
 }
 
-/* スタッフ別勤怠一覧 */
+/* 管理者スタッフ別勤怠一覧 */
 .attendance-list-table,
-/* 勤怠一覧 */
+/* 管理者側スタッフ勤怠一覧,ユーザー勤怠一覧共通 */
 .attendance-table {
     width: 100%;
     border-collapse: collapse;
     border-spacing: 0;
-    font-size: 18px;
-    letter-spacing: 2.7px;
+    font-size: 16px;
+    letter-spacing: 0.15em;
     background: #FFFFFF;
     border-radius: 10px;
     table-layout: fixed;
 }
 
+/* 共通table要素 */
 .table-header-tr .table-th {
     border-bottom: 3px solid #E1E1E1;
 }
@@ -107,7 +121,7 @@
     font-feature-settings: "tnum";
 }
 
-/* 勤怠一覧 */
+/* 管理者スタッフ勤怠一覧 */
 .table-th-name, .table-td-name {
     width: 20%;
     padding-left: 20px;
@@ -120,6 +134,7 @@
     text-align: left;
 }
 
+/* 共通詳細link要素 */
 .table-header-tr .detail-link-th, .table-tr .detail-link-td {
     text-align: center;
     padding-right: 20px;
@@ -130,7 +145,6 @@
     border-bottom: none;
 }
 
-/* 共通style */
 .table-tr:hover {
     background: #f3f3f3;
 }
@@ -138,9 +152,6 @@
 .detail-link {
     display: inline-block;
     color: black;
-    font-size: 16px;
-    letter-spacing: 2.4px;
-    font-weight: bold;
     text-decoration: none;
     transition: background 0.2s;
 }
@@ -155,14 +166,13 @@
     margin: 5% auto;
 }
 
-/* スタッフ別勤怠一覧 */
+/* スタッフ別勤怠一覧CSVボタン */
 .attendance-list-csv-btn {
     width: 184px;
     line-height: 50px;
     border: none;
     border-radius: 5px;
-    font-size: 18px;
-    letter-spacing: 2.7px;
+    font-size: 22px;
     background-color: black;
     color: white;
     transition: background 0.2s;
@@ -188,13 +198,11 @@
     .attendance-table {
         min-width: 800px;
         min-height: 100%;
-        table-layout: fixed;
     }
 
     .table-th, .table-td {
         padding: 3px 10px;
         font-size: 12.8px;
-        letter-spacing: 1.92px;
     }
 }
 

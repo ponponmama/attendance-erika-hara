@@ -1,9 +1,10 @@
+/* 管理者スタッフ別勤怠一覧 */
 .staff-list-container {
     width: 900px;
     padding: 40px 0;
-    background: #f3f3f3;
 }
 
+/* 管理者スタッフ別勤怠一覧table要素 */
 .staff-list-table-container {
     border-radius: 10px;
     padding: 0;
@@ -12,6 +13,7 @@
     overflow: hidden;
 }
 
+/* 管理者スタッフ別勤怠一覧table */
 .staff-list-table {
     width: 100%;
     border-collapse: collapse;
@@ -42,7 +44,7 @@
 }
 
 .table-tr:hover {
-    background: #f3f3f3;
+    background: #E1E1E1;
 }
 
 .staff-list-table tr:last-child td {
@@ -54,13 +56,12 @@
     padding: 4px 12px;
     color: black;
     border-radius: 4px;
-    font-size: 16px;
     text-decoration: none;
     transition: background 0.2s;
 }
 
 .detail-link:hover {
-    background: grey;
+    background: #737373;
 }
 
 @media (max-width: 1024px) {

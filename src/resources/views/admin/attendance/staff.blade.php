@@ -21,7 +21,7 @@
                 <a href="{{ route('admin.attendance.staff', ['id' => $user->id, 'month' => $currentMonth->copy()->subMonth()->format('Y-m')]) }}"
                     class="month-arrow">← 前月</a>
                 <span class="current-month">
-                    <img src="{{ asset('images/calendar.svg') }}" alt="カレンダー" class="calendar-icon">
+                    <img src="{{ asset('images/calendar.png') }}" alt="カレンダー" class="calendar-icon">
                     {{ $currentMonth->format('Y/m') }}
                 </span>
                 <a href="{{ route('admin.attendance.staff', ['id' => $user->id, 'month' => $currentMonth->copy()->addMonth()->format('Y-m')]) }}"

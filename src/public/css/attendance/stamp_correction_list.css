@@ -1,9 +1,8 @@
+/* 申請一覧 */
 .stamp-correction-list-container {
     width: 900px;
     padding: 40px 0;
     background: #f3f3f3;
-    letter-spacing: 0.15em;
-
 }
 
 .tab-menu {
@@ -16,8 +15,8 @@
 .tab-item-active {
     height: 19px;
     font-size: 16px;
-    letter-spacing: 2.4px;
     color: black;
+    letter-spacing: 0.15em;
 }
 
 .tab-item {
@@ -35,7 +34,7 @@
 }
 
 .list-table-container {
-    border-radius: 12px;
+    border-radius: 10px;
     padding: 0;
     margin: 0 auto;
     width: 100%;
@@ -48,10 +47,12 @@
     border-collapse: collapse;
     border-spacing: 0;
     font-size: 16px;
-    font-weight: 400;
     background: #FFFFFF;
     border-radius: 10px;
     table-layout: fixed;
+    letter-spacing: 0.15em;
+    font-feature-settings: "tnum";
+
 }
 
 .table-header-tr .table-th {
@@ -65,7 +66,6 @@
     border-bottom: 2px solid #E1E1E1;
     color: #737373;
     padding: 0 15px;
-    font-feature-settings: "tnum";
 }
 
 .table-td.reason-td {
