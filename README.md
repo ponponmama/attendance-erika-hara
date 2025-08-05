@@ -76,7 +76,7 @@
 - 修正申請一覧画面
 
 <p align="center">
-    <img src="user_stamp_correction_request_list.png" alt="修正申請一覧画面">
+    <img src="user_stamp_correction_request.png" alt="修正申請一覧画面">
 </p>
 
 ### 管理者機能
@@ -135,7 +135,6 @@
 <p align="center">
     <img src="admin_approved.png" alt="承認済画面">
 </p>
-
 
 ### 開発言語・フレームワーク
 
@@ -333,7 +332,7 @@ php artisan test
   - `Auth/RegisterTest.php` - ユーザー登録機能テスト
   - `Auth/AdminLoginTest.php` - ログイン認証機能テスト（管理者）
 
-  *テストで一旦 db がリセットされます。マイグレートリフレッシュとシーダーしてください。
+  \*テストで一旦 db がリセットされます。マイグレートリフレッシュとシーダーしてください。
 
 ```bash
 php artisan migrate:fresh --seed
