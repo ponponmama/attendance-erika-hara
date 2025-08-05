@@ -154,10 +154,14 @@ class AttendanceListTest extends TestCase
         $user = User::factory()->create();
         $this->actingAs($user);
 
+        // テスト時間を固定（現在の月に合わせる）
+        $testTime = Carbon::create(2025, 8, 5, 9, 0, 0);
+        Carbon::setTestNow($testTime);
+
         // 勤怠記録を作成（現在の月のデータ）
         $attendance = Attendance::factory()->create([
             'user_id' => $user->id,
-            'date' => '2025-07-25',
+            'date' => '2025-08-05',
             'clock_in' => '09:00:00',
             'clock_out' => '18:00:00',
         ]);

@@ -49,13 +49,16 @@
 - 勤怠打刻画面
 
 <p align="center">
-    <img src="user_attendance_pre-work status.png" alt="ユーザー打刻勤務前画面">
+    <img src="user_pre_work_status.png" alt="ユーザー打刻勤務前画面">
 </p>
 <p align="center">
-    <img src="user_attendance_working.png" alt="ユーザー打刻勤務中画面">
+    <img src="user_working.png" alt="ユーザー打刻勤務中画面">
 </p>
 <p align="center">
-    <img src="user_leave work.png" alt="ユーザー打刻勤務中画面">
+    <img src="user_leave_work.png" alt="ユーザー打刻休憩中画面">
+</p>
+<p align="center">
+    <img src="user_clock_out.png" alt="ユーザー打刻勤務終了画面">
 </p>
 
 - 勤怠一覧画面
@@ -97,7 +100,7 @@
 - 勤怠一覧画面 <br>
 
 <p align="center">
-    <img src="admin_attendance.png" alt="勤怠一覧画面">
+    <img src="admin_attendance_list.png" alt="勤怠一覧画面">
 </p>
 
 - スタッフ一覧画面 <br>
@@ -109,7 +112,7 @@
 - スタッフ別勤怠一覧画面 <br>
 
 <p align="center">
-    <img src="admin_attendance_staff.png" alt="スタッフ別勤怠一覧画面">
+    <img src="admin_attendance_list.png" alt="スタッフ別勤怠一覧画面">
 </p>
 
 - 勤怠詳細・修正画面 <br>
@@ -121,17 +124,18 @@
 - 修正申請一覧画面 <br>
 
 <p align="center">
-    <img src="admin_stamp_correction_request_list.png" alt="スタッフ一覧画面">
+    <img src="admin_stamp_correction_request_list.png" alt="修正申請一覧画面">
 </p>
 
 - 修正申請の承認画面 <br>
 
 <p align="center">
-    <img src="admin_approved.png" alt="スタッフ一覧画面">
+    <img src="admin_pending.png" alt="承認待画面">
 </p>
 <p align="center">
-    <img src="admin_pending.png" alt="スタッフ一覧画面">
+    <img src="admin_approved.png" alt="承認済画面">
 </p>
+
 
 ### 開発言語・フレームワーク
 
