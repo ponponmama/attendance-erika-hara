@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Database\Factories\ReasonList;
+use Carbon\Carbon;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Attendance>
@@ -31,8 +32,8 @@ class AttendanceFactory extends Factory
         return [
             'user_id' => null, // Seederで指定
             'date' => null, // Seederで指定（ランダム生成を無効化）
-            'clock_in' => $clockIn,
-            'clock_out' => $clockOut,
+            'clock_in' => $clockIn, // 日付はAttendanceモデルで自動設定される
+            'clock_out' => $clockOut, // 日付はAttendanceモデルで自動設定される
             'memo' => null, // Seederで指定（ランダム生成を無効化）
         ];
     }

@@ -18,7 +18,7 @@ class AttendanceController extends Controller
         $user = Auth::user();
         $today = $now->toDateString();
 
-        $attendance = Attendance::where('user_id', $user->id)->where('date', $today)->first();
+        $attendance = Attendance::where('user_id', $user->id)->whereDate('date', $today)->first();
         $break = $attendance ? BreakTime::where('attendance_id', $attendance->id)->whereNull('break_end')->first() : null;
 
         $status = 'not_clocked_in';
@@ -187,7 +187,8 @@ class AttendanceController extends Controller
         }])->findOrFail($id);
 
         // 一般ユーザーの場合は自分の勤怠のみアクセス可能
-        if ($user->role !== 'admin' && $attendance->user_id !== $user->id) {
+        // 厳密比較だと型の違いで弾かれる可能性があるため、緩やかな比較に変更
+        if ($user->role !== 'admin' && $attendance->user_id != $user->id) {
             abort(403);
         }
 

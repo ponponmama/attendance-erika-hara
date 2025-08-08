@@ -13,7 +13,7 @@
             @if ($status === 'not_clocked_in')
                 <span class="status-text">勤務外</span>
             @elseif($status === 'clocked_in')
-                <span class="status-text">出勤中</span>
+                <span class="status-text">勤務中</span>
             @elseif($status === 'on_break')
                 <span class="status-text">休憩中</span>
             @else

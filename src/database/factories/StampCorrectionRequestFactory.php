@@ -21,13 +21,13 @@ class StampCorrectionRequestFactory extends Factory
     {
         $status = $this->faker->randomElement(['pending', 'approved']);
         $approved_at = ($status === 'approved') ? $this->faker->dateTimeThisMonth() : null;
-        $approved_by = ($status === 'approved') ? User::where('role', 'admin')->first()->id ?? 1 : null;
+        $approved_by = ($status === 'approved') ? User::where('role', 'admin')->first()->id ?? null : null;
 
         return [
             'user_id' => null, // Seederで指定
             'attendance_id' => null, // Seederで指定
             'approved_by' => $approved_by,
-            'request_date' => null, // Seederで指定（ランダム生成を無効化）
+            'request_date' => now(), // デフォルトで現在時刻を設定
             'correction_type' => $this->faker->randomElement(['clock_in', 'clock_out', 'break_start', 'break_end']),
             'current_time' => $this->faker->optional(0.7)->time('H:i:s'),
             'requested_time' => $this->faker->time('H:i:s'),

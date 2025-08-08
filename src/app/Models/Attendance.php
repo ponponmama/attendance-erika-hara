@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class Attendance extends Model
 {
@@ -19,9 +20,23 @@ class Attendance extends Model
 
     protected $casts = [
         'date' => 'date',
-        'clock_in' => 'datetime:H:i:s',
-        'clock_out' => 'datetime:H:i:s',
     ];
+
+    /**
+     * 出勤時間をフォーマットして取得
+     */
+    public function getClockInFormattedAttribute()
+    {
+        return $this->clock_in ? Carbon::parse($this->clock_in)->format('H:i') : '';
+    }
+
+    /**
+     * 退勤時間をフォーマットして取得
+     */
+    public function getClockOutFormattedAttribute()
+    {
+        return $this->clock_out ? Carbon::parse($this->clock_out)->format('H:i') : '';
+    }
 
     public function user()
     {
