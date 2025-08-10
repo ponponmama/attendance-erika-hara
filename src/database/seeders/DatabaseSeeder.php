@@ -64,7 +64,8 @@ class DatabaseSeeder extends Seeder
                     'memo' => ($day % 5 === 0) ? $reason : null,
                 ]);
 
-                BreakTime::factory()->create([
+                // 勤務時間内に収まる休憩時間を作成
+                BreakTime::factory()->withinWorkHours($attendance)->create([
                     'attendance_id' => $attendance->id,
                 ]);
 

@@ -31,6 +31,7 @@
     letter-spacing: 0.15em;
     font-size: 16px;
     font-feature-settings: "tnum";
+    table-layout: fixed;
 }
 
 /* 最後の行のセルのボーダーを削除 */
@@ -82,6 +83,10 @@
     cursor: not-allowed;
 }
 
+.attendance-detail-td .attendance-detail-memo:disabled {
+    padding-left: 25px;
+}
+
 .attendance-detail-td {
     border-bottom: 2px solid #E1E1E1;
     padding: 4px 20px;
@@ -89,7 +94,7 @@
 
 /* 修正画面style */
 .detail-td {
-    padding: 4px 35px;
+    padding: 4px 40px;
 }
 
 .attendance-detail-td .attendance-detail-memo {
@@ -100,12 +105,8 @@
 }
 
 /* 管理者ルート申請一覧より詳細画面style */
-.attendance-detail-text-memo {
-    width: 316px;
-    height: 72px;
-    text-align: left;
-    font-size: 16px;
-    padding: 0;
+.admin-td {
+    padding: 4px 20px;
 }
 
 .left-date,
@@ -118,11 +119,11 @@
 }
 
 .left-date {
-    margin-right: 20%;
+    margin-right: 103px;
 }
 
 .attendance-detail-tilde {
-    width: 16%;
+    width: 97px;
     display: inline-block;
     text-align: center;
     letter-spacing: 0.15em;
@@ -186,31 +187,39 @@ input[type="time"].attendance-detail-input {
     font-family: inherit;
 }
 
-@media (max-width: 1024px) {
-    .attendance-detail-container {
-        width: 80%;
-    }
-}
 
 @media (max-width: 820px) {
     .attendance-detail-container {
-        width: 80%;
+        width: 100%;
+        max-width: 100%;
+        padding: 0 10px;
+        box-sizing: border-box;
+    }
+
+    .attendance-detail-form {
+        width: 100%;
     }
 
     .table-wrapper {
+        width: 100%;
         overflow-x: auto;
-        overflow-y: auto;
     }
-
 
     .attendance-detail-table {
-        min-width: 600px;
-        min-height: 100%;
+        width: 900px;
+        min-width: 900px;
         table-layout: fixed;
+        margin-bottom: 20px;
     }
 
-    .attendance-detail-th {
-        width: 30%;
-        padding: 4px 30px;
+    .attendance-detail-th,
+    .attendance-detail-td,
+    .detail-td {
+        min-width: 150px;
+    }
+
+    .attendance-detail-td .attendance-detail-memo {
+        width: 260px;
     }
 }
+
