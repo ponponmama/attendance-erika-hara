@@ -195,11 +195,17 @@ class AttendanceController extends Controller
         // 最新の修正申請（pending/approved問わず）
         $latestRequest = $attendance->stampCorrectionRequests()->latest()->first();
 
+        // 承認待ち・承認済みの修正申請をすべて取得
+        $correctionRequests = $attendance->stampCorrectionRequests()
+            ->whereIn('status', ['pending', 'approved'])
+            ->latest()
+            ->get();
+
         Log::info($latestRequest);
 
         // 管理者用の最新の修正申請（なければnull）
         $stampCorrectionRequest = $attendance->stampCorrectionRequests()->latest()->first();
 
-        return view('attendance.detail', compact('attendance', 'latestRequest', 'stampCorrectionRequest'));
+        return view('attendance.detail', compact('attendance', 'latestRequest', 'stampCorrectionRequest', 'correctionRequests'));
     }
 }

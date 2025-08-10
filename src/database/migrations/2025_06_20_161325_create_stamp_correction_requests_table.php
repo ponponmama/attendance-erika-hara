@@ -23,7 +23,6 @@ class CreateStampCorrectionRequestsTable extends Migration
             $table->time('current_time')->nullable();
             $table->time('requested_time')->nullable();
             $table->text('reason')->nullable();
-            $table->json('correction_data')->nullable();
             $table->enum('status', ['pending', 'approved'])->default('pending');
             $table->timestamp('approved_at')->nullable();
             $table->timestamps();
