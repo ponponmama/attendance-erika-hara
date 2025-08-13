@@ -75,6 +75,27 @@
     letter-spacing: 0.15em;
 }
 
+
+.attendance-detail-td .attendance-detail-memo {
+    width: 316px;
+    height: 72px;
+    text-align: left;
+    padding: 3.5px 15px;
+}
+
+/* 1.管理者ルートスタッフ一覧より詳細画面style */
+.attendance-detail-td {
+    border-bottom: 2px solid #E1E1E1;
+    padding: 4px 20px;
+}
+
+/* 2.管理者ルート勤怠一覧より詳細画面style */
+/* 3.スタッフ承認申請一覧より詳細画面style */
+.detail-td {
+    padding: 4px 40px;
+}
+
+/* スタッフ承認申請送信後のstyle */
 .attendance-detail-input:disabled,
 .attendance-detail-td .attendance-detail-memo:disabled {
     border: none;
@@ -87,43 +108,13 @@
     padding-left: 25px;
 }
 
-.attendance-detail-td {
-    border-bottom: 2px solid #E1E1E1;
-    padding: 4px 20px;
-}
-
-/* 修正画面style */
-.detail-td,
-.attendance-detail-text-memo {
-    padding: 4px 20px;
-}
-
-.attendance-detail-td .attendance-detail-memo {
-    width: 316px;
-    height: 72px;
-    text-align: left;
-    padding: 3.5px 15px;
-}
-
-/* 管理者ルート申請一覧より詳細画面style */
-.admin-td {
-    padding: 4px 40px;
-}
 
 .left-date,
-.right-date {
-    width: 103px;
-    text-align: left;
-    display: inline-block;
-    text-align: left;
-    padding: 0;
-
-}
-
+.right-date,
 .attendance-detail-time {
     width: 103px;
     display: inline-block;
-    text-align: center;
+    text-align: left;
     padding: 0;
 }
 
@@ -177,11 +168,6 @@
     color: #FF000080;
     font-weight: 800;
     margin: 5% auto;
-}
-
-/* スタッフ承認申請画面style */
-.staff-td {
-    padding: 4px 40px;
 }
 
 /* 時計アイコン・スピンボタン非表示 */

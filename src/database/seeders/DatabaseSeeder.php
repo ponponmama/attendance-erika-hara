@@ -64,21 +64,24 @@ class DatabaseSeeder extends Seeder
                     'memo' => ($day % 5 === 0) ? $reason : null,
                 ]);
 
-                // 昼休憩を作成
-                BreakTime::factory()->withinWorkHours($attendance, 'lunch')->create([
-                    'attendance_id' => $attendance->id,
-                ]);
-
-                // 追加休憩がある場合は作成
+                // 勤務時間を計算
                 $workDuration = \Carbon\Carbon::parse($attendance->clock_in)->diffInMinutes(\Carbon\Carbon::parse($attendance->clock_out));
+
+                // 休憩を時間順に作成
                 if ($workDuration >= 360) {
-                    // 6時間以上: 午前休憩も追加
+                    // 6時間以上: 午前休憩を最初に作成
                     BreakTime::factory()->withinWorkHours($attendance, 'morning')->create([
                         'attendance_id' => $attendance->id,
                     ]);
                 }
+
+                // 昼休憩を作成（全員）
+                BreakTime::factory()->withinWorkHours($attendance, 'lunch')->create([
+                    'attendance_id' => $attendance->id,
+                ]);
+
                 if ($workDuration >= 480) {
-                    // 8時間以上: 午後休憩も追加
+                    // 8時間以上: 午後休憩を最後に作成
                     BreakTime::factory()->withinWorkHours($attendance, 'afternoon')->create([
                         'attendance_id' => $attendance->id,
                     ]);

@@ -20,6 +20,7 @@ class CreateStampCorrectionRequestsTable extends Migration
             $table->foreignId('approved_by')->nullable()->constrained('users')->onDelete('set null');
             $table->date('request_date');
             $table->string('correction_type', 255);
+            $table->json('correction_data')->nullable();
             $table->time('current_time')->nullable();
             $table->time('requested_time')->nullable();
             $table->text('reason')->nullable();

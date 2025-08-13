@@ -278,4 +278,108 @@ class AttendanceDetailCorrectionTest extends TestCase
         // 詳細ボタンが表示されていることを確認
         $response->assertSee('詳細');
     }
+
+    /**
+     * ID: 11-9
+     * 勤怠詳細情報修正機能（一般ユーザー） - correction_dataが正しく保存される
+     * テスト手順: 1. 勤怠情報が登録されたユーザーにログインをする 2. 複数の項目を修正して保存処理をする 3. データベースのcorrection_dataを確認する
+     * 期待挙動: correction_dataに正しい構造でデータが保存される
+     */
+    public function test_correction_data_is_saved_correctly()
+    {
+        /** @var User $user */
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+        $attendance = Attendance::factory()->create([
+            'user_id' => $user->id,
+            'date' => '2024-07-15',
+            'clock_in' => '09:00:00',
+            'clock_out' => '18:00:00',
+        ]);
+
+        // 複数の項目を修正
+        $this->post("/stamp_correction_request", [
+            'attendance_id' => $attendance->id,
+            'clock_in' => '08:30',
+            'clock_out' => '18:30',
+            'break_start_0' => '12:30',
+            'break_end_0' => '13:30',
+            'memo' => 'テスト備考',
+        ]);
+
+        // correction_dataが正しく保存されていることを確認
+        $this->assertDatabaseHas('stamp_correction_requests', [
+            'user_id' => $user->id,
+            'attendance_id' => $attendance->id,
+            'correction_type' => 'clock_in,clock_out,break_0_start,break_0_end',
+        ]);
+
+        // correction_dataの内容を確認
+        $request = \App\Models\StampCorrectionRequest::where('user_id', $user->id)->first();
+        $this->assertNotNull($request->correction_data);
+        $this->assertEquals('08:30', $request->correction_data['clock_in']['requested']);
+        $this->assertEquals('18:30', $request->correction_data['clock_out']['requested']);
+        $this->assertEquals('12:30', $request->correction_data['break_0_start']['requested']);
+        $this->assertEquals('13:30', $request->correction_data['break_0_end']['requested']);
+    }
+
+    /**
+     * ID: 11-10
+     * 勤怠詳細情報修正機能（管理者） - 承認時にcorrection_dataから正しくデータが更新される
+     * テスト手順: 1. 修正申請を作成する 2. 管理者でログインして承認する 3. 勤怠データが正しく更新されることを確認する
+     * 期待挙動: 承認時にcorrection_dataから正しく勤怠データが更新される
+     */
+    public function test_approval_updates_attendance_data_from_correction_data()
+    {
+        /** @var User $user */
+        $user = User::factory()->create();
+        /** @var User $admin */
+        $admin = User::factory()->admin()->create();
+
+        $attendance = Attendance::factory()->create([
+            'user_id' => $user->id,
+            'date' => '2024-07-15',
+            'clock_in' => '09:00:00',
+            'clock_out' => '18:00:00',
+        ]);
+
+        // 修正申請を作成
+        $this->actingAs($user);
+        $this->post("/stamp_correction_request", [
+            'attendance_id' => $attendance->id,
+            'clock_in' => '08:30',
+            'clock_out' => '18:30',
+            'memo' => 'テスト備考',
+        ]);
+
+        $request = \App\Models\StampCorrectionRequest::where('user_id', $user->id)->first();
+
+                // correction_dataが正しく保存されていることを確認
+        $this->assertNotNull($request->correction_data);
+        $this->assertArrayHasKey('clock_in', $request->correction_data);
+        $this->assertArrayHasKey('clock_out', $request->correction_data);
+        $this->assertEquals('08:30', $request->correction_data['clock_in']['requested']);
+        $this->assertEquals('18:30', $request->correction_data['clock_out']['requested']);
+
+        // 管理者で承認
+        $this->actingAs($admin);
+        $this->post("/stamp_correction_request/approve/{$request->id}");
+
+        // 承認後のデータを確認
+        $attendance->refresh();
+
+                // データが正しく更新されていることを確認
+        if ($attendance->clock_in instanceof \Carbon\Carbon) {
+            $this->assertEquals('08:30:00', $attendance->clock_in->format('H:i:s'));
+        } else {
+            $this->assertEquals('08:30:00', substr($attendance->clock_in, 11, 8));
+        }
+
+        if ($attendance->clock_out instanceof \Carbon\Carbon) {
+            $this->assertEquals('18:30:00', $attendance->clock_out->format('H:i:s'));
+        } else {
+            $this->assertEquals('18:30:00', substr($attendance->clock_out, 11, 8));
+        }
+    }
 }

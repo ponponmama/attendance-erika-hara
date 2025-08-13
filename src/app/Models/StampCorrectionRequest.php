@@ -15,6 +15,7 @@ class StampCorrectionRequest extends Model
         'approved_by',
         'request_date',
         'correction_type',
+        'correction_data',
         'current_time',
         'requested_time',
         'reason',
@@ -24,7 +25,8 @@ class StampCorrectionRequest extends Model
 
     protected $casts = [
         'request_date' => 'date',
-        'correction_type' => 'string', // Enums can often be cast to strings
+        'correction_type' => 'string',
+        'correction_data' => 'array',
         'status' => 'string',
     ];
 

@@ -184,6 +184,12 @@ class AdminAttendanceListTest extends TestCase
             'status' => 'pending',
             'reason' => '申請1',
             'correction_type' => 'clock_in',
+            'correction_data' => [
+                'clock_in' => [
+                    'current' => '09:00',
+                    'requested' => '08:30'
+                ]
+            ],
             'current_time' => '09:00',
             'requested_time' => '08:30',
             'request_date' => now(),
@@ -195,6 +201,12 @@ class AdminAttendanceListTest extends TestCase
             'status' => 'pending',
             'reason' => '申請2',
             'correction_type' => 'clock_out',
+            'correction_data' => [
+                'clock_out' => [
+                    'current' => '18:00',
+                    'requested' => '19:00'
+                ]
+            ],
             'current_time' => '18:00',
             'requested_time' => '19:00',
             'request_date' => now(),
@@ -235,6 +247,12 @@ class AdminAttendanceListTest extends TestCase
             'status' => 'approved',
             'reason' => '承認済み申請1',
             'correction_type' => 'clock_in',
+            'correction_data' => [
+                'clock_in' => [
+                    'current' => '09:00',
+                    'requested' => '08:30'
+                ]
+            ],
             'current_time' => '09:00',
             'requested_time' => '08:30',
             'request_date' => now(),
@@ -246,6 +264,12 @@ class AdminAttendanceListTest extends TestCase
             'status' => 'approved',
             'reason' => '承認済み申請2',
             'correction_type' => 'clock_out',
+            'correction_data' => [
+                'clock_out' => [
+                    'current' => '18:00',
+                    'requested' => '19:00'
+                ]
+            ],
             'current_time' => '18:00',
             'requested_time' => '19:00',
             'request_date' => now(),
@@ -281,6 +305,12 @@ class AdminAttendanceListTest extends TestCase
             'status' => 'pending',
             'reason' => 'テスト修正申請',
             'correction_type' => 'clock_in',
+            'correction_data' => [
+                'clock_in' => [
+                    'current' => '09:00',
+                    'requested' => '08:30'
+                ]
+            ],
             'current_time' => '09:00',
             'requested_time' => '08:30',
             'request_date' => now(),
@@ -318,6 +348,12 @@ class AdminAttendanceListTest extends TestCase
             'status' => 'pending',
             'reason' => 'テスト修正申請',
             'correction_type' => 'clock_in',
+            'correction_data' => [
+                'clock_in' => [
+                    'current' => '09:00',
+                    'requested' => '08:30'
+                ]
+            ],
             'current_time' => '09:00',
             'requested_time' => '08:30',
             'request_date' => now(),

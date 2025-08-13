@@ -44,6 +44,15 @@ class AdminCorrectionRequestTest extends TestCase
             'attendance_id' => $attendance1->id,
             'status' => 'pending',
             'reason' => '出勤時刻修正',
+            'correction_type' => 'clock_in',
+            'correction_data' => [
+                'clock_in' => [
+                    'current' => '09:00',
+                    'requested' => '08:30'
+                ]
+            ],
+            'current_time' => '09:00',
+            'requested_time' => '08:30',
             'request_date' => '2024-07-15',
             'approved_by' => null,
         ]);
@@ -53,6 +62,15 @@ class AdminCorrectionRequestTest extends TestCase
             'attendance_id' => $attendance2->id,
             'status' => 'pending',
             'reason' => '退勤時刻修正',
+            'correction_type' => 'clock_out',
+            'correction_data' => [
+                'clock_out' => [
+                    'current' => '18:00',
+                    'requested' => '19:00'
+                ]
+            ],
+            'current_time' => '18:00',
+            'requested_time' => '19:00',
             'request_date' => '2024-07-16',
             'approved_by' => null,
         ]);
@@ -96,6 +114,15 @@ class AdminCorrectionRequestTest extends TestCase
             'attendance_id' => $attendance1->id,
             'status' => 'approved',
             'reason' => '出勤時刻修正',
+            'correction_type' => 'clock_in',
+            'correction_data' => [
+                'clock_in' => [
+                    'current' => '09:00',
+                    'requested' => '08:30'
+                ]
+            ],
+            'current_time' => '09:00',
+            'requested_time' => '08:30',
             'request_date' => '2024-07-15',
             'approved_by' => $admin->id,
         ]);
@@ -105,6 +132,15 @@ class AdminCorrectionRequestTest extends TestCase
             'attendance_id' => $attendance2->id,
             'status' => 'approved',
             'reason' => '退勤時刻修正',
+            'correction_type' => 'clock_out',
+            'correction_data' => [
+                'clock_out' => [
+                    'current' => '18:00',
+                    'requested' => '19:00'
+                ]
+            ],
+            'current_time' => '18:00',
+            'requested_time' => '19:00',
             'request_date' => '2024-07-16',
             'approved_by' => $admin->id,
         ]);
@@ -142,6 +178,15 @@ class AdminCorrectionRequestTest extends TestCase
             'attendance_id' => $attendance->id,
             'status' => 'pending',
             'reason' => '出勤時刻修正',
+            'correction_type' => 'clock_in',
+            'correction_data' => [
+                'clock_in' => [
+                    'current' => '09:00',
+                    'requested' => '08:30'
+                ]
+            ],
+            'current_time' => '09:00',
+            'requested_time' => '08:30',
             'request_date' => '2024-07-15',
             'approved_by' => null,
         ]);
@@ -181,6 +226,12 @@ class AdminCorrectionRequestTest extends TestCase
             'status' => 'pending',
             'reason' => '出勤時刻修正',
             'correction_type' => 'clock_in',
+            'correction_data' => [
+                'clock_in' => [
+                    'current' => '09:00',
+                    'requested' => '08:30'
+                ]
+            ],
             'current_time' => '09:00',
             'requested_time' => '08:30',
             'request_date' => '2024-07-15',
@@ -223,6 +274,15 @@ class AdminCorrectionRequestTest extends TestCase
             'user_id' => $user->id,
             'attendance_id' => $attendance->id,
             'status' => 'pending',
+            'correction_type' => 'clock_in',
+            'correction_data' => [
+                'clock_in' => [
+                    'current' => '09:00',
+                    'requested' => '08:30'
+                ]
+            ],
+            'current_time' => '09:00',
+            'requested_time' => '08:30',
             'request_date' => '2024-07-15',
             'approved_by' => null,
         ]);
@@ -246,6 +306,15 @@ class AdminCorrectionRequestTest extends TestCase
             'user_id' => $user->id,
             'attendance_id' => $attendance->id,
             'status' => 'pending',
+            'correction_type' => 'clock_in',
+            'correction_data' => [
+                'clock_in' => [
+                    'current' => '09:00',
+                    'requested' => '08:30'
+                ]
+            ],
+            'current_time' => '09:00',
+            'requested_time' => '08:30',
             'request_date' => '2024-07-15',
             'approved_by' => null,
         ]);
