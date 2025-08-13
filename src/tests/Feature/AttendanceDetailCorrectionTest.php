@@ -167,7 +167,7 @@ class AttendanceDetailCorrectionTest extends TestCase
         ]);
 
         $response->assertStatus(302);
-        $response->assertRedirect('/stamp_correction_request/list');
+        $response->assertRedirect('/');
 
         // 修正申請がデータベースに保存されていることを確認
         $this->assertDatabaseHas('stamp_correction_requests', [

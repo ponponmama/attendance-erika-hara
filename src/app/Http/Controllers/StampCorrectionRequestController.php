@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StampCorrectionRequest;
+use App\Models\StampCorrectionRequest as StampCorrectionRequestModel;
+use App\Models\Attendance;
+use App\Models\BreakTime;
+use Carbon\Carbon;
 
 class StampCorrectionRequestController extends Controller
 {
@@ -17,7 +21,7 @@ class StampCorrectionRequestController extends Controller
 
         if ($user->role === 'admin') {
             // 管理者用：全ユーザーの申請を取得
-            $requests = \App\Models\StampCorrectionRequest::with(['user', 'attendance'])
+            $requests = StampCorrectionRequestModel::with(['user', 'attendance'])
                 ->when($status === 'pending', function ($query) {
                     return $query->where('status', 'pending');
                 })
@@ -28,7 +32,7 @@ class StampCorrectionRequestController extends Controller
                 ->get();
         } else {
             // 一般ユーザー用：自分の申請のみ取得
-            $requests = \App\Models\StampCorrectionRequest::where('user_id', $user->id)
+            $requests = StampCorrectionRequestModel::where('user_id', $user->id)
                 ->when($tab === 'approved', function ($query) {
                     return $query->where('status', 'approved');
                 })
@@ -45,7 +49,11 @@ class StampCorrectionRequestController extends Controller
     //修正申告承認処理
     public function approve($attendance_correct_request)
     {
-        $request = \App\Models\StampCorrectionRequest::findOrFail($attendance_correct_request);
+        if (Auth::user()->role !== 'admin') {
+            abort(403);
+        }
+
+        $request = StampCorrectionRequestModel::findOrFail($attendance_correct_request);
         $request->status = 'approved';
         $request->approved_at = now();
         $request->approved_by = Auth::id();
@@ -57,12 +65,12 @@ class StampCorrectionRequestController extends Controller
 
         // 出勤時間の更新
         if (in_array('clock_in', $correctionTypes) && $request->requested_time) {
-            $attendance->clock_in = \Carbon\Carbon::parse($attendance->date)->setTimeFromTimeString($request->requested_time);
+            $attendance->clock_in = Carbon::parse($attendance->date)->setTimeFromTimeString($request->requested_time);
         }
 
         // 退勤時間の更新
         if (in_array('clock_out', $correctionTypes) && $request->requested_time) {
-            $attendance->clock_out = \Carbon\Carbon::parse($attendance->date)->setTimeFromTimeString($request->requested_time);
+            $attendance->clock_out = Carbon::parse($attendance->date)->setTimeFromTimeString($request->requested_time);
         }
 
         // 休憩時間の更新
@@ -79,9 +87,9 @@ class StampCorrectionRequestController extends Controller
                     if ($break) {
                         $updateData = [];
                         if ($breakField === 'start' && $request->requested_time) {
-                            $updateData['break_start'] = \Carbon\Carbon::parse($attendance->date)->setTimeFromTimeString($request->requested_time);
+                            $updateData['break_start'] = Carbon::parse($attendance->date)->setTimeFromTimeString($request->requested_time);
                         } elseif ($breakField === 'end' && $request->requested_time) {
-                            $updateData['break_end'] = \Carbon\Carbon::parse($attendance->date)->setTimeFromTimeString($request->requested_time);
+                            $updateData['break_end'] = Carbon::parse($attendance->date)->setTimeFromTimeString($request->requested_time);
                         }
 
                         if (!empty($updateData)) {
@@ -102,7 +110,7 @@ class StampCorrectionRequestController extends Controller
     public function store(StampCorrectionRequest $request)
     {
         $user = Auth::user();
-        $attendance = \App\Models\Attendance::findOrFail($request->attendance_id);
+        $attendance = Attendance::findOrFail($request->attendance_id);
 
         if ($user->role !== 'admin' && $attendance->user_id != $user->id) {
             abort(403);
@@ -114,13 +122,13 @@ class StampCorrectionRequestController extends Controller
             $updateData = [];
 
             if ($request->filled('clock_in')) {
-                $updateData['clock_in'] = \Carbon\Carbon::parse($attendance->date)->setTimeFromTimeString($request->clock_in);
+                $updateData['clock_in'] = Carbon::parse($attendance->date)->setTimeFromTimeString($request->clock_in);
             } else {
                 $updateData['clock_in'] = null;
             }
 
             if ($request->filled('clock_out')) {
-                $updateData['clock_out'] = \Carbon\Carbon::parse($attendance->date)->setTimeFromTimeString($request->clock_out);
+                $updateData['clock_out'] = Carbon::parse($attendance->date)->setTimeFromTimeString($request->clock_out);
             } else {
                 $updateData['clock_out'] = null;
             }
@@ -142,11 +150,11 @@ class StampCorrectionRequestController extends Controller
                 $breakData = [];
 
                 if ($request->filled($breakStartKey)) {
-                    $breakData['break_start'] = \Carbon\Carbon::parse($attendance->date)->setTimeFromTimeString($request->input($breakStartKey));
+                    $breakData['break_start'] = Carbon::parse($attendance->date)->setTimeFromTimeString($request->input($breakStartKey));
                 }
 
                 if ($request->filled($breakEndKey)) {
-                    $breakData['break_end'] = \Carbon\Carbon::parse($attendance->date)->setTimeFromTimeString($request->input($breakEndKey));
+                    $breakData['break_end'] = Carbon::parse($attendance->date)->setTimeFromTimeString($request->input($breakEndKey));
                 } else {
                     $breakData['break_end'] = null;
                 }
@@ -165,11 +173,11 @@ class StampCorrectionRequestController extends Controller
             if ($request->filled($newBreakStartKey)) {
                 $newBreakData = [
                     'attendance_id' => $attendance->id,
-                    'break_start' => \Carbon\Carbon::parse($attendance->date)->setTimeFromTimeString($request->input($newBreakStartKey)),
-                    'break_end' => $request->filled($newBreakEndKey) ? \Carbon\Carbon::parse($attendance->date)->setTimeFromTimeString($request->input($newBreakEndKey)) : null,
+                    'break_start' => Carbon::parse($attendance->date)->setTimeFromTimeString($request->input($newBreakStartKey)),
+                    'break_end' => $request->filled($newBreakEndKey) ? Carbon::parse($attendance->date)->setTimeFromTimeString($request->input($newBreakEndKey)) : null,
                 ];
 
-                \App\Models\BreakTime::create($newBreakData);
+                BreakTime::create($newBreakData);
             }
 
             return redirect()->back()->with('success', '勤怠を更新しました');
@@ -177,9 +185,9 @@ class StampCorrectionRequestController extends Controller
 
         // 一般ユーザーの場合は修正申請を作成
         // 出勤時間の修正を優先的に処理
-        $currentClockIn = $attendance->clock_in ? \Carbon\Carbon::parse($attendance->clock_in)->format('H:i') : '';
+        $currentClockIn = $attendance->clock_in ? Carbon::parse($attendance->clock_in)->format('H:i') : '';
         $requestedClockIn = $request->input('clock_in', '');
-        $currentClockOut = $attendance->clock_out ? \Carbon\Carbon::parse($attendance->clock_out)->format('H:i') : '';
+        $currentClockOut = $attendance->clock_out ? Carbon::parse($attendance->clock_out)->format('H:i') : '';
         $requestedClockOut = $request->input('clock_out', '');
         $requestedMemo = $request->input('memo', '');
 
@@ -205,7 +213,18 @@ class StampCorrectionRequestController extends Controller
             $breakStartKey = "break_start_{$i}";
             $breakEndKey = "break_end_{$i}";
 
-            if ($request->has($breakStartKey) || $request->has($breakEndKey)) {
+            // 現在の休憩時間を取得
+            $currentBreak = $attendance->breakTimes->get($i);
+            $currentBreakStart = $currentBreak && $currentBreak->break_start ? Carbon::parse($currentBreak->break_start)->format('H:i') : '';
+            $currentBreakEnd = $currentBreak && $currentBreak->break_end ? Carbon::parse($currentBreak->break_end)->format('H:i') : '';
+
+            // 修正後の時間を取得
+            $requestedBreakStart = $request->input($breakStartKey, '');
+            $requestedBreakEnd = $request->input($breakEndKey, '');
+
+            // 実際に値が変更されている場合のみ修正申請を作成
+            if (($request->filled($breakStartKey) && $requestedBreakStart !== $currentBreakStart) ||
+                ($request->filled($breakEndKey) && $requestedBreakEnd !== $currentBreakEnd)) {
                 $breakCorrections[] = $i;
                 $hasCorrection = true;
             }
@@ -231,7 +250,7 @@ class StampCorrectionRequestController extends Controller
                     $requestedTime = $requestedClockOut;
                 }
 
-                \App\Models\StampCorrectionRequest::create([
+                StampCorrectionRequestModel::create([
                     'user_id' => $user->id,
                     'attendance_id' => $attendance->id,
                     'request_date' => now(),
@@ -250,16 +269,16 @@ class StampCorrectionRequestController extends Controller
 
                 // 現在の休憩時間を取得
                 $currentBreak = $attendance->breakTimes->get($breakIndex);
-                $currentBreakStart = $currentBreak && $currentBreak->break_start ? \Carbon\Carbon::parse($currentBreak->break_start)->format('H:i') : '';
-                $currentBreakEnd = $currentBreak && $currentBreak->break_end ? \Carbon\Carbon::parse($currentBreak->break_end)->format('H:i') : '';
+                $currentBreakStart = $currentBreak && $currentBreak->break_start ? Carbon::parse($currentBreak->break_start)->format('H:i') : '';
+                $currentBreakEnd = $currentBreak && $currentBreak->break_end ? Carbon::parse($currentBreak->break_end)->format('H:i') : '';
 
                 // 修正後の時間を取得
                 $requestedBreakStart = $request->input($breakStartKey, '');
                 $requestedBreakEnd = $request->input($breakEndKey, '');
 
                 // 開始時間の修正申請
-                if ($request->has($breakStartKey) && $requestedBreakStart !== $currentBreakStart) {
-                    \App\Models\StampCorrectionRequest::create([
+                if ($request->filled($breakStartKey) && $requestedBreakStart !== $currentBreakStart) {
+                    StampCorrectionRequestModel::create([
                         'user_id' => $user->id,
                         'attendance_id' => $attendance->id,
                         'request_date' => now(),
@@ -272,8 +291,8 @@ class StampCorrectionRequestController extends Controller
                 }
 
                 // 終了時間の修正申請
-                if ($request->has($breakEndKey) && $requestedBreakEnd !== $currentBreakEnd) {
-                    \App\Models\StampCorrectionRequest::create([
+                if ($request->filled($breakEndKey) && $requestedBreakEnd !== $currentBreakEnd) {
+                    StampCorrectionRequestModel::create([
                         'user_id' => $user->id,
                         'attendance_id' => $attendance->id,
                         'request_date' => now(),
@@ -287,7 +306,7 @@ class StampCorrectionRequestController extends Controller
             }
         }
 
-        return redirect()->route('stamp_correction_request.list')
+        return redirect()->back()
             ->with('success', '修正申請を送信しました');
     }
 }

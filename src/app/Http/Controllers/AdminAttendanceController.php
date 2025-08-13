@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Attendance;
 use App\Models\BreakTime;
+use App\Models\User;
 use Carbon\Carbon;
 
 class AdminAttendanceController extends Controller
@@ -29,14 +30,14 @@ class AdminAttendanceController extends Controller
 
     //スタッフ別勤怠一覧
     public function staffAttendance($id) {
-        $user = \App\Models\User::findOrFail($id);
+        $user = User::findOrFail($id);
         $monthParam = request()->get('month');
         $currentMonth = $monthParam
-            ? \Carbon\Carbon::createFromFormat('Y-m', $monthParam)->startOfMonth()
-            : \Carbon\Carbon::now()->startOfMonth();
+            ? Carbon::createFromFormat('Y-m', $monthParam)->startOfMonth()
+            : Carbon::now()->startOfMonth();
 
         // 指定月の全勤怠データを取得
-        $attendances = \App\Models\Attendance::where('user_id', $id)
+        $attendances = Attendance::where('user_id', $id)
             ->whereYear('date', $currentMonth->year)
             ->whereMonth('date', $currentMonth->month)
             ->orderBy('date', 'desc')
@@ -48,7 +49,7 @@ class AdminAttendanceController extends Controller
     //スタッフ一覧
     public function staffList() {
         // 一般ユーザーのみを取得（管理者以外）
-        $users = \App\Models\User::where('role', 'user')->get();
+        $users = User::where('role', 'user')->get();
         return view('admin.staff.list', compact('users'));
     }
 
@@ -150,14 +151,14 @@ class AdminAttendanceController extends Controller
         // 1. 月情報を取得（例: '2023-06'）
         $month = $request->input('month');
         $currentMonth = $month
-            ? \Carbon\Carbon::createFromFormat('Y-m', $month)->startOfMonth()
-            : \Carbon\Carbon::now()->startOfMonth();
+            ? Carbon::createFromFormat('Y-m', $month)->startOfMonth()
+            : Carbon::now()->startOfMonth();
 
         // 2. ユーザー情報取得
-        $user = \App\Models\User::findOrFail($id);
+        $user = User::findOrFail($id);
 
         // 3. 勤怠データ取得（指定月のデータを昇順で取得）
-        $attendances = \App\Models\Attendance::where('user_id', $id)
+        $attendances = Attendance::where('user_id', $id)
             ->whereYear('date', $currentMonth->year)
             ->whereMonth('date', $currentMonth->month)
             ->orderBy('date', 'asc')
@@ -171,15 +172,15 @@ class AdminAttendanceController extends Controller
             // 日付（例: 07/01（火））
             $date = $attendance->date ? $attendance->date->format('m/d') . '（' . $wday[$attendance->date->dayOfWeek] . '）' : '';
             // 出勤
-            $clockIn = $attendance->clock_in ? \Carbon\Carbon::parse($attendance->clock_in)->format('H:i') : '';
+            $clockIn = $attendance->clock_in ? Carbon::parse($attendance->clock_in)->format('H:i') : '';
             // 退勤
-            $clockOut = $attendance->clock_out ? \Carbon\Carbon::parse($attendance->clock_out)->format('H:i') : '';
+            $clockOut = $attendance->clock_out ? Carbon::parse($attendance->clock_out)->format('H:i') : '';
             // 休憩（分単位の合計をhh:mmに変換）
             $totalBreakMinutes = 0;
             foreach ($attendance->breakTimes as $break) {
                 if ($break->break_start && $break->break_end) {
-                    $start = \Carbon\Carbon::parse($break->break_start);
-                    $end = \Carbon\Carbon::parse($break->break_end);
+                    $start = Carbon::parse($break->break_start);
+                    $end = Carbon::parse($break->break_end);
                     $totalBreakMinutes += $end->diffInMinutes($start);
                 }
             }
@@ -189,8 +190,8 @@ class AdminAttendanceController extends Controller
             // 合計（実働時間）
             $netWorkHours = '';
             if ($attendance->clock_in && $attendance->clock_out) {
-                $clockInTime = \Carbon\Carbon::parse($attendance->clock_in);
-                $clockOutTime = \Carbon\Carbon::parse($attendance->clock_out);
+                $clockInTime = Carbon::parse($attendance->clock_in);
+                $clockOutTime = Carbon::parse($attendance->clock_out);
                 $workMinutes = $clockOutTime->diffInMinutes($clockInTime) - $totalBreakMinutes;
                 $work_h = floor($workMinutes / 60);
                 $work_m = $workMinutes % 60;
