@@ -219,13 +219,13 @@
                                     $hasClockInRequest = in_array('clock_in', $correctionTypes);
                                 @endphp
                                 <input type="time" name="clock_in" class="attendance-detail-input"
-                                    value="{{ old('clock_in', $hasClockInRequest ? $latestRequest->correction_data['clock_in']['requested'] : ($attendance->clock_in ? \Carbon\Carbon::parse($attendance->clock_in)->format('H:i') : '')) }}"{{ $latestRequest ? 'disabled' : '' }}>
+                                    value="{{ old('clock_in', $hasClockInRequest && $latestRequest->correction_data && isset($latestRequest->correction_data['clock_in']) ? $latestRequest->correction_data['clock_in']['requested'] : ($attendance->clock_in ? \Carbon\Carbon::parse($attendance->clock_in)->format('H:i') : '')) }}"{{ $latestRequest ? 'disabled' : '' }}>
                                 <span class="attendance-detail-tilde">〜</span>
                                 @php
                                     $hasClockOutRequest = in_array('clock_out', $correctionTypes);
                                 @endphp
                                 <input type="time" name="clock_out" class="attendance-detail-input"
-                                    value="{{ old('clock_out', $hasClockOutRequest ? $latestRequest->correction_data['clock_out']['requested'] : ($attendance->clock_out ? \Carbon\Carbon::parse($attendance->clock_out)->format('H:i') : '')) }}"
+                                    value="{{ old('clock_out', $hasClockOutRequest && $latestRequest->correction_data && isset($latestRequest->correction_data['clock_out']) ? $latestRequest->correction_data['clock_out']['requested'] : ($attendance->clock_out ? \Carbon\Carbon::parse($attendance->clock_out)->format('H:i') : '')) }}"
                                     {{ $latestRequest ? 'disabled' : '' }}>
                                 <p class="form__error">
                                     @error('clock_in')
@@ -262,14 +262,14 @@
                                     @endphp
                                     <input type="time" name="break_start_{{ $i }}"
                                         class="attendance-detail-input"
-                                        value="{{ old('break_start_' . $i, $hasBreakStartRequest ? $latestRequest->correction_data['break_' . $i . '_start']['requested'] : (isset($attendance->breakTimes[$i]) && $attendance->breakTimes[$i]->break_start ? \Carbon\Carbon::parse($attendance->breakTimes[$i]->break_start)->format('H:i') : '')) }}"{{ $latestRequest ? 'disabled' : '' }}>
+                                        value="{{ old('break_start_' . $i, $hasBreakStartRequest && $latestRequest->correction_data && isset($latestRequest->correction_data['break_' . $i . '_start']) ? $latestRequest->correction_data['break_' . $i . '_start']['requested'] : (isset($attendance->breakTimes[$i]) && $attendance->breakTimes[$i]->break_start ? \Carbon\Carbon::parse($attendance->breakTimes[$i]->break_start)->format('H:i') : '')) }}"{{ $latestRequest ? 'disabled' : '' }}>
                                     <span class="attendance-detail-tilde input-tilde">〜</span>
                                     @php
                                         $hasBreakEndRequest = in_array('break_' . $i . '_end', $correctionTypes);
                                     @endphp
                                     <input type="time" name="break_end_{{ $i }}"
                                         class="attendance-detail-input"
-                                        value="{{ old('break_end_' . $i, $hasBreakEndRequest ? $latestRequest->correction_data['break_' . $i . '_end']['requested'] : (isset($attendance->breakTimes[$i]) && $attendance->breakTimes[$i]->break_end ? \Carbon\Carbon::parse($attendance->breakTimes[$i]->break_end)->format('H:i') : '')) }}"{{ $latestRequest ? 'disabled' : '' }}>
+                                        value="{{ old('break_end_' . $i, $hasBreakEndRequest && $latestRequest->correction_data && isset($latestRequest->correction_data['break_' . $i . '_end']) ? $latestRequest->correction_data['break_' . $i . '_end']['requested'] : (isset($attendance->breakTimes[$i]) && $attendance->breakTimes[$i]->break_end ? \Carbon\Carbon::parse($attendance->breakTimes[$i]->break_end)->format('H:i') : '')) }}"{{ $latestRequest ? 'disabled' : '' }}>
                                     <p class="form__error">
                                         @error('break_start_' . $i)
                                             {{ $message }}
@@ -302,11 +302,17 @@
                     @php
                         $hasPendingRequest = $attendance
                             ->stampCorrectionRequests()
-                            ->whereIn('status', ['pending', 'approved'])
+                            ->where('status', 'pending')
+                            ->exists();
+                        $hasApprovedRequest = $attendance
+                            ->stampCorrectionRequests()
+                            ->where('status', 'approved')
                             ->exists();
                     @endphp
                     @if ($hasPendingRequest)
                         <p class="pending-message">*承認待ちのため修正はできません。</p>
+                    @elseif ($hasApprovedRequest)
+                        <!-- 承認済みの場合は何も表示しない -->
                     @else
                         <input type="hidden" name="attendance_id" value="{{ $attendance->id }}">
                         <button type="submit" class="attendance-detail-edit-btn button">修正</button>

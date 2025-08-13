@@ -75,39 +75,12 @@
     letter-spacing: 0.15em;
 }
 
-
 .attendance-detail-td .attendance-detail-memo {
     width: 316px;
     height: 72px;
     text-align: left;
     padding: 3.5px 15px;
 }
-
-/* 1.管理者ルートスタッフ一覧より詳細画面style */
-.attendance-detail-td {
-    border-bottom: 2px solid #E1E1E1;
-    padding: 4px 20px;
-}
-
-/* 2.管理者ルート勤怠一覧より詳細画面style */
-/* 3.スタッフ承認申請一覧より詳細画面style */
-.detail-td {
-    padding: 4px 40px;
-}
-
-/* スタッフ承認申請送信後のstyle */
-.attendance-detail-input:disabled,
-.attendance-detail-td .attendance-detail-memo:disabled {
-    border: none;
-    background: none;
-    color: black;
-    cursor: not-allowed;
-}
-
-.attendance-detail-td .attendance-detail-memo:disabled {
-    padding-left: 25px;
-}
-
 
 .left-date,
 .right-date,
@@ -128,6 +101,45 @@
     text-align: center;
     letter-spacing: 0.15em;
     font-size: 16px;
+}
+
+
+
+.status-approved {
+    display: inline-block;
+    background: #737373;
+    color: #FFFFFF;
+}
+
+
+
+/* 時計アイコン・スピンボタン非表示 */
+input[type="time"].attendance-detail-input::-webkit-calendar-picker-indicator {
+    display: none;
+}
+
+input[type="time"].attendance-detail-input::-webkit-inner-spin-button,
+input[type="time"].attendance-detail-input::-webkit-outer-spin-button {
+    display: none;
+    -webkit-appearance: none;
+}
+
+input[type="time"].attendance-detail-input {
+    -moz-appearance: textfield;
+    appearance: textfield;
+    font-family: inherit;
+}
+
+/* 1.管理者ルートスタッフ一覧より詳細画面style */
+.attendance-detail-td {
+    border-bottom: 2px solid #E1E1E1;
+    padding: 4px 20px;
+}
+
+/* 2.管理者ルート勤怠一覧より詳細画面style */
+/* 3.スタッフ承認申請一覧より詳細画面style */
+.detail-td {
+    padding: 4px 40px;
 }
 
 .attendance-detail-btn-area {
@@ -157,12 +169,6 @@
     color: #FFFFFF;
 }
 
-.status-approved {
-    display: inline-block;
-    background: #737373;
-    color: #FFFFFF;
-}
-
 .pending-message {
     text-align: right;
     color: #FF000080;
@@ -170,22 +176,20 @@
     margin: 5% auto;
 }
 
-/* 時計アイコン・スピンボタン非表示 */
-input[type="time"].attendance-detail-input::-webkit-calendar-picker-indicator {
-    display: none;
+/* スタッフ承認申請送信後のstyle＆申請一覧詳細画面style */
+.attendance-detail-input:disabled,
+.attendance-detail-td .attendance-detail-memo:disabled {
+    border: none;
+    background: none;
+    color: black;
+    cursor: not-allowed;
 }
 
-input[type="time"].attendance-detail-input::-webkit-inner-spin-button,
-input[type="time"].attendance-detail-input::-webkit-outer-spin-button {
-    display: none;
-    -webkit-appearance: none;
+.attendance-detail-td .attendance-detail-memo:disabled {
+    padding-left: 25px;
 }
 
-input[type="time"].attendance-detail-input {
-    -moz-appearance: textfield;
-    appearance: textfield;
-    font-family: inherit;
-}
+
 
 
 @media (max-width: 820px) {
