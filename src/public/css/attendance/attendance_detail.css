@@ -189,9 +189,6 @@ input[type="time"].attendance-detail-input {
     padding-left: 25px;
 }
 
-
-
-
 @media (max-width: 820px) {
     .attendance-detail-container {
         width: 100%;
