@@ -221,6 +221,7 @@ chmod +x setup.sh
       storage/logs \
       storage/logs/app \
       storage/logs/app/public \
+      tests/Unit
 ```
 
 <br>
