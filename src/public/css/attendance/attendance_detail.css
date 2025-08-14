@@ -130,14 +130,14 @@ input[type="time"].attendance-detail-input {
     font-family: inherit;
 }
 
-/* 1.管理者ルートスタッフ一覧より詳細画面style */
+/* 管理者ルートスタッフ一覧より詳細画面style */
 .attendance-detail-td {
     border-bottom: 2px solid #E1E1E1;
     padding: 4px 20px;
 }
 
-/* 2.管理者ルート勤怠一覧より詳細画面style */
-/* 3.スタッフ承認申請一覧より詳細画面style */
+/* 管理者ルート勤怠一覧より詳細画面style */
+/* スタッフ承認申請一覧より詳細画面style */
 .detail-td {
     padding: 4px 40px;
 }

@@ -44,25 +44,71 @@
                         <tr class="attendance-detail-tr">
                             <th class="attendance-detail-th">出勤・退勤</th>
                             <td class="attendance-detail-td">
+                                @php
+                                    $correctionTypes = $latestRequest
+                                        ? explode(',', $latestRequest->correction_type)
+                                        : [];
+                                    $hasClockInRequest = in_array('clock_in', $correctionTypes);
+                                    $hasClockOutRequest = in_array('clock_out', $correctionTypes);
+                                @endphp
                                 <span
-                                    class="attendance-detail-time">{{ $attendance->clock_in ? \Carbon\Carbon::parse($attendance->clock_in)->format('H:i') : '' }}</span>
+                                    class="attendance-detail-time">{{ $hasClockInRequest && $latestRequest->correction_data && isset($latestRequest->correction_data['clock_in']) ? $latestRequest->correction_data['clock_in']['requested'] : ($attendance->clock_in ? \Carbon\Carbon::parse($attendance->clock_in)->format('H:i') : '') }}</span>
                                 <span class="attendance-detail-tilde">〜</span>
                                 <span
-                                    class="attendance-detail-time">{{ $attendance->clock_out ? \Carbon\Carbon::parse($attendance->clock_out)->format('H:i') : '' }}</span>
+                                    class="attendance-detail-time">{{ $hasClockOutRequest && $latestRequest->correction_data && isset($latestRequest->correction_data['clock_out']) ? $latestRequest->correction_data['clock_out']['requested'] : ($attendance->clock_out ? \Carbon\Carbon::parse($attendance->clock_out)->format('H:i') : '') }}</span>
                             </td>
                         </tr>
-                        @foreach ($attendance->breakTimes as $i => $break)
+                        @php
+                            $breakCount = count($attendance->breakTimes);
+                            // 承認待ちの修正リクエストがある場合、correction_dataから追加された休憩時間も含める
+                            if ($latestRequest && $latestRequest->correction_data) {
+                                $maxBreakIndex = 0;
+                                foreach ($latestRequest->correction_data as $key => $data) {
+                                    if (strpos($key, 'break_') === 0) {
+                                        $parts = explode('_', $key);
+                                        if (count($parts) === 3) {
+                                            $breakIndex = (int) $parts[1];
+                                            $maxBreakIndex = max($maxBreakIndex, $breakIndex);
+                                        }
+                                    }
+                                }
+                                $breakCount = max($breakCount, $maxBreakIndex + 1);
+                            }
+                        @endphp
+
+                        @for ($i = 0; $i < $breakCount; $i++)
+                            @php
+                                $hasBreakData =
+                                    isset($attendance->breakTimes[$i]) &&
+                                    ($attendance->breakTimes[$i]->break_start ||
+                                        $attendance->breakTimes[$i]->break_end);
+                                // 承認待ちの修正リクエストがある場合、correction_dataにデータがある場合も表示
+                                $hasCorrectionData = false;
+                                if ($latestRequest && $latestRequest->correction_data) {
+                                    $hasCorrectionData =
+                                        isset($latestRequest->correction_data["break_{$i}_start"]) ||
+                                        isset($latestRequest->correction_data["break_{$i}_end"]);
+                                }
+
+                                // データがある休憩または修正データがある休憩のみ表示
+                                if (!$hasBreakData && !$hasCorrectionData) {
+                                    continue;
+                                }
+
+                                $hasBreakStartRequest = in_array('break_' . $i . '_start', $correctionTypes);
+                                $hasBreakEndRequest = in_array('break_' . $i . '_end', $correctionTypes);
+                            @endphp
                             <tr class="attendance-detail-tr">
                                 <th class="attendance-detail-th">休憩{{ $i + 1 }}</th>
                                 <td class="attendance-detail-td">
                                     <span
-                                        class="attendance-detail-time">{{ $break->break_start ? \Carbon\Carbon::parse($break->break_start)->format('H:i') : '' }}</span>
+                                        class="attendance-detail-time">{{ $hasBreakStartRequest && $latestRequest->correction_data && isset($latestRequest->correction_data['break_' . $i . '_start']) ? $latestRequest->correction_data['break_' . $i . '_start']['requested'] : (isset($attendance->breakTimes[$i]) && $attendance->breakTimes[$i]->break_start ? \Carbon\Carbon::parse($attendance->breakTimes[$i]->break_start)->format('H:i') : '') }}</span>
                                     <span class="attendance-detail-tilde">〜</span>
                                     <span
-                                        class="attendance-detail-time">{{ $break->break_end ? \Carbon\Carbon::parse($break->break_end)->format('H:i') : '' }}</span>
+                                        class="attendance-detail-time">{{ $hasBreakEndRequest && $latestRequest->correction_data && isset($latestRequest->correction_data['break_' . $i . '_end']) ? $latestRequest->correction_data['break_' . $i . '_end']['requested'] : (isset($attendance->breakTimes[$i]) && $attendance->breakTimes[$i]->break_end ? \Carbon\Carbon::parse($attendance->breakTimes[$i]->break_end)->format('H:i') : '') }}</span>
                                 </td>
                             </tr>
-                        @endforeach
+                        @endfor
                         <tr class="attendance-detail-tr">
                             <th class="attendance-detail-th">備考</th>
                             <td class="attendance-detail-td">
@@ -225,8 +271,7 @@
                                     $hasClockOutRequest = in_array('clock_out', $correctionTypes);
                                 @endphp
                                 <input type="time" name="clock_out" class="attendance-detail-input"
-                                    value="{{ old('clock_out', $hasClockOutRequest && $latestRequest->correction_data && isset($latestRequest->correction_data['clock_out']) ? $latestRequest->correction_data['clock_out']['requested'] : ($attendance->clock_out ? \Carbon\Carbon::parse($attendance->clock_out)->format('H:i') : '')) }}"
-                                    {{ $latestRequest ? 'disabled' : '' }}>
+                                    value="{{ old('clock_out', $hasClockOutRequest && $latestRequest->correction_data && isset($latestRequest->correction_data['clock_out']) ? $latestRequest->correction_data['clock_out']['requested'] : ($attendance->clock_out ? \Carbon\Carbon::parse($attendance->clock_out)->format('H:i') : '')) }}"{{ $latestRequest ? 'disabled' : '' }}>
                                 <p class="form__error">
                                     @error('clock_in')
                                         {{ $message }}
@@ -241,6 +286,20 @@
                             $breakCount = count($attendance->breakTimes);
                             $isPendingOrApproved =
                                 $latestRequest && in_array($latestRequest->status, ['pending', 'approved']);
+                            // 承認待ち・承認済みの場合、correction_dataから追加された休憩時間も含める
+                            if ($isPendingOrApproved && $latestRequest->correction_data) {
+                                $maxBreakIndex = 0;
+                                foreach ($latestRequest->correction_data as $key => $data) {
+                                    if (strpos($key, 'break_') === 0) {
+                                        $parts = explode('_', $key);
+                                        if (count($parts) === 3) {
+                                            $breakIndex = (int) $parts[1];
+                                            $maxBreakIndex = max($maxBreakIndex, $breakIndex);
+                                        }
+                                    }
+                                }
+                                $breakCount = max($breakCount, $maxBreakIndex + 1);
+                            }
                         @endphp
 
                         @for ($i = 0; $i < $breakCount + 1; $i++)
@@ -249,8 +308,15 @@
                                     isset($attendance->breakTimes[$i]) &&
                                     ($attendance->breakTimes[$i]->break_start ||
                                         $attendance->breakTimes[$i]->break_end);
-                                // 承認待ち・承認済みの場合は、データがある休憩のみ表示
-                                if ($isPendingOrApproved && !$hasBreakData) {
+                                // 承認待ち・承認済みの場合、correction_dataにデータがある場合も表示
+                                $hasCorrectionData = false;
+                                if ($isPendingOrApproved && $latestRequest->correction_data) {
+                                    $hasCorrectionData =
+                                        isset($latestRequest->correction_data["break_{$i}_start"]) ||
+                                        isset($latestRequest->correction_data["break_{$i}_end"]);
+                                }
+                                // 承認待ち・承認済みの場合は、データがある休憩または修正データがある休憩のみ表示
+                                if ($isPendingOrApproved && !$hasBreakData && !$hasCorrectionData) {
                                     continue;
                                 }
                             @endphp
