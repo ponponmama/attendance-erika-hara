@@ -321,8 +321,8 @@ class AdminAttendanceListTest extends TestCase
         $response->assertStatus(200);
         $response->assertSee('テストユーザー');
         $response->assertSee('テスト修正申請');
-        // 管理者画面では実際の勤怠データが表示されるため、09:00を確認
-        $response->assertSee('09:00');
+        // 管理者画面では修正要求値が表示されるため、08:30を確認
+        $response->assertSee('08:30');
     }
 
     /**
