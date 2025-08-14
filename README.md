@@ -303,6 +303,20 @@ php artisan migrate --seed
 3. 修正申請の承認
 4. 勤怠データの直接修正
 
+## ダミーデータログイン情報
+
+### 管理者ユーザー
+- メールアドレス: admin@example.com
+- パスワード: password
+
+### 一般ユーザー
+- メールアドレス: user〇@example.com
+- パスワード: password
+
+*〇にはid番号　例:user1←数字が入ります。@example.com　
+
+※ シーダー実行後に上記アカウントが作成されます。
+
 ## テスト
 
 ### テスト実行

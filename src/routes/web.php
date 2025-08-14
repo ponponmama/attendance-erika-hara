@@ -102,11 +102,6 @@ Route::post('/stamp_correction_request', [StampCorrectionRequestController::clas
     ->middleware(['auth'])
     ->name('stamp_correction_request.store');
 
-// 【一般ユーザー・管理者】修正申請の詳細表示
-Route::get('/stamp_correction_request/{id}', [StampCorrectionRequestController::class, 'show'])
-    ->middleware(['auth'])
-    ->name('stamp_correction_request.show');
-
 // 【管理者】修正申請の承認（承認ボタン押下時）
 Route::post('/stamp_correction_request/approve/{attendance_correct_request}', [StampCorrectionRequestController::class, 'approve'])
     ->middleware(['auth', 'role:admin'])
