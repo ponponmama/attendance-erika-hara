@@ -25,7 +25,7 @@
             @endphp
             @if ($latestRequest && in_array($latestRequest->status, ['pending', 'approved']))
                 {{-- 管理者ルート申請一覧より詳細画面(承認待ち・承認済みの表示のみ) --}}
-                <div class="table-wrapper">1
+                <div class="table-wrapper">
                     <table class="attendance-detail-table">
                         <tr class="attendance-detail-tr">
                             <th class="attendance-detail-th">名前</th>
@@ -86,7 +86,7 @@
                 {{-- 管理者ルート修正画面 --}}
                 <form class="attendance-detail-form" action="{{ route('stamp_correction_request.store') }}" method="POST">
                     @csrf
-                    <div class="table-wrapper">2
+                    <div class="table-wrapper">
                         <table class="attendance-detail-table">
                             <tr class="attendance-detail-tr">
                                 <th class="attendance-detail-th">名前</th>
@@ -189,7 +189,7 @@
             {{-- スタッフ承認申請画面 --}}
             <form class="attendance-detail-form" action="{{ route('stamp_correction_request.store') }}" method="POST">
                 @csrf
-                <div class="table-wrapper">3
+                <div class="table-wrapper">
                     <table class="attendance-detail-table">
                         <tr class="attendance-detail-tr">
                             <th class="attendance-detail-th">名前</th>

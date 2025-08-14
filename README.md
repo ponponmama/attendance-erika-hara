@@ -315,22 +315,24 @@ docker-compose exec php bash
 php artisan test
 ```
 
-### テスト項目（70 項目）
+### テスト項目
 
 - **機能テスト**
 
-  - `AdminUserTest.php` - 管理者ユーザー機能テスト
-  - `EmailVerificationTest.php` - メール認証機能テスト
-  - `AttendancePageTest.php` - 勤怠ページ機能テスト
-  - `AdminCorrectionRequestTest.php` - 管理者修正申請機能テスト
-  - `AdminAttendanceDetailTest.php` - 管理者勤怠詳細機能テスト
-  - `AttendanceListTest.php` - 勤怠一覧機能テスト
-  - `AdminAttendanceListTest.php` - 管理者勤怠一覧機能テスト
-  - `AttendanceDetailTest.php` - 勤怠詳細機能テスト
+  - `AdminUserTest.php` - 管理者ユーザー機能テスト（管理者）
+  - `Auth/EmailVerificationTest.php` - メール認証機能テスト（一般ユーザー）
+  - `Attendance/TimeStampTest.php` - 勤怠打刻機能テスト（一般ユーザー）
+  - `AdminCorrectionRequestTest.php` - 管理者修正申請機能テスト（管理者）
+  - `AdminAttendanceDetailTest.php` - 管理者勤怠詳細機能テスト（管理者）
+  - `Attendance/AttendanceListTest.php` - 勤怠一覧機能テスト（一般ユーザー）
+  - `AdminAttendanceListTest.php` - 管理者勤怠一覧機能テスト（管理者）
   - `AttendanceDetailCorrectionTest.php` - 勤怠詳細修正機能テスト（一般ユーザー）
-  - `Auth/LoginTest.php` - ログイン認証機能テスト（一般ユーザー）
-  - `Auth/RegisterTest.php` - ユーザー登録機能テスト
+  - `Auth/UserLoginTest.php` - ログイン認証機能テスト（一般ユーザー）
+  - `Auth/RegisterTest.php` - ユーザー登録機能テスト（一般ユーザー）
   - `Auth/AdminLoginTest.php` - ログイン認証機能テスト（管理者）
+  - `Auth/LogoutTest.php` - ログアウト機能テスト（一般ユーザー・管理者共通）
+
+    全 112 項目
 
   \*テストで一旦 db がリセットされます。マイグレートリフレッシュとシーダーしてください。
 
