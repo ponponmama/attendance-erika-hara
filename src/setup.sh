@@ -7,7 +7,8 @@ mkdir -p bootstrap/cache \
         storage/framework/views \
         storage/logs \
         storage/logs/app \
-        storage/logs/app/public
+        storage/logs/app/public \
+        tests/Unit
 
 echo "ディレクトリ作成完了"
 
