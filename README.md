@@ -307,14 +307,18 @@ php artisan migrate --seed
 ## ダミーデータログイン情報
 
 ### 管理者ユーザー
+
 - メールアドレス: admin@example.com
-- パスワード: password
+- パスワード: user_pass
 
 ### 一般ユーザー
-- メールアドレス: user〇@example.com
-- パスワード: password
 
-*〇にはid番号　例:user1←数字が入ります。@example.com　
+- メールアドレス: user1@example.com 〜 user20@example.com
+- パスワード: user_pass
+
+>**注意**: これらのユーザーは `php artisan db:seed` コマンドで作成されます。
+
+\*user英数字＝id 番号　例:user1← 数字が入ります。@example.com
 
 ※ シーダー実行後に上記アカウントが作成されます。
 
