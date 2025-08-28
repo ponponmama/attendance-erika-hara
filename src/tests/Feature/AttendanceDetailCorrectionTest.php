@@ -35,7 +35,7 @@ class AttendanceDetailCorrectionTest extends TestCase
             'attendance_id' => $attendance->id,
             'clock_in' => '19:00',
             'clock_out' => '18:00',
-            'reason' => 'テスト備考',
+            'memo' => 'テスト備考',
         ]);
 
         $response->assertSessionHasErrors([
@@ -62,17 +62,22 @@ class AttendanceDetailCorrectionTest extends TestCase
             'clock_out' => '18:00:00',
         ]);
 
+        // CSRFトークンを取得
+        $response = $this->get('/attendance/' . $attendance->id);
+        $response->assertStatus(200);
+
         $response = $this->post("/stamp_correction_request", [
             'attendance_id' => $attendance->id,
             'clock_in' => '09:00',
             'clock_out' => '18:00',
             'break_start_0' => '19:00',
             'break_end_0' => '20:00',
-            'reason' => 'テスト備考',
+            'memo' => 'テスト備考',
+            '_token' => csrf_token(),
         ]);
 
         $response->assertSessionHasErrors([
-            'break_start_0' => '出勤時間もしくは退勤時間が不適切な値です'
+            'break_start_0' => '休憩時間が勤務時間外です'
         ]);
     }
 
@@ -95,17 +100,22 @@ class AttendanceDetailCorrectionTest extends TestCase
             'clock_out' => '18:00:00',
         ]);
 
+        // CSRFトークンを取得
+        $response = $this->get('/attendance/' . $attendance->id);
+        $response->assertStatus(200);
+
         $response = $this->post("/stamp_correction_request", [
             'attendance_id' => $attendance->id,
             'clock_in' => '09:00',
             'clock_out' => '18:00',
             'break_start_0' => '12:00',
             'break_end_0' => '19:00',
-            'reason' => 'テスト備考',
+            'memo' => 'テスト備考',
+            '_token' => csrf_token(),
         ]);
 
         $response->assertSessionHasErrors([
-            'break_end_0' => '出勤時間もしくは退勤時間が不適切な値です'
+            'break_end_0' => '休憩時間が勤務時間外です'
         ]);
     }
 
@@ -173,7 +183,7 @@ class AttendanceDetailCorrectionTest extends TestCase
         $this->assertDatabaseHas('stamp_correction_requests', [
             'user_id' => $user->id,
             'attendance_id' => $attendance->id,
-            'reason' => 'テスト備考',
+            'memo' => 'テスト備考',
         ]);
     }
 
@@ -235,7 +245,7 @@ class AttendanceDetailCorrectionTest extends TestCase
             'attendance_id' => $attendance->id,
             'clock_in' => '08:30',
             'clock_out' => '18:00',
-            'reason' => 'テスト備考',
+            'memo' => 'テスト備考',
         ]);
 
         $response = $this->get('/stamp_correction_request/list');
@@ -269,7 +279,7 @@ class AttendanceDetailCorrectionTest extends TestCase
             'attendance_id' => $attendance->id,
             'clock_in' => '08:30',
             'clock_out' => '18:00',
-            'reason' => 'テスト備考',
+            'memo' => 'テスト備考',
         ]);
 
         $response = $this->get('/stamp_correction_request/list');
@@ -322,6 +332,44 @@ class AttendanceDetailCorrectionTest extends TestCase
         $this->assertEquals('18:30', $request->correction_data['clock_out']['requested']);
         $this->assertEquals('12:30', $request->correction_data['break_0_start']['requested']);
         $this->assertEquals('13:30', $request->correction_data['break_0_end']['requested']);
+    }
+
+    /**
+     * ID: 11-9
+     * 勤怠詳細情報修正機能（一般ユーザー） - 休憩開始時間が出勤時間より前になっている場合、エラーメッセージが表示される
+     * テスト手順: 1. 勤怠情報が登録されたユーザーにログインをする 2. 勤怠詳細ページを開く 3. 休憩開始時間を出勤時間より前に設定する 4. 保存処理をする
+     * 期待挙動: 「休憩時間が勤務時間外です」というバリデーションメッセージが表示される
+     */
+    public function test_shows_error_when_break_start_time_is_before_clock_in_time()
+    {
+        /** @var User $user */
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+        $attendance = Attendance::factory()->create([
+            'user_id' => $user->id,
+            'date' => '2024-07-15',
+            'clock_in' => '09:00:00',
+            'clock_out' => '18:00:00',
+        ]);
+
+        // CSRFトークンを取得
+        $response = $this->get('/attendance/' . $attendance->id);
+        $response->assertStatus(200);
+
+        $response = $this->post("/stamp_correction_request", [
+            'attendance_id' => $attendance->id,
+            'clock_in' => '09:00',
+            'clock_out' => '18:00',
+            'break_start_0' => '08:00',
+            'break_end_0' => '09:30',
+            'memo' => 'テスト備考',
+            '_token' => csrf_token(),
+        ]);
+
+        $response->assertSessionHasErrors([
+            'break_start_0' => '休憩時間が勤務時間外です'
+        ]);
     }
 
     /**

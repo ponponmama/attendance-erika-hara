@@ -25,7 +25,7 @@
                 </p>
                 <div class="form-group">
                     <label class="register-label" for="email">メールアドレス</label>
-                    <input class="register-input" type="email" name="email" id="email" value="{{ old('email') }}"
+                    <input class="register-input" type="text" name="email" id="email" value="{{ old('email') }}"
                         autocomplete="email">
                 </div>
                 <p class="form__error">
@@ -35,7 +35,8 @@
                 </p>
                 <div class="form-group">
                     <label class="register-label" for="password">パスワード</label>
-                    <input class="register-input" type="password" name="password" id="password" autocomplete="new-password">
+                    <input class="register-input" type="password" name="password" id="password"
+                        autocomplete="new-password">
                 </div>
                 <p class="form__error">
                     @error('password')

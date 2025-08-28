@@ -27,7 +27,7 @@
                 @endif
                 <div class="form-group">
                     <label class="form-label" for="email">メールアドレス</label>
-                    <input class="form-input" type="email" name="email" id="email" value="{{ old('email') }}"
+                    <input class="form-input" type="text" name="email" id="email" value="{{ old('email') }}"
                         autocomplete="email">
                 </div>
                 <p class="form__error">
