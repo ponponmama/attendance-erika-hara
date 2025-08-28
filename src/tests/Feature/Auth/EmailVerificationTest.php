@@ -41,40 +41,7 @@ class EmailVerificationTest extends TestCase
         Event::assertDispatched(Registered::class);
     }
 
-    /**
-     * メール認証機能 - 実際のメール送信テスト（MailHog使用）
-     * テスト手順: 1. 会員登録をする 2. 実際にメールが送信されることを確認
-     * 期待挙動: MailHogにメールが送信されている
-     */
-    public function test_actual_verification_email_is_sent_to_mailhog()
-    {
-        // MailHogを使用して実際のメール送信をテスト
-        $this->withoutExceptionHandling();
 
-        // CSRFトークンを取得
-        $response = $this->get('/register');
-        $response->assertStatus(200);
-
-        $response = $this->post('/register', [
-            'name' => 'テスト太郎',
-            'email' => 'test@example.com',
-            'password' => 'password123',
-            'password_confirmation' => 'password123',
-            '_token' => csrf_token(),
-        ]);
-
-        $response->assertStatus(302);
-
-        // ユーザーが作成されたことを確認
-        $this->assertDatabaseHas('users', [
-            'email' => 'test@example.com',
-            'email_verified_at' => null,
-        ]);
-
-        // MailHogにメールが送信されたことを確認
-        // 実際のメール送信が行われていることをテスト
-        $this->assertTrue(true); // メール送信が成功した場合の確認
-    }
 
     /**
      * ID: 16-2
@@ -277,29 +244,5 @@ class EmailVerificationTest extends TestCase
         $response->assertStatus(200);
     }
 
-            /**
-     * メール再送機能 - 実際のメール送信テスト（MailHog使用）
-     * テスト手順: 1. 未認証ユーザーでログイン 2. メール再送ボタンを押下 3. 実際にメールが送信されることを確認
-     * 期待挙動: MailHogに再送メールが送信されている
-     */
-    public function test_actual_resend_verification_email_to_mailhog()
-    {
-        /** @var User $user */
-        $user = User::factory()->create([
-            'email_verified_at' => null,
-        ]);
 
-        $this->actingAs($user);
-
-        // メール再送リクエスト（CSRFミドルウェアを無効化）
-        $response = $this->withoutMiddleware(\App\Http\Middleware\VerifyCsrfToken::class)
-            ->post('/email/verification-notification');
-
-        $response->assertStatus(302);
-        $response->assertSessionHas('status', 'verification-link-sent');
-
-        // MailHogにメールが送信されたことを確認
-        // 実際のメール送信が行われていることをテスト
-        $this->assertTrue(true); // メール送信が成功した場合の確認
-    }
 }

@@ -351,7 +351,7 @@ php artisan test
   - `Auth/AdminLoginTest.php` - ログイン認証機能テスト（管理者）
   - `Auth/LogoutTest.php` - ログアウト機能テスト（一般ユーザー・管理者共通）
 
-    全 112 項目
+    全 113 項目
 
   \*テストで一旦 db がリセットされます。マイグレートリフレッシュとシーダーしてください。
 

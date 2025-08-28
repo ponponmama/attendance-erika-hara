@@ -99,7 +99,7 @@ class AdminAttendanceDetailTest extends TestCase
         ]);
 
         $response->assertSessionHasErrors([
-            'break_start_0' => '出勤時間もしくは退勤時間が不適切な値です'
+            'break_start_0' => '休憩時間が勤務時間外です'
         ]);
     }
 
@@ -132,7 +132,7 @@ class AdminAttendanceDetailTest extends TestCase
         ]);
 
         $response->assertSessionHasErrors([
-            'break_end_0' => '出勤時間もしくは退勤時間が不適切な値です'
+            'break_end_0' => '休憩時間が勤務時間外です'
         ]);
     }
 

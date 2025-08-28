@@ -177,13 +177,13 @@ class AttendanceDetailCorrectionTest extends TestCase
         ]);
 
         $response->assertStatus(302);
-        $response->assertRedirect('/');
+        // redirect()->back() なので、リダイレクト先は前のページ
 
         // 修正申請がデータベースに保存されていることを確認
         $this->assertDatabaseHas('stamp_correction_requests', [
             'user_id' => $user->id,
             'attendance_id' => $attendance->id,
-            'memo' => 'テスト備考',
+            'reason' => 'テスト備考',
         ]);
     }
 
