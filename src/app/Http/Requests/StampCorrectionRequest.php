@@ -41,11 +41,19 @@ class StampCorrectionRequest extends FormRequest
 
     public function messages()
     {
-        return [
+        $messages = [
             'clock_in.date_format' => '出勤時間の形式が正しくありません',
             'clock_out.date_format' => '退勤時間の形式が正しくありません',
             'memo.required' => '備考を記入してください',
         ];
+
+        // 休憩時間のバリデーションメッセージを動的に追加
+        for ($i = 0; $i <= 10; $i++) {
+            $messages["break_start_{$i}.date_format"] = '休憩開始時間の形式が正しくありません';
+            $messages["break_end_{$i}.date_format"] = '休憩終了時間の形式が正しくありません';
+        }
+
+        return $messages;
     }
 
     /**
@@ -85,19 +93,19 @@ class StampCorrectionRequest extends FormRequest
                     // 休憩時間が勤務時間外（出勤時間より前）
                     if ($clockIn && $breakStart < $clockIn) {
                         Log::info("Validation error: break_start_{$i} < clock_in");
-                        $validator->errors()->add("break_start_{$i}", '出勤時間もしくは退勤時間が不適切な値です');
+                        $validator->errors()->add("break_start_{$i}", '休憩時間が勤務時間外です');
                     }
 
                     // 休憩時間が勤務時間外（退勤時間より後）
                     if ($clockOut && $breakEnd > $clockOut) {
                         Log::info("Validation error: break_end_{$i} > clock_out");
-                        $validator->errors()->add("break_end_{$i}", '出勤時間もしくは退勤時間が不適切な値です');
+                        $validator->errors()->add("break_end_{$i}", '休憩時間が勤務時間外です');
                     }
 
                     // 休憩開始時間が退勤時間より後の場合
                     if ($clockOut && $breakStart > $clockOut) {
                         Log::info("Validation error: break_start_{$i} > clock_out");
-                        $validator->errors()->add("break_start_{$i}", '出勤時間もしくは退勤時間が不適切な値です');
+                        $validator->errors()->add("break_start_{$i}", '休憩時間が勤務時間外です');
                     }
                 }
             }
