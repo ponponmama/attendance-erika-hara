@@ -34,50 +34,32 @@
 
 #### ユーザー画面
 
-- ユーザー登録
+- ユーザー登録 <br>
 
-<p align="center">
-    <img src="user_register.png" alt="ユーザー登録画面">
-</p>
+    <img src="attendance_register.png" alt="ユーザー登録画面">
 
-- ログイン
+- ログイン <br>
 
-<p align="center">
-    <img src="user_login.png" alt="ユーザーログイン画面">
-</p>
+    <img src="attendance_login.png" alt="ユーザーログイン画面">
 
-- 勤怠打刻画面
+- 勤怠打刻画面 <br>
 
-<p align="center">
-    <img src="user_pre_work_status.png" alt="ユーザー打刻勤務前画面">
-</p>
-<p align="center">
-    <img src="user_working.png" alt="ユーザー打刻勤務中画面">
-</p>
-<p align="center">
-    <img src="user_leave_work.png" alt="ユーザー打刻休憩中画面">
-</p>
-<p align="center">
-    <img src="user_clock_out.png" alt="ユーザー打刻勤務終了画面">
-</p>
+    <img src="attendance.png" alt="ユーザー打刻勤務前画面">
+    <img src="attendance_working_start.png" alt="ユーザー打刻勤務中画面">
+    <img src="attendance_leave_work.png" alt="ユーザー打刻休憩中画面">
+    <img src="attendance_clock_out.png" alt="ユーザー打刻勤務終了画面">
 
-- 勤怠一覧画面
+- 勤怠一覧画面 <br>
 
-<p align="center">
-    <img src="user_attendance_list.png" alt="ユーザー勤怠一覧画面">
-</p>
+    <img src="attendance_list.png" alt="ユーザー勤怠一覧画面">
 
-- 勤怠詳細画面
+- 勤怠詳細画面 <br>
 
-<p align="center">
-    <img src="user_detail.png" alt="ユーザー修正申請画面">
-</p>
+    <img src="attendance_detail.png" alt="ユーザー修正申請画面">
 
-- 修正申請一覧画面
+- 修正申請一覧画面 <br>
 
-<p align="center">
-    <img src="user_stamp_correction_request.png" alt="修正申請一覧画面">
-</p>
+    <img src="attendance_stamp_correction_request_list.png" alt="修正申請一覧画面">
 
 ### 管理者機能
 
@@ -93,48 +75,33 @@
 
 - ログイン <br>
 
-<p align="center">
     <img src="admin_login.png" alt="ログイン画面">
-</p>
 
 - 勤怠一覧画面 <br>
 
-<p align="center">
     <img src="admin_attendance_list.png" alt="勤怠一覧画面">
-</p>
 
 - スタッフ一覧画面 <br>
 
-<p align="center">
     <img src="admin_staff_list.png" alt="スタッフ一覧画面">
-</p>
 
 - スタッフ別勤怠一覧画面 <br>
 
-<p align="center">
     <img src="admin_attendance_list.png" alt="スタッフ別勤怠一覧画面">
-</p>
 
 - 勤怠詳細・修正画面 <br>
 
-<p align="center">
     <img src="admin_detail.png" alt="勤怠詳細・修正画面">
-</p>
 
 - 修正申請一覧画面 <br>
 
-<p align="center">
     <img src="admin_stamp_correction_request_list.png" alt="修正申請一覧画面">
-</p>
 
 - 修正申請の承認画面 <br>
 
-<p align="center">
     <img src="admin_pending.png" alt="承認待画面">
-</p>
-<p align="center">
     <img src="admin_approved.png" alt="承認済画面">
-</p>
+
 
 ### 開発言語・フレームワーク
 

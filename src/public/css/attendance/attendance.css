@@ -6,6 +6,10 @@ body {
     width: 100%;
 }
 
+.main-content {
+    justify-content: center;
+}
+
 .attendance-container {
     display: flex;
     flex-direction: column;
