@@ -87,7 +87,7 @@
 
 - スタッフ別勤怠一覧画面 <br>
 
-    <img src="admin_attendance_list.png" alt="スタッフ別勤怠一覧画面">
+    <img src="admin_attendance_staff_list.png" alt="スタッフ別勤怠一覧画面">
 
 - 勤怠詳細・修正画面 <br>
 
