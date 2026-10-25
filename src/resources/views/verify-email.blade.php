@@ -17,10 +17,11 @@
             <form method="POST" action="{{ route('verification.send') }}">
                 @csrf
                 <div class="form-group">
-                    <button type="submit" class="verify-email-button button">認証はこちらから</button>
+                    {{-- 開発環境のメール確認画面（MailHog）を開く --}}
+                    <button type="button" class="verify-email-button button" onclick="window.open('http://localhost:8025', '_blank')">認証はこちらから</button>
                 </div>
                 <p class="auth-success-message">
-                    認証メールを再送する
+                    <a href="#" class="link" onclick="this.closest('form').submit(); return false;">認証メールを再送する</a>
                 </p>
             </form>
         </div>
