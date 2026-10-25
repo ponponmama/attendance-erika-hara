@@ -99,13 +99,13 @@ class StampCorrectionRequest extends FormRequest
                     // 休憩時間が勤務時間外（退勤時間より後）
                     if ($clockOut && $breakEnd > $clockOut) {
                         Log::info("Validation error: break_end_{$i} > clock_out");
-                        $validator->errors()->add("break_end_{$i}", '休憩時間が勤務時間外です');
+                        $validator->errors()->add("break_end_{$i}", '出勤時間もしくは退勤時間が不適切な値です');
                     }
 
                     // 休憩開始時間が退勤時間より後の場合
                     if ($clockOut && $breakStart > $clockOut) {
                         Log::info("Validation error: break_start_{$i} > clock_out");
-                        $validator->errors()->add("break_start_{$i}", '休憩時間が勤務時間外です');
+                        $validator->errors()->add("break_start_{$i}", '出勤時間もしくは退勤時間が不適切な値です');
                     }
                 }
             }
