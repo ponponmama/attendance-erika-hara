@@ -36,30 +36,30 @@
 
 - ユーザー登録 <br>
 
-    <img src="attendance_register.png" alt="ユーザー登録画面">
+    <img src="readme_md_img/users/attendance_register.png" alt="ユーザー登録画面">
 
 - ログイン <br>
 
-    <img src="attendance_login.png" alt="ユーザーログイン画面">
+    <img src="readme_md_img/users/attendance_login.png" alt="ユーザーログイン画面">
 
 - 勤怠打刻画面 <br>
 
-    <img src="attendance.png" alt="ユーザー打刻勤務前画面">
-    <img src="attendance_working_start.png" alt="ユーザー打刻勤務中画面">
-    <img src="attendance_leave_work.png" alt="ユーザー打刻休憩中画面">
-    <img src="attendance_clock_out.png" alt="ユーザー打刻勤務終了画面">
+    <img src="readme_md_img/users/attendance.png" alt="ユーザー打刻勤務前画面">
+    <img src="readme_md_img/users/attendance_working_start.png" alt="ユーザー打刻勤務中画面">
+    <img src="readme_md_img/users/attendance_leave_work.png" alt="ユーザー打刻休憩中画面">
+    <img src="readme_md_img/users/attendance_clock_out.png" alt="ユーザー打刻勤務終了画面">
 
 - 勤怠一覧画面 <br>
 
-    <img src="attendance_list.png" alt="ユーザー勤怠一覧画面">
+    <img src="readme_md_img/users/attendance_list.png" alt="ユーザー勤怠一覧画面">
 
 - 勤怠詳細画面 <br>
 
-    <img src="attendance_detail.png" alt="ユーザー修正申請画面">
+    <img src="readme_md_img/users/attendance_detail.png" alt="ユーザー修正申請画面">
 
 - 修正申請一覧画面 <br>
 
-    <img src="attendance_stamp_correction_request_list.png" alt="修正申請一覧画面">
+    <img src="readme_md_img/users/attendance_stamp_correction_request_list.png" alt="修正申請一覧画面">
 
 ### 管理者機能
 
@@ -75,32 +75,32 @@
 
 - ログイン <br>
 
-    <img src="admin_login.png" alt="ログイン画面">
+    <img src="readme_md_img/admin/admin_login.png" alt="ログイン画面">
 
 - 勤怠一覧画面 <br>
 
-    <img src="admin_attendance_list.png" alt="勤怠一覧画面">
+    <img src="readme_md_img/admin/admin_attendance_list.png" alt="勤怠一覧画面">
 
 - スタッフ一覧画面 <br>
 
-    <img src="admin_staff_list.png" alt="スタッフ一覧画面">
+    <img src="readme_md_img/admin/admin_staff_list.png" alt="スタッフ一覧画面">
 
 - スタッフ別勤怠一覧画面 <br>
 
-    <img src="admin_attendance_staff_list.png" alt="スタッフ別勤怠一覧画面">
+    <img src="readme_md_img/admin/admin_attendance_staff_list.png" alt="スタッフ別勤怠一覧画面">
 
 - 勤怠詳細・修正画面 <br>
 
-    <img src="admin_detail.png" alt="勤怠詳細・修正画面">
+    <img src="readme_md_img/admin/admin_detail.png" alt="勤怠詳細・修正画面">
 
 - 修正申請一覧画面 <br>
 
-    <img src="admin_stamp_correction_request_list.png" alt="修正申請一覧画面">
+    <img src="readme_md_img/admin/admin_stamp_correction_request_list.png" alt="修正申請一覧画面">
 
 - 修正申請の承認画面 <br>
 
-    <img src="admin_pending.png" alt="承認待画面">
-    <img src="admin_approved.png" alt="承認済画面">
+    <img src="readme_md_img/admin/admin_pending.png" alt="承認待画面">
+    <img src="readme_md_img/admin/admin_approved.png" alt="承認済画面">
 
 
 ### 開発言語・フレームワーク
@@ -117,7 +117,7 @@
 
 ### ER 図
 
-![Attendance Diagram](attendance.drawio.png)
+![Attendance Diagram](readme_md_img/attendance.drawio.png)
 
 ### 環境構築
 
