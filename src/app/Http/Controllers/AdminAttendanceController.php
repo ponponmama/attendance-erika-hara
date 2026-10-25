@@ -181,7 +181,7 @@ class AdminAttendanceController extends Controller
                 if ($break->break_start && $break->break_end) {
                     $start = Carbon::parse($break->break_start);
                     $end = Carbon::parse($break->break_end);
-                    $totalBreakMinutes += $end->diffInMinutes($start);
+                    $totalBreakMinutes += (int) $end->diffInMinutes($start, true);
                 }
             }
             $break_h = floor($totalBreakMinutes / 60);
@@ -192,7 +192,7 @@ class AdminAttendanceController extends Controller
             if ($attendance->clock_in && $attendance->clock_out) {
                 $clockInTime = Carbon::parse($attendance->clock_in);
                 $clockOutTime = Carbon::parse($attendance->clock_out);
-                $workMinutes = $clockOutTime->diffInMinutes($clockInTime) - $totalBreakMinutes;
+                $workMinutes = (int) $clockOutTime->diffInMinutes($clockInTime, true) - $totalBreakMinutes;
                 $work_h = floor($workMinutes / 60);
                 $work_m = $workMinutes % 60;
                 $netWorkHours = sprintf('%d:%02d', $work_h, $work_m);

@@ -54,13 +54,13 @@
                             $break_m = 0;
 
                             if ($clockIn && $clockOut) {
-                                $workHours = $clockOut->diffInSeconds($clockIn) / 3600;
+                                $workHours = $clockOut->diffInSeconds($clockIn, true) / 3600;
 
                                 foreach ($attendance->breakTimes as $break) {
                                     if ($break->break_start && $break->break_end) {
                                         $start = \Carbon\Carbon::parse($break->break_start);
                                         $end = \Carbon\Carbon::parse($break->break_end);
-                                        $totalBreakMinutes += $end->diffInMinutes($start);
+                                        $totalBreakMinutes += (int) $end->diffInMinutes($start, true);
                                     }
                                 }
                                 $break_h = floor($totalBreakMinutes / 60);

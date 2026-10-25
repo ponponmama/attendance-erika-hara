@@ -74,7 +74,7 @@ class AttendanceController extends Controller
 
                 $clockIn = Carbon::parse($attendance->clock_in);
                 $clockOut = Carbon::parse($attendance->clock_out);
-                $workHours = $clockOut->diffInSeconds($clockIn) / 3600;
+                $workHours = $clockOut->diffInSeconds($clockIn, true) / 3600;
                 $totalWorkHours += $workHours;
 
                 // 休憩時間を計算
@@ -83,7 +83,7 @@ class AttendanceController extends Controller
                     if ($break->break_start && $break->break_end) {
                         $breakStart = Carbon::parse($break->break_start);
                         $breakEnd = Carbon::parse($break->break_end);
-                        $breakHours += $breakEnd->diffInSeconds($breakStart) / 3600;
+                        $breakHours += $breakEnd->diffInSeconds($breakStart, true) / 3600;
                     }
                 }
                 $totalBreakHours += $breakHours;

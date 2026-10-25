@@ -16,12 +16,6 @@ class TimeStampTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-
-        // テスト用のデータベースをリフレッシュ
-        $this->refreshDatabase();
-
-        // マイグレーションを実行
-        $this->artisan('migrate:fresh');
     }
 
     /**
